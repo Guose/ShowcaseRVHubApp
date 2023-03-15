@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShowcaseRVHub.MAUI.View.MainPage" 
+             xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
+             x:DataType="viewmodel:MainViewModel">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <StackLayout Margin="100,20">
+            <Label 
+                Text="Login" 
+                FontSize="30" 
+                FontAttributes="Bold" 
+                Margin="0,0,0,20" 
+                TextColor="{DynamicResource PrimaryColor}"/>
+            
+            <StackLayout Orientation="Horizontal">
+                <Label 
+                    Text="Username:" 
+                    VerticalTextAlignment="Center" 
+                    TextColor="{DynamicResource PrimaryColor}" 
+                    Margin="0,0,10,0"/>
+                
+                <Entry 
+                    Placeholder="Enter your username" 
+                    VerticalTextAlignment="Center"
+                    Text="{Binding Username, UpdateSourceEventName=PropertyChanged}"/>
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                <Label 
+                    Text="Password:" 
+                    VerticalTextAlignment="Center" 
+                    TextColor="{DynamicResource PrimaryColor}" 
+                    Margin="0,0,10,0"/>
+                
+                <Entry 
+                    Placeholder="Enter your password" 
+                    VerticalTextAlignment="Center" 
+                    Text="{Binding Password, UpdateSourceEventName=PropertyChanged}"
+                    IsPassword="True"/>                
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                <Switch />
+                
+                <Label 
+                    Text="Remember Me" 
+                    VerticalTextAlignment="Center" 
+                    TextColor="{DynamicResource PrimaryColor}" />
+            </StackLayout>
+
+            <Button 
+                Text="Login" 
+                WidthRequest="400"
+                FontAttributes="Bold" 
+                HorizontalOptions="StartAndExpand"
+                FontSize="22" 
+                Margin="-38,30,0,20"
+                Style="{StaticResource ButtonOutline}"/>
+
+            <Label 
+                Text="Don't have an account? Sign up" 
+                Margin="0,20,0,0" 
+                TextColor="{DynamicResource PrimaryColor}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CreateUser_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+            
+            <Label 
+                Text="Forgot Password?" 
+                Margin="0,20,0,0" 
+                TextColor="{DynamicResource PrimaryColor}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ForgotPassword_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+            
+        </StackLayout>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShowcaseRVHub.MAUI.View.AddUserPage"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
+             x:DataType="viewmodel:ShowcaseUserFormViewModel"
+             x:Name="AddUserForm"
+             BindingContext="{StaticResource AddUserFormView}"
+             Title="Add User Page">
+    <ContentPage.Resources>
+        <viewmodel:ShowcaseUserFormViewModel x:Key="AddUserFormView"/>
+    </ContentPage.Resources>
+    <Grid Margin="20">
+
+        <Grid Margin="40,10" RowDefinitions="auto,auto,auto,auto,auto,auto">
+
+            <Label 
+                Text="Create User" 
+                FontSize="36" 
+                FontAttributes="Bold" 
+                Margin="0,5,0,20" 
+                TextColor="{DynamicResource PrimaryColor}"/>
+
+            <Grid Grid.Row="1" RowDefinitions="auto" ColumnDefinitions="200,auto">
+                
+                <Label 
+                    Grid.Column="0"
+                    Text="Email:" 
+                    TextColor="{DynamicResource PrimaryColor}" 
+                    Style="{StaticResource FormLabel}"/>
+
+                <Entry 
+                    Grid.Column="1" 
+                    Placeholder="Enter email"
+                    Text="{Binding Email}"/>
+            </Grid>
+
+            <Grid Grid.Row="2" RowDefinitions="auto" ColumnDefinitions="200,auto">
+                <Label 
+                    Grid.Column="0"
+                    Text="Username:"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    Style="{StaticResource FormLabel}"/>
+
+                <Entry 
+                    Grid.Column="1"
+                    Placeholder="Create your username" 
+                    Text="{Binding Username}"/>
+            </Grid>
+
+            <Grid Grid.Row="3" RowDefinitions="auto" ColumnDefinitions="200,auto">
+                <Label 
+                    Grid.Column="0"
+                    Text="Password:" 
+                    TextColor="{DynamicResource PrimaryColor}" 
+                    Style="{StaticResource FormLabel}"/>
+
+                <Entry 
+                    Grid.Column="1" 
+                    Placeholder="Create password"
+                    Text="{Binding Password}"
+                    IsPassword="True"/>
+            </Grid>
+
+            <Grid Grid.Row="4" RowDefinitions="auto" ColumnDefinitions="200,auto">
+                <Label 
+                    Grid.Column="0"
+                    Text="Confirm Password:"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    Style="{StaticResource FormLabel}"/>
+
+                <Entry 
+                    Grid.Column="1"
+                    WidthRequest="300"
+                    Placeholder="Re-enter password"
+                    Text="{Binding ConfirmPassword}"
+                    IsPassword="True"/>
+            </Grid>
+
+
+            <Grid Grid.Row="5" RowDefinitions="auto" ColumnDefinitions="200,auto">
+                <Button 
+                    Grid.Column="0"
+                    Text="Create" 
+                    WidthRequest="200"  
+                    FontAttributes="Bold" 
+                    HorizontalOptions="StartAndExpand"
+                    FontSize="22" 
+                    Margin="0,30,0,20" 
+                    Command="{Binding SubmitCommand}"
+                    Style="{StaticResource ButtonOutline}"/>
+
+                <Button 
+                    Grid.Column="1"
+                    Text="Cancel" 
+                    WidthRequest="200"  
+                    FontAttributes="Bold" 
+                    HorizontalOptions="StartAndExpand"
+                    FontSize="22" 
+                    Margin="30,30,0,20" 
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource ButtonOutline}"/>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</ContentPage>
