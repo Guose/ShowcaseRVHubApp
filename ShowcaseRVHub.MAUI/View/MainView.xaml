@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ShowcaseRVHub.MAUI.View.MainPage" 
+             x:Class="ShowcaseRVHub.MAUI.View.MainView" 
+             xmlns:model="clr-namespace:ShowcaseRVHub.Domain.Model;assembly=ShowcaseRVHub.Domain"
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             Title="Login"
              x:DataType="viewmodel:MainViewModel">
 
     <Grid Margin="20">
@@ -16,63 +20,63 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <StackLayout Margin="100,20">
-            <Label 
-                Text="Login" 
-                FontSize="30" 
-                FontAttributes="Bold" 
-                Margin="0,0,0,20" 
-                TextColor="{DynamicResource PrimaryColor}"/>
+        <StackLayout Margin="75,20" >
             
             <StackLayout Orientation="Horizontal">
                 <Label 
                     Text="Username:" 
                     VerticalTextAlignment="Center" 
-                    TextColor="{DynamicResource PrimaryColor}" 
+                    TextColor="{StaticResource LabelTextDark}" 
                     Margin="0,0,10,0"/>
                 
                 <Entry 
                     Placeholder="Enter your username" 
                     VerticalTextAlignment="Center"
-                    Text="{Binding Username, UpdateSourceEventName=PropertyChanged}"/>
+                    Text="{Binding Username}"/>
             </StackLayout>
             
             <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
                 <Label 
                     Text="Password:" 
                     VerticalTextAlignment="Center" 
-                    TextColor="{DynamicResource PrimaryColor}" 
+                    TextColor="{StaticResource LabelTextDark}" 
                     Margin="0,0,10,0"/>
                 
                 <Entry 
                     Placeholder="Enter your password" 
                     VerticalTextAlignment="Center" 
-                    Text="{Binding Password, UpdateSourceEventName=PropertyChanged}"
+                    Text="{Binding Password}"
                     IsPassword="True"/>                
             </StackLayout>
             
             <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-                <Switch />
                 
                 <Label 
                     Text="Remember Me" 
-                    VerticalTextAlignment="Center" 
-                    TextColor="{DynamicResource PrimaryColor}" />
+                    VerticalTextAlignment="Center"                     
+                    TextColor="{StaticResource Primary}" />
+                <Switch 
+                    Margin="30,0,0,0"
+                    OnColor="{StaticResource Accent}"
+                    IsToggled="{Binding IsRemembered}" />                
+                
             </StackLayout>
 
             <Button 
                 Text="Login" 
-                WidthRequest="400"
-                FontAttributes="Bold" 
                 HorizontalOptions="StartAndExpand"
-                FontSize="22" 
-                Margin="-38,30,0,20"
+                WidthRequest="250"
+                FontAttributes="Bold" 
+                FontSize="22"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=ValidateUserCommand}"
+                CommandParameter="{Binding .}"
+                Margin="0,30,0,20"
                 Style="{StaticResource ButtonOutline}"/>
 
             <Label 
-                Text="Don't have an account? Sign up" 
-                Margin="0,20,0,0" 
-                TextColor="{DynamicResource PrimaryColor}">
+                Text="Don't have an account? Sign up"
+                Margin="0,30,0,0" 
+                TextColor="{StaticResource LabelTextDark}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="CreateUser_Tapped" />
                 </Label.GestureRecognizers>
@@ -81,7 +85,7 @@
             <Label 
                 Text="Forgot Password?" 
                 Margin="0,20,0,0" 
-                TextColor="{DynamicResource PrimaryColor}">
+                TextColor="{StaticResource LabelTextDark}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ForgotPassword_Tapped" />
                 </Label.GestureRecognizers>

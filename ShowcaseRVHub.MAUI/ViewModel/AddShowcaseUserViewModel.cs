@@ -10,9 +10,9 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 
         public AddShowcaseUserViewModel(ShowcaseUserStore showcaseUserStore, NavigationModalStore navigationModalStore)
         {
-            ICommand cancelCommand = new CloseModalCommand(navigationModalStore);
+            //ICommand cancelCommand = new CloseModalCommand(navigationModalStore);
             ICommand submitCommand = new AddShowcaseUserCommand(showcaseUserStore, navigationModalStore);
-            ShowcaseUserFormViewModel = new ShowcaseUserFormViewModel(submitCommand, cancelCommand);
+            ShowcaseUserFormViewModel = new ShowcaseUserFormViewModel(submitCommand);
         }
     }
 }

@@ -1,17 +1,15 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace ShowcaseRVHub.MAUI.ViewModel
+﻿namespace ShowcaseRVHub.MAUI.ViewModel
 {
-    public class ViewModelBase : ObservableObject, INotifyPropertyChanged
+    public partial class ViewModelBase : ObservableObject
     {
-        public event PropertyChangedEventHandler MyPropertyChanged;
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsNotBust))]
+        bool isBusy;
 
-        protected virtual void OnMyPropertyChanged(string propertyName)
-        {
-            MyPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        [ObservableProperty]
+        string title;
+
+        public bool IsNotBust => !IsBusy;
 
         protected virtual void Dispose() { }
     }

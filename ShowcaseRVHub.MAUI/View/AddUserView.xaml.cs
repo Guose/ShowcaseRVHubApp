@@ -2,9 +2,9 @@ using ShowcaseRVHub.MAUI.ViewModel;
 
 namespace ShowcaseRVHub.MAUI.View;
 
-public partial class ForgotPasswordPage : ContentPage
+public partial class AddUserView : ContentPage
 {
-	public ForgotPasswordPage()
+	public AddUserView()
 	{
 		InitializeComponent();
 		BindingContext = new ShowcaseUserFormViewModel();

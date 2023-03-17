@@ -27,10 +27,16 @@ namespace ShowcaseRVHub.MAUI
             builder.Services.AddSingleton<ShowcaseUserStore>();
 
             builder.Services.AddSingleton<MainViewModel>();
-            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<MainView>();
 
             builder.Services.AddTransient<ShowcaseUserFormViewModel>();
-            builder.Services.AddTransient<AddUserPage>();
+            builder.Services.AddTransient<AddUserView>();
+
+            builder.Services.AddTransient<ForgotPasswordViewModel>();
+            builder.Services.AddTransient<ForgotPasswordView>();
+
+            builder.Services.AddTransient<RVNavigationViewModel>();
+            builder.Services.AddTransient<RVNavigationView>();
 
             return builder.Build();
         }

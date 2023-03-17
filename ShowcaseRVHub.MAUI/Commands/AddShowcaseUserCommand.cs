@@ -1,6 +1,4 @@
-﻿using ShowcaseRVHub.Domain.Model;
-using ShowcaseRVHub.MAUI.Stores;
-using ShowcaseRVHub.MAUI.ViewModel;
+﻿using ShowcaseRVHub.MAUI.Stores;
 
 namespace ShowcaseRVHub.MAUI.Commands
 {
@@ -28,9 +26,13 @@ namespace ShowcaseRVHub.MAUI.Commands
             {
                 ShowcaseUser showcaseUser = new(
                     Guid.NewGuid(),
+                    formUserModel.FirstName,
+                    formUserModel.LastName,
+                    formUserModel.PhoneNumber,
                     formUserModel.Username,
                     formUserModel.Password,
-                    formUserModel.Email);
+                    formUserModel.Email,
+                    formUserModel.IsRemembered);
 
                 await _userStore.CreateAsync(showcaseUser);
                 _navigationStore.Close();

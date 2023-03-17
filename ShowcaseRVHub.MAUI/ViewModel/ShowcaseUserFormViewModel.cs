@@ -1,106 +1,29 @@
-﻿using ShowcaseRVHub.MAUI.Commands;
-using ShowcaseRVHub.MAUI.Stores;
-using System.Windows.Input;
+﻿
 
 namespace ShowcaseRVHub.MAUI.ViewModel
 {
-    public class ShowcaseUserFormViewModel : ViewModelBase
+    public partial class ShowcaseUserFormViewModel : ViewModelBase
     {
-		private readonly INavigation _navigation;
-
-        public ShowcaseUserFormViewModel(INavigation navigation)
+        public ShowcaseUserFormViewModel()
         {
-            _navigation = navigation;
+            
+        }
+        public ShowcaseUserFormViewModel(ICommand submitCommand)
+        {
+            SubmitCommand = submitCommand;
         }
 
-		private string _email;
-		public string Email
-		{
-			get
-			{
-				return _email;
-			}
-			set
-			{
-				_email = value;
-				OnMyPropertyChanged(nameof(Email));
-			}
-		}
-		private string _username;
-		public string Username
-		{
-			get
-			{
-				return _username;
-			}
-			set
-			{
-				_username = value;
-				OnMyPropertyChanged(nameof(Username));
-			}
-		}
-
-		private string _password;
-		public string Password
-		{
-			get
-			{
-				return _password;
-			}
-			set
-			{
-				_password = value;
-				OnMyPropertyChanged(nameof(Password));
-			}
-		}
-
-		private string _confirmPassword;
-		public string ConfirmPassword
-		{
-			get
-			{
-				return _confirmPassword;
-			}
-			set
-			{
-				_confirmPassword = value;
-				OnMyPropertyChanged(nameof(ConfirmPassword));
-			}
-		}
-
-        public bool IsMatch
-		{
-			get => Password == ConfirmPassword;
-		}
-
-        private bool _isSubmitting;
-        public bool IsSubmitting
-        {
-            get
-            {
-                return _isSubmitting;
-            }
-            set
-            {
-                _isSubmitting = value;
-                OnMyPropertyChanged(nameof(IsSubmitting));
-            }
-        }
-
-        private string _errorMessage;
-        public string ErrorMessage
-        {
-            get
-            {
-                return _errorMessage;
-            }
-            set
-            {
-                _errorMessage = value;
-                OnMyPropertyChanged(nameof(ErrorMessage));
-                OnMyPropertyChanged(nameof(HasErrorMessage));
-            }
-        }
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Username { get; set; }
+		public string Password { get; set; }
+		public string ConfirmPassword { get; set; }
+        public bool IsRemembered { get; set; }
+        public bool IsMatch  => Password == ConfirmPassword;
+        public bool IsSubmitting { get; set; }
+        public string ErrorMessage { get; set; }
 
         public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
         public bool CanSubmit => !string.IsNullOrEmpty(Username);
@@ -109,16 +32,6 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 		{
 			await Shell.Current.Navigation.PopModalAsync();
 		});
-
-
-        public ShowcaseUserFormViewModel()
-        {
-            
-        }
-        public ShowcaseUserFormViewModel(ICommand submitCommand, ICommand cancelCommand)
-        {
-			SubmitCommand = submitCommand;
-            //CancelCommand = cancelCommand;
-        }
+        
     }
 }

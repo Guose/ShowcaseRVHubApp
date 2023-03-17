@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ShowcaseRVHub.MAUI.View.ForgotPasswordPage"
+             x:Class="ShowcaseRVHub.MAUI.View.AddUserView"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
              x:DataType="viewmodel:ShowcaseUserFormViewModel"
-             Title="Forgot Password"
-             x:Name="ForgotPassword">
+             BindingContext="{StaticResource AddUserFormView}"
+             Title="Add User View">
     <ContentPage.Resources>
-        <viewmodel:ShowcaseUserFormViewModel x:Key="ForgotUserFormView"/>
+        <viewmodel:ShowcaseUserFormViewModel x:Key="AddUserFormView"/>
     </ContentPage.Resources>
-    <Grid Margin="20">
-
-        <Grid Margin="40,10" RowDefinitions="auto,auto,auto,auto,auto,auto">
+    
+    <Grid>
+        <Grid 
+            Margin="30" 
+            RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,*">
 
             <Label 
                 Text="Create User" 
                 FontSize="36" 
                 FontAttributes="Bold" 
                 Margin="0,5,0,20" 
-                TextColor="{DynamicResource PrimaryColor}"/>
+                TextColor="{StaticResource Accent}"/>
 
             <Grid Grid.Row="1" RowDefinitions="auto" ColumnDefinitions="200,auto">
-
+                
                 <Label 
                     Grid.Column="0"
                     Text="Email:" 
-                    TextColor="{DynamicResource PrimaryColor}" 
+                    TextColor="{StaticResource LabelTextDark}" 
                     Style="{StaticResource FormLabel}"/>
 
                 <Entry 
@@ -38,8 +40,47 @@
             <Grid Grid.Row="2" RowDefinitions="auto" ColumnDefinitions="200,auto">
                 <Label 
                     Grid.Column="0"
+                    Text="First Name:"
+                    TextColor="{StaticResource LabelTextDark}"
+                    Style="{StaticResource FormLabel}"/>
+
+                <Entry 
+                    Grid.Column="1"
+                    Placeholder="Enter first name" 
+                    Text="{Binding FirstName}"/>
+            </Grid>
+
+            <Grid Grid.Row="3" RowDefinitions="auto" ColumnDefinitions="200,auto">
+                <Label 
+                    Grid.Column="0"
+                    Text="Last Name:"
+                    TextColor="{StaticResource LabelTextDark}"
+                    Style="{StaticResource FormLabel}"/>
+
+                <Entry 
+                    Grid.Column="1"
+                    Placeholder="Enter last name" 
+                    Text="{Binding LastName}"/>
+            </Grid>
+
+            <Grid Grid.Row="4" RowDefinitions="auto" ColumnDefinitions="200,auto">
+                <Label 
+                    Grid.Column="0"
+                    Text="Phone Number:"
+                    TextColor="{StaticResource LabelTextDark}"
+                    Style="{StaticResource FormLabel}"/>
+
+                <Entry 
+                    Grid.Column="1"
+                    Placeholder="Enter your phone number" 
+                    Text="{Binding Username}"/>
+            </Grid>
+
+            <Grid Grid.Row="5" RowDefinitions="auto" ColumnDefinitions="200,auto">
+                <Label 
+                    Grid.Column="0"
                     Text="Username:"
-                    TextColor="{DynamicResource PrimaryColor}"
+                    TextColor="{StaticResource LabelTextDark}"
                     Style="{StaticResource FormLabel}"/>
 
                 <Entry 
@@ -48,11 +89,11 @@
                     Text="{Binding Username}"/>
             </Grid>
 
-            <Grid Grid.Row="3" RowDefinitions="auto" ColumnDefinitions="200,auto">
+            <Grid Grid.Row="6" RowDefinitions="auto" ColumnDefinitions="200,auto">
                 <Label 
                     Grid.Column="0"
                     Text="Password:" 
-                    TextColor="{DynamicResource PrimaryColor}" 
+                    TextColor="{StaticResource LabelTextDark}" 
                     Style="{StaticResource FormLabel}"/>
 
                 <Entry 
@@ -62,42 +103,36 @@
                     IsPassword="True"/>
             </Grid>
 
-            <Grid Grid.Row="4" RowDefinitions="auto" ColumnDefinitions="200,auto">
+            <Grid Grid.Row="7" RowDefinitions="auto" ColumnDefinitions="200,auto">
                 <Label 
                     Grid.Column="0"
                     Text="Confirm Password:"
-                    TextColor="{DynamicResource PrimaryColor}"
+                    TextColor="{StaticResource LabelTextDark}"
                     Style="{StaticResource FormLabel}"/>
 
                 <Entry 
                     Grid.Column="1"
-                    WidthRequest="300"
                     Placeholder="Re-enter password"
                     Text="{Binding ConfirmPassword}"
                     IsPassword="True"/>
             </Grid>
 
 
-            <Grid Grid.Row="5" RowDefinitions="auto" ColumnDefinitions="200,auto">
+            <Grid Margin="0,50" Grid.Row="8" RowDefinitions="auto,auto">
                 <Button 
-                    Grid.Column="0"
-                    Text="Create" 
-                    WidthRequest="200"  
+                    Grid.Row="0"
+                    Margin="20,20"
+                    Text="Create"  
                     FontAttributes="Bold" 
-                    HorizontalOptions="StartAndExpand"
-                    FontSize="22" 
-                    Margin="0,30,0,20" 
+                    FontSize="22"
                     Command="{Binding SubmitCommand}"
                     Style="{StaticResource ButtonOutline}"/>
 
                 <Button 
-                    Grid.Column="1"
-                    Text="Cancel" 
-                    WidthRequest="200"  
-                    FontAttributes="Bold" 
-                    HorizontalOptions="StartAndExpand"
+                    Grid.Row="1"
+                    Margin="20,0"
+                    Text="Cancel"
                     FontSize="22" 
-                    Margin="30,30,0,20" 
                     Command="{Binding CancelCommand}"
                     Style="{StaticResource ButtonOutline}"/>
             </Grid>

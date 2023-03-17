@@ -61,8 +61,8 @@
 
             <Style x:Key="ButtonOutline" TargetType="Button">
                 <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />
-                <Setter Property="TextColor" Value="{StaticResource Primary}" />
-                <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+                <Setter Property="TextColor" Value="{StaticResource Accent}" />
+                <Setter Property="BorderColor" Value="{StaticResource Accent}" />
                 <Setter Property="BorderWidth" Value="2" />
                 <Setter Property="HeightRequest" Value="55" />
                 <Setter Property="CornerRadius" Value="20" />

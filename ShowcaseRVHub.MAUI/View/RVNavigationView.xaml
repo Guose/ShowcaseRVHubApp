@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShowcaseRVHub.MAUI.View.RVNavigationView"
+             xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
+             Title="{Binding User.Username}"
+             x:DataType="viewmodel:RVNavigationViewModel">
+    
+    <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}">
+        <Grid VerticalOptions="CenterAndExpand" RowDefinitions="auto,auto">
+            <Button 
+            Grid.Row="0"
+            Margin="20"
+            FontAttributes="Bold" 
+            FontSize="22" 
+            Style="{StaticResource ButtonOutline}"
+            Text="Departures"/>
+            
+            <Button 
+            Grid.Row="1"
+            Margin="20"
+            FontAttributes="Bold" 
+            FontSize="22" 
+            Style="{StaticResource ButtonOutline}"
+            Text="Arrivals" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

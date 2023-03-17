@@ -58,10 +58,28 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\AddUserPage.xaml">
+	  <Compile Update="View\AddUserView.xaml.cs">
+	    <DependentUpon>AddUserView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\ForgotPasswordView.xaml.cs">
+	    <DependentUpon>ForgotPasswordView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\MainView.xaml.cs">
+	    <DependentUpon>MainView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\RVNavigationView.xaml.cs">
+	    <DependentUpon>RVNavigationView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="View\AddUserView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\ForgotPasswordPage.xaml">
+	  <MauiXaml Update="View\ForgotPasswordView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\RVNavigationView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
