@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
-using ShowcaseRVHub.Domain.Queries;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ShowcaseRVHub.EntityFramework;
 using ShowcaseRVHub.MAUI.Stores;
 using ShowcaseRVHub.MAUI.View;
-using ShowcaseRVHub.MAUI.ViewModel;
 
 namespace ShowcaseRVHub.MAUI
 {
@@ -22,6 +24,16 @@ namespace ShowcaseRVHub.MAUI
 #if DEBUG
 		    builder.Logging.AddDebug();
 #endif
+
+            string connectionString = builder.Configuration.GetConnectionString("SQLiteConnection");
+            var options = new DbContextOptionsBuilder().UseSqlite(connectionString).Options;
+
+            using (var context = new ShowcaseUsersDbContext(options))
+            {
+                context.Database.EnsureCreated();
+            }
+
+            builder.Services.AddSingleton<ShowcaseUsersDbContextFactory>();
 
             builder.Services.AddSingleton<NavigationModalStore>();
             builder.Services.AddSingleton<ShowcaseUserStore>();
