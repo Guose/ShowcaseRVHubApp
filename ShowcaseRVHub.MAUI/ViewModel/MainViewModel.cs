@@ -1,21 +1,25 @@
-﻿using ShowcaseRVHub.MAUI.View;
+﻿using ShowcaseRVHub.MAUI.Model;
+using ShowcaseRVHub.MAUI.View;
 
 namespace ShowcaseRVHub.MAUI.ViewModel
 {
     public partial class MainViewModel : ViewModelBase
     {
-        private ShowcaseUser _user;
+        private UserModel _user;
 
         public MainViewModel()
         {
-            _user = new ShowcaseUser(
-                Guid.NewGuid(), 
-                "justin@showcasemi.com", 
-                "Justin", "Elder", 
-                "(425)923-4362", 
-                "Justin", 
-                "Justin", 
-                IsRemembered);
+            _user = new UserModel
+            {
+                Id = Guid.NewGuid(),
+                Email = "justin@showcasemi.com",
+                FirstName = "Justin",
+                LastName = "Elder",
+                Phone = "(425)923-4362",
+                Username = "Justin",
+                Password = "Justin",
+                IsRemembered = true,
+            };
         }
 
         [ObservableProperty]

@@ -1,6 +1,5 @@
 ﻿global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
-global using ShowcaseRVHub.Domain.Model;
 global using ShowcaseRVHub.MAUI.ViewModel;
 global using System.Windows.Input;
 global using ShowcaseRVHub.MAUI.Services;

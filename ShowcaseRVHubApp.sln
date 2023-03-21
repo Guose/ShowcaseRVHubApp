@@ -8,7 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.MAUI", "Showc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.Domain", "ShowcaseRVHub.Domain\ShowcaseRVHub.Domain.csproj", "{7D150F9B-BE09-4BD3-BCA3-339342BE5E9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowcaseRVHub.EntityFramework", "ShowcaseRVHub.EntityFramework\ShowcaseRVHub.EntityFramework.csproj", "{5B240173-DCE4-4955-8360-302C1F96979B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.EntityFramework", "ShowcaseRVHub.EntityFramework\ShowcaseRVHub.EntityFramework.csproj", "{5B240173-DCE4-4955-8360-302C1F96979B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowcaseRVHub.WebApi", "ShowcaseRVHub.WebApi\ShowcaseRVHub.WebApi.csproj", "{DDC2A93C-C4D0-44D1-902D-5C14313A294B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,12 +38,16 @@ Global
 		{5B240173-DCE4-4955-8360-302C1F96979B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B240173-DCE4-4955-8360-302C1F96979B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B240173-DCE4-4955-8360-302C1F96979B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDC2A93C-C4D0-44D1-902D-5C14313A294B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDC2A93C-C4D0-44D1-902D-5C14313A294B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDC2A93C-C4D0-44D1-902D-5C14313A294B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDC2A93C-C4D0-44D1-902D-5C14313A294B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 		SolutionGuid = {981B1FF0-A8A8-4487-9408-C23EE4CCDF64}
+		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 	EndGlobalSection
 EndGlobal

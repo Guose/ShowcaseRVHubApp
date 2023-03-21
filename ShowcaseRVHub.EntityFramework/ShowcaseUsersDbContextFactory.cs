@@ -11,9 +11,9 @@ namespace ShowcaseRVHub.EntityFramework
             _options = options;
         }
 
-        public ShowcaseUsersDbContext Create(DbContextOptions options)
+        public ShowcaseUsersDbContext Create()
         {
-            return new ShowcaseUsersDbContext(options);
+            return new ShowcaseUsersDbContext(_options);
         }
     }
 }

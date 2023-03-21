@@ -13,7 +13,7 @@
         {
             // Perform authentication logic here (e.g., call an API endpoint, check against a database)
             // Return true if the user is authenticated, false otherwise
-            await Task.Delay(1000); // Simulate authentication delay
+            await Task.Delay(500); // Simulate authentication delay
             return username == "Justin" && password == "Justin";
         }
     }
