@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using ShowcaseRVHub.MAUI.Services.Interfaces;
 using ShowcaseRVHub.MAUI.View;
 
 namespace ShowcaseRVHub.MAUI
@@ -20,6 +21,8 @@ namespace ShowcaseRVHub.MAUI
 #if DEBUG
 		    builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddSingleton<IShowcaseUserDataService, ShowcaseUserDataService>();
 
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<MainView>();
