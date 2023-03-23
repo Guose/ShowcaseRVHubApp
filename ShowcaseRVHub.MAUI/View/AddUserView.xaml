@@ -4,17 +4,21 @@
              x:Class="ShowcaseRVHub.MAUI.View.AddUserView"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
+             xmlns:view="clr-namespace:ShowcaseRVHub.MAUI.View"
              x:DataType="viewmodel:ShowcaseUserFormViewModel"
-             BindingContext="{StaticResource AddUserFormView}"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
              Title="Add User View">
+
     <ContentPage.Resources>
-        <viewmodel:ShowcaseUserFormViewModel x:Key="AddUserFormView"/>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red"/>
+        </Style>
     </ContentPage.Resources>
-    
+
     <Grid>
-        <Grid 
-            Margin="30" 
-            RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,*">
+        <Grid Margin="50,20" RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto">
 
             <Label 
                 Text="Create User" 
@@ -24,7 +28,7 @@
                 TextColor="{StaticResource Accent}"/>
 
             <Grid Grid.Row="1" RowDefinitions="auto" ColumnDefinitions="200,auto">
-                
+
                 <Label 
                     Grid.Column="0"
                     Text="Email:" 
@@ -34,7 +38,7 @@
                 <Entry 
                     Grid.Column="1" 
                     Placeholder="Enter email"
-                    Text="{Binding Email}"/>
+                    Text="{Binding AddEmail}" />
             </Grid>
 
             <Grid Grid.Row="2" RowDefinitions="auto" ColumnDefinitions="200,auto">
@@ -47,7 +51,8 @@
                 <Entry 
                     Grid.Column="1"
                     Placeholder="Enter first name" 
-                    Text="{Binding FirstName}"/>
+                    Text="{Binding AddFirstName}" />
+                
             </Grid>
 
             <Grid Grid.Row="3" RowDefinitions="auto" ColumnDefinitions="200,auto">
@@ -60,7 +65,7 @@
                 <Entry 
                     Grid.Column="1"
                     Placeholder="Enter last name" 
-                    Text="{Binding LastName}"/>
+                    Text="{Binding AddLastName}"/>
             </Grid>
 
             <Grid Grid.Row="4" RowDefinitions="auto" ColumnDefinitions="200,auto">
@@ -73,7 +78,7 @@
                 <Entry 
                     Grid.Column="1"
                     Placeholder="Enter your phone number" 
-                    Text="{Binding Username}"/>
+                    Text="{Binding AddPhoneNumber}"/>
             </Grid>
 
             <Grid Grid.Row="5" RowDefinitions="auto" ColumnDefinitions="200,auto">
@@ -86,7 +91,7 @@
                 <Entry 
                     Grid.Column="1"
                     Placeholder="Create your username" 
-                    Text="{Binding Username}"/>
+                    Text="{Binding AddUsername}"/>
             </Grid>
 
             <Grid Grid.Row="6" RowDefinitions="auto" ColumnDefinitions="200,auto">
@@ -99,7 +104,7 @@
                 <Entry 
                     Grid.Column="1" 
                     Placeholder="Create password"
-                    Text="{Binding Password}"
+                    Text="{Binding AddPassword}"
                     IsPassword="True"/>
             </Grid>
 
@@ -113,28 +118,33 @@
                 <Entry 
                     Grid.Column="1"
                     Placeholder="Re-enter password"
-                    Text="{Binding ConfirmPassword}"
+                    Text="{Binding AddConfirmPassword}"
                     IsPassword="True"/>
             </Grid>
 
 
-            <Grid Margin="0,50" Grid.Row="8" RowDefinitions="auto,auto">
+            <Grid Margin="0,30" Grid.Row="8" ColumnDefinitions="auto,auto">
                 <Button 
-                    Grid.Row="0"
-                    Margin="20,20"
+                    Grid.Column="0"
                     Text="Create"  
+                    HorizontalOptions="StartAndExpand"
+                    WidthRequest="175"
+                    Margin="10"
                     FontAttributes="Bold" 
                     FontSize="22"
-                    Command="{Binding SubmitCommand}"
+                    Command="{Binding CreateUserCommand}"
                     Style="{StaticResource ButtonOutline}"/>
 
                 <Button 
-                    Grid.Row="1"
-                    Margin="20,0"
-                    Text="Cancel"
-                    FontSize="22" 
+                    Grid.Column="1"
+                    Text="Cancel" 
+                    HorizontalOptions="StartAndExpand"
+                    WidthRequest="175"
+                    Margin="10"
+                    FontAttributes="Bold" 
+                    FontSize="22"
                     Command="{Binding CancelCommand}"
-                    Style="{StaticResource ButtonOutline}"/>
+                    Style="{StaticResource CancelButtonOutline}"/>
             </Grid>
 
         </Grid>

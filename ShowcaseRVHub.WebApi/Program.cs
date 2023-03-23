@@ -1,25 +1,29 @@
 using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data;
 using ShowcaseRVHub.WebApi.Models;
+using ShowcaseRVHub.WebApi.Services;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        
         // Add services to the container.
         builder.Services.AddDbContext<ShowcaseDbContext>(options =>
         {
             options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection"));
         });
-
-        using IServiceScope scope = builder.Services.BuildServiceProvider().CreateScope();
-
-        ShowcaseDbContext? dbContext = scope.ServiceProvider.GetService<ShowcaseDbContext>();
-        dbContext!.Database.Migrate();
+        builder.Services.AddScoped<DbContextService>();
 
         var app = builder.Build();
+
+        using (var scope = app.Services.CreateAsyncScope())
+        {
+            DbContextService? dbService = scope.ServiceProvider.GetService<DbContextService>();
+            await dbService!.MigrateDatabaseAsync();
+        }
+
         // Configure the HTTP request pipeline.
 
         //app.UseHttpsRedirection();
@@ -29,6 +33,13 @@ internal class Program
             var users = await context.ShowcaseUsers.ToListAsync();
 
             return Results.Ok(users);
+        });
+
+        app.MapGet("api/user/{id}", async (ShowcaseDbContext context, Guid id) =>
+        {
+            var user = await context.ShowcaseUsers.Where(u => u.Id == id).FirstAsync().ConfigureAwait(false);
+
+            return Results.Ok(user);
         });
 
         app.MapPost("api/users", async (ShowcaseDbContext context, ShowcaseUserModel user) =>
@@ -49,12 +60,13 @@ internal class Program
                 return Results.NotFound();
             }
 
-            userModel.FirstName = user.FirstName ?? userModel.FirstName;
-            userModel.LastName = user.LastName ?? userModel.LastName;
-            userModel.Email = user.Email ?? userModel.Email;
-            userModel.Phone = user.Phone ?? userModel.Phone;
-            userModel.Username = user.Username ?? userModel.Username;
-            userModel.Password = user.Password ?? userModel.Password;
+            userModel.FirstName = string.IsNullOrEmpty(user.FirstName) ? userModel.FirstName: user.FirstName;
+            userModel.LastName = string.IsNullOrEmpty(user.LastName) ? userModel.LastName : user.LastName;
+            userModel.Email = string.IsNullOrEmpty(user.Email) ? userModel.Email : user.Email;
+            userModel.Phone = string.IsNullOrEmpty(user.Phone) ? userModel.Phone : user.Phone;
+            userModel.Username = string.IsNullOrEmpty(user.Username) ? userModel.Username : user.Username;
+            userModel.Password = string.IsNullOrEmpty(user.Password) ? userModel.Password : user.Password;
+            userModel.ModifiedOn = DateTime.UtcNow;
             userModel.IsRemembered = user.IsRemembered;
 
             await context.SaveChangesAsync();
@@ -78,6 +90,6 @@ internal class Program
             return Results.NoContent();
         });
 
-        app.Run();
+        await app.RunAsync();
     }
 }

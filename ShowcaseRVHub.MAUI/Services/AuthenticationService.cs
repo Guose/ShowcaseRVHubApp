@@ -1,20 +1,20 @@
-﻿namespace ShowcaseRVHub.MAUI.Services
-{
-    public static class AuthenticationService
-    {
-        public static async Task<bool> Authenticate(string username, string password)
-        {
-            // Perform authentication logic here (e.g., call an API endpoint, check against a database)
-            // Return true if the user is authenticated, false otherwise
-            return await SomeAuthenticationMethod(username, password);
-        }
+﻿using ShowcaseRVHub.MAUI.Model;
+using ShowcaseRVHub.MAUI.Services.Interfaces;
 
-        private static async Task<bool> SomeAuthenticationMethod(string username, string password)
+namespace ShowcaseRVHub.MAUI.Services
+{
+    public class AuthenticationService
+    {
+        private readonly UserModel _userModel;
+
+        public AuthenticationService(UserModel userModel)
         {
-            // Perform authentication logic here (e.g., call an API endpoint, check against a database)
+            _userModel = userModel;
+        }
+        public async Task<bool> Authenticate(string username, string password)
+        {
             // Return true if the user is authenticated, false otherwise
-            await Task.Delay(500); // Simulate authentication delay
-            return username == "Justin" && password == "Justin";
+            return await Task.Run(() => username == _userModel.Username && password == _userModel.Password);
         }
     }
 }

@@ -3,13 +3,23 @@
     public partial class ViewModelBase : ObservableObject
     {
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsNotBust))]
+        [NotifyPropertyChangedFor(nameof(IsNotBusy))]
         bool isBusy;
 
         [ObservableProperty]
         string title;
 
-        public bool IsNotBust => !IsBusy;
+        [ObservableProperty]
+        string username;
+
+        [ObservableProperty]
+        string password;
+
+        [ObservableProperty]
+        string confirmPassword;
+
+        public bool IsMatch => Password == ConfirmPassword;
+        public bool IsNotBusy => !IsBusy;
 
         protected virtual void Dispose() { }
     }

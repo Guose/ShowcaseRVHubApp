@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ShowcaseRVHub.WebApi.Models
 {
@@ -17,6 +18,15 @@ namespace ShowcaseRVHub.WebApi.Models
         public string Username { get; set; } = string.Empty;
         [Required]
         public string Password { get; set; } = string.Empty;
+        [Required]
+        public DateTime CreatedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
         public bool IsRemembered { get; set; } = false;
+
+        public ShowcaseUserModel()
+        {
+            CreatedOn = DateTime.UtcNow;
+            ModifiedOn = null;
+        }
     }
 }

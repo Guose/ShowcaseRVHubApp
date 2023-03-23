@@ -67,6 +67,12 @@
                 <Setter Property="HeightRequest" Value="55" />
                 <Setter Property="CornerRadius" Value="20" />
             </Style>
+            
+            <Style x:Key="CancelButtonOutline" TargetType="Button" BasedOn="{StaticResource ButtonOutline}">
+                <Setter Property="TextColor" Value="{StaticResource LabelTextDark}"/>
+                <Setter Property="BorderColor" Value="{StaticResource LabelTextDark}"/>
+            </Style>
+            
             <Style x:Key="CardView" TargetType="Frame">
                 <Setter Property="BorderColor" Value="#DDDDDD" />
                 <Setter Property="HasShadow" Value="True" />

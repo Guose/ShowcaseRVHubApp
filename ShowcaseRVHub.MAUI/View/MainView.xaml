@@ -7,18 +7,9 @@
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="True"
              Title="Login"
-             x:DataType="viewmodel:MainViewModel">
+             x:DataType="viewmodel:MainViewModel" >
 
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Grid Margin="20" RowDefinitions="auto,auto,auto,auto,auto,auto,auto">
         
         <StackLayout Margin="75,20" >
             
@@ -66,11 +57,11 @@
                 Text="Login" 
                 HorizontalOptions="StartAndExpand"
                 WidthRequest="250"
+                Margin="0,30,0,20"
                 FontAttributes="Bold" 
                 FontSize="22"
-                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=ValidateUserCommand}"
-                CommandParameter="{Binding .}"
-                Margin="0,30,0,20"
+                Command="{Binding ValidateUserCommand}"
+                IsEnabled="{Binding IsNotBusy}"
                 Style="{StaticResource ButtonOutline}"/>
 
             <Label 
@@ -92,5 +83,13 @@
             </Label>
             
         </StackLayout>
+
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="FillAndExpand"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand" />
     </Grid>
 </ContentPage>
