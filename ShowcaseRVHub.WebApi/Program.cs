@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data;
 using ShowcaseRVHub.WebApi.Models;
@@ -51,7 +52,7 @@ internal class Program
             return Results.Created($"api/users/{user.Id}", user);
         });
 
-        app.MapPut("api/users/{id}", async (ShowcaseDbContext context, Guid id, ShowcaseUserModel user) =>
+        app.MapPut("api/user/{id}", async (ShowcaseDbContext context, Guid? id, [FromBody] ShowcaseUserModel? user) =>
         {
             var userModel = await context.ShowcaseUsers.FirstOrDefaultAsync(u => u.Id == id);
 
@@ -71,7 +72,7 @@ internal class Program
 
             await context.SaveChangesAsync();
 
-            return Results.NoContent();
+            return Results.Ok();
         });
 
         app.MapDelete("api/users/{id}", async (ShowcaseDbContext context, Guid id) =>
