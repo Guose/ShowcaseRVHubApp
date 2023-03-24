@@ -1,6 +1,8 @@
-﻿namespace ShowcaseRVHub.MAUI.Services.Interfaces
+﻿using ShowcaseRVHub.MAUI.Model;
+
+namespace ShowcaseRVHub.MAUI.Services.Interfaces
 {
-    public interface IUserService
+    public interface IUserEmailService
     {
         Task<bool> ResetPasswordAsync(string email);
         Task<bool> RetrieveUsernameAsync(string email);

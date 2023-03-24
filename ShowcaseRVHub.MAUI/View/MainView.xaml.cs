@@ -1,4 +1,5 @@
-﻿using ShowcaseRVHub.MAUI.Model;
+﻿using LinqToDB;
+using ShowcaseRVHub.MAUI.Model;
 using ShowcaseRVHub.MAUI.Services.Interfaces;
 
 namespace ShowcaseRVHub.MAUI.View
@@ -8,11 +9,15 @@ namespace ShowcaseRVHub.MAUI.View
         private readonly TapGestureRecognizer _addUserTapped;
         private readonly TapGestureRecognizer _forgotPassword;
         private readonly IShowcaseUserDataService _dataService;
+        private readonly IUserRepository _userRepository;
+        private readonly IUserEmailService _userService;
 
-        public MainView(IShowcaseUserDataService dataService)
+        public MainView(IUserEmailService userService, IUserRepository userRepository, IShowcaseUserDataService dataService)
         {
             InitializeComponent();
             _dataService = dataService;
+            _userRepository = userRepository;
+            _userService = userService;
 
             BindingContext = new MainViewModel(_dataService);
 
@@ -26,7 +31,7 @@ namespace ShowcaseRVHub.MAUI.View
 
         private async void ForgotPassword_Tapped(object sender, TappedEventArgs e)
         {
-            var forgotPasswordModal = new ForgotPasswordView();
+            var forgotPasswordModal = new ForgotPasswordView(_userService, _userRepository, _dataService);
             await Navigation.PushModalAsync(forgotPasswordModal);
         }
 
@@ -43,9 +48,12 @@ namespace ShowcaseRVHub.MAUI.View
             // Load the saved credentials if the user previously opted to remember them
             if (BindingContext is MainViewModel viewModel)
             {
-                List<UserModel> users = await _dataService.GetAllUsersAsync();
+                IQueryable<UserModel> users = await _dataService.GetAllUsersAsync();
 
-                UserModel user = users.OrderByDescending(m => m.ModifiedOn).FirstOrDefault(u => u.IsRemembered == true);
+                UserModel user = await users
+                                        .OrderByDescending(m => m.ModifiedOn)
+                                        .Where(u => u.IsRemembered == true)
+                                        .FirstOrDefaultAsync();
 
                 if (user != null)
                 {

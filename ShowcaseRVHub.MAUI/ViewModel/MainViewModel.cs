@@ -7,7 +7,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
     public partial class MainViewModel : ViewModelBase
     {
         IShowcaseUserDataService _dataService;
-        List<UserModel> _users;
+        IQueryable<UserModel> _users;
         UserModel _user;
 
         public MainViewModel(IShowcaseUserDataService dataService)
@@ -26,7 +26,8 @@ namespace ShowcaseRVHub.MAUI.ViewModel
         private async void LoadUsersFromDatabase()
         {
             _users = await _dataService.GetAllUsersAsync();
-            if (_users == null || _users.Count <= 0)
+
+            if (_users == null || !_users.Any())
             {
                 Debug.WriteLine("---> Database connection failed.");
                 await Shell.Current.DisplayAlert("Something went wrong!", $"Make sure service is running to the database...", "OK");

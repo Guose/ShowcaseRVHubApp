@@ -1,0 +1,19 @@
+.form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input {
+    margin: 0 0 1rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 30px;
+    width: auto;
+  }
+  
+  .button {
+    border-radius: 25px;
+    height: 35px;
+    margin-top: 15px;
+  }

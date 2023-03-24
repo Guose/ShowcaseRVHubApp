@@ -6,12 +6,16 @@ namespace ShowcaseRVHub.MAUI.ViewModel
     public partial class ForgotPasswordViewModel : ViewModelBase
     {
         private readonly IShowcaseUserDataService _dataService;
-        private readonly IUserService _userService;
-        private UserModel _user;
+        private readonly IUserEmailService _userService;
+        private readonly IUserRepository _userRepository;
 
-        public ForgotPasswordViewModel(IUserService userService, IShowcaseUserDataService dataService)
+        public ForgotPasswordViewModel(
+            IUserEmailService userService,
+            IUserRepository userRepository,
+            IShowcaseUserDataService dataService)
         {
             _userService = userService;
+            _userRepository = userRepository;
             _dataService = dataService;
         }
 
@@ -19,33 +23,106 @@ namespace ShowcaseRVHub.MAUI.ViewModel
         string forgotPasswordEmail;
 
         [ObservableProperty]
-        string passwordReset;
-
-        [ObservableProperty]
-        string confirmPasswordReset;
+        string forgotUsernameEmail;
 
         [ObservableProperty]
         bool isPasswordResetSuccessful;
 
-        public async Task ResetPasswordAsync(string newPassword)
+        [RelayCommand]
+        public async Task RetrievePasswordAsync(string newPassword)
         {
-            List<UserModel> users = await _dataService.GetAllUsersAsync();
-            IsPasswordResetSuccessful = await _userService.ResetPasswordAsync(ForgotPasswordEmail);
-
-            if (IsPasswordResetSuccessful)
+            if (IsBusy)
+                return;
+            try
             {
-                UserModel user = users.FirstOrDefault(u => u.Email == ForgotPasswordEmail);
-                if(user != null)
+                IsBusy = true;
+
+                if (Connectivity.NetworkAccess != NetworkAccess.Internet)
                 {
-                    user.Password = newPassword;
-                    await _dataService.UpdateUserAsync(user);
+                    await Shell.Current.DisplayAlert("No connectivity!",
+                        $"Please check internet and try again.", "OK");
+                    return;
+                }
+
+                string email = ForgotPasswordEmail == null ? string.Empty : ForgotPasswordEmail.ToLower();
+                IsPasswordResetSuccessful = await _userService.ResetPasswordAsync(email);
+
+                if (IsPasswordResetSuccessful)
+                {
+                    UserModel user = await _userRepository.GetUserByEmailAsync(email);
+                    if (user != null)
+                    {
+                        await Shell.Current.DisplayAlert("Forgot Passord?", $"Password for {email} is: \"{user.Password}\"", "OK");
+                        //user.Password = newPassword;
+                        //await _dataService.UpdateUserAsync(user);
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert("Something is wrong!", $"Failed to retrieve password for {user.Username}", "OK");
+                        Debug.WriteLine("---> FAILED TO RETRIEVE PASSWORD { User is null }");
+                    }
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Something is wrong!", $"Failed to retrieve password... Please enter your email", "OK");
+                    Debug.WriteLine("---> FAILED TO RETRIEVE PASSWORD { IsPasswordResetSuccessful is false }");
                 }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Unable to validate user: {ex.Message}");
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            }
+            finally { IsBusy = false; }
+            
         }
 
-        public async Task RetrieveUsernameAsync()
+        [RelayCommand]
+        public async Task RetrieveUsernameAsync(string newUsername)
         {
-            throw new NotImplementedException();
+            if (IsBusy)
+                return;
+
+            try
+            {
+                IsBusy = true;
+
+                if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("No connectivity!",
+                        $"Please check internet and try again.", "OK");
+                    return;
+                }
+
+                string email = ForgotUsernameEmail == null ? string.Empty : ForgotUsernameEmail.ToLower();
+                IsPasswordResetSuccessful = await _userService.RetrieveUsernameAsync(email);
+
+                if (IsPasswordResetSuccessful)
+                {
+                    UserModel user = await _userRepository.GetUserByEmailAsync(email);
+                    if (user != null)
+                    {
+                        await Shell.Current.DisplayAlert("Forgot Username?", $"Username: \"{user.Username}\" - retrieved for {email}", "OK");
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert("Something is wrong!", $"Failed to retrieve username for {email}", "OK");
+                        Debug.WriteLine("---> FAILED TO RETRIEVE USERNAME { User is null }");
+                    }
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Something is wrong!", $"Failed to retrieve username... Please enter your email", "OK");
+                    Debug.WriteLine("---> FAILED TO RETRIEVE USERNAME { IsPasswordResetSuccessful is false }");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Unable to validate user: {ex.Message}");
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            }
+            finally { IsBusy = false; }
+
         }
     }
 }

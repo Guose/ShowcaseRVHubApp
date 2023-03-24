@@ -3,7 +3,7 @@ using ShowcaseRVHub.MAUI.Services.Interfaces;
 
 namespace ShowcaseRVHub.MAUI.Services
 {
-    public class AuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly UserModel _userModel;
 

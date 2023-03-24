@@ -61,10 +61,10 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                     Id = Guid.NewGuid(),
                     FirstName = AddFirstName,
                     LastName = AddLastName,
-                    Email = AddEmail,
+                    Email = AddEmail.ToLower(),
                     Phone = AddPhoneNumber,
-                    Username = AddUsername,
-                    Password = AddPassword,
+                    Username = Username,
+                    Password = Password,
                     CreatedOn = DateTime.UtcNow,
                 };
 
@@ -76,12 +76,6 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
             finally { IsBusy = false; }
-        }
-
-        [RelayCommand]
-        public async Task CancelAsync()
-        {
-            await Shell.Current.Navigation.PopModalAsync();
-        }
+        }        
     }
 }

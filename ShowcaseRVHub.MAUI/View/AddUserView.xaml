@@ -91,7 +91,7 @@
                 <Entry 
                     Grid.Column="1"
                     Placeholder="Create your username" 
-                    Text="{Binding AddUsername}"/>
+                    Text="{Binding Username}"/>
             </Grid>
 
             <Grid Grid.Row="6" RowDefinitions="auto" ColumnDefinitions="200,auto">
@@ -104,7 +104,7 @@
                 <Entry 
                     Grid.Column="1" 
                     Placeholder="Create password"
-                    Text="{Binding AddPassword}"
+                    Text="{Binding Password, Mode=OneWayToSource}"
                     IsPassword="True"/>
             </Grid>
 
@@ -118,7 +118,7 @@
                 <Entry 
                     Grid.Column="1"
                     Placeholder="Re-enter password"
-                    Text="{Binding AddConfirmPassword}"
+                    Text="{Binding ConfirmPassword, Mode=OneWayToSource}"
                     IsPassword="True"/>
             </Grid>
 

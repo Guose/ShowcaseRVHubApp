@@ -21,6 +21,12 @@
         public bool IsMatch => Password == ConfirmPassword;
         public bool IsNotBusy => !IsBusy;
 
+        [RelayCommand]
+        public async Task CancelAsync()
+        {
+            await Shell.Current.Navigation.PopModalAsync();
+        }
+
         protected virtual void Dispose() { }
     }
 }
