@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react'
+import { ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import './form.css'
 
 const Form = () => {
-    
+    let isSuccess = false;
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
@@ -24,8 +26,7 @@ const Form = () => {
         if (password !== confirmPass) {
             alert('Passwords do not match')
             return
-        }
-        
+        }        
         // Filter user to change password
         const filterUser = userData.filter(u => u.email === email)
 
@@ -33,10 +34,11 @@ const Form = () => {
         const updateUserPassword = {
             id: filterUser[0].id,
             createdOn: filterUser[0].createdOn,
+            email: filterUser[0].email,
             firstName: filterUser[0].firstName,
             lastName: filterUser[0].lastName,
             isRemembered: filterUser[0].isRemembered,
-            modifiedOn: '',
+            modifiedOn: null,
             phone: filterUser[0].phone,
             password: password,
             username: filterUser[0].username
@@ -52,15 +54,37 @@ const Form = () => {
             return
         }        
 
-        try {           
-
+        try {
             // Send updated user data to server using PUT method
             const response = await axios.put('http://localhost:3001/update/user', updateUserPassword)
             console.log(response.data)
+            isSuccess = true
         } catch (error) {
             alert(error)
             console.error(error)
-        } 
+            isSuccess = false;
+        } finally {
+            setEmail('')
+            setPassword('')
+            setConfirmPass('')            
+            checkSuccessRun(isSuccess)
+        }
+    }
+    const checkSuccessRun = async (success) => {
+         if (success) {
+            toast.success('Password has been changed, succesfully!', {
+                onclose: () => {
+                    const newWindow = window.open(window.location.href, '_self')
+
+                    // Close the new window after a short delay
+                    setTimeout(() => {
+                        newWindow.close()
+                    }, 1000)
+                }
+            })
+         } else {
+            toast.error('Something went wrong! Try again or contact tech support at support@showcasemi.com')
+         }
     }
 
     return (
@@ -90,6 +114,7 @@ const Form = () => {
             onChange={(event) => setConfirmPass(event.target.value)} />
         </div>
         <button className='button' type="submit">Update Password</button>
+        <ToastContainer />
       </form>
     )
 }

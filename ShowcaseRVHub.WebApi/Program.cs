@@ -52,7 +52,7 @@ internal class Program
             return Results.Created($"api/users/{user.Id}", user);
         });
 
-        app.MapPut("api/user/{id}", async (ShowcaseDbContext context, Guid? id, [FromBody] ShowcaseUserModel? user) =>
+        app.MapPut("api/user/{id}", async (ShowcaseDbContext context, Guid id, [FromBody]ShowcaseUserModel user) =>
         {
             var userModel = await context.ShowcaseUsers.FirstOrDefaultAsync(u => u.Id == id);
 
@@ -72,7 +72,7 @@ internal class Program
 
             await context.SaveChangesAsync();
 
-            return Results.Ok();
+            return Results.Ok(userModel);
         });
 
         app.MapDelete("api/users/{id}", async (ShowcaseDbContext context, Guid id) =>

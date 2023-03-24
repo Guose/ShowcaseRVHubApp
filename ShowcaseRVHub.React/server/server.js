@@ -21,18 +21,18 @@ app.get('/users', (req, res) => {
 })
 
 app.put('/update/user', (req, res) => {
-    if(req.body === null) {
+    if(req.body === null || req.body === undefined) {
         console.error("Request body is null")
         return
     }
     try {
-        console.log('Update to: ', req.body.id)
+        
     fetch(url + '/user/' + req.body.id , {
         method: 'PUT',
         headers: { "Content-Type": "application/json"},
         body: JSON.stringify(req.body)
     })
-    .then(console.log(req.body))
+    .then(console.log('Update to id: ', req.body.id))
     .catch((err) => {console.log(err.message)})
 
     res.send("Send was successfull")
@@ -44,5 +44,6 @@ app.put('/update/user', (req, res) => {
 
 app.listen(PORT, () => {
     console.log('Server is running on PORT: ', PORT)
-    console.log('User api url is: ', url + '/user/{id}')
+    console.log('React server url: http://localhost:3001/update/user')
+    console.log('Webservice api url is: ', url + '/user/{id}')
 })
