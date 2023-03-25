@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace ShowcaseRVHub.WebApi.Models
 {
-    public class ShowcaseUserModel
+    public class ShowcaseUser
     {
         [Key]
         public Guid Id { get; set; }
@@ -23,7 +22,7 @@ namespace ShowcaseRVHub.WebApi.Models
         public DateTime? ModifiedOn { get; set; }
         public bool IsRemembered { get; set; } = false;
 
-        public ShowcaseUserModel()
+        public ShowcaseUser()
         {
             CreatedOn = DateTime.UtcNow;
             ModifiedOn = null;

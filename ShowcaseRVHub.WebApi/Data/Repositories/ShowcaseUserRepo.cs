@@ -11,7 +11,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
         {
             _context = context;
         }
-        public async Task CreateUserAsync(ShowcaseUserModel user)
+        public async Task CreateUserAsync(ShowcaseUser user)
         {
             if (user == null)
             {
@@ -36,7 +36,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ShowcaseUserModel> GetUserByIdAsync(Guid id)
+        public async Task<ShowcaseUser> GetUserByIdAsync(Guid id)
         {
             var user = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
 
@@ -47,12 +47,12 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             return user;
         }
 
-        public async Task<IEnumerable<ShowcaseUserModel>> GetUsersAsync()
+        public async Task<IEnumerable<ShowcaseUser>> GetUsersAsync()
         {
             return await _context.ShowcaseUsers.ToListAsyncEF();
         }
 
-        public async Task UpdateUserAsync(Guid id, ShowcaseUserModel newUser)
+        public async Task UpdateUserAsync(Guid id, ShowcaseUser newUser)
         {
             var updateUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
 

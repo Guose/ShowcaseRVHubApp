@@ -16,7 +16,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShowcaseUserModel>>> GetUsersAsync()
+        public async Task<ActionResult<IEnumerable<ShowcaseUser>>> GetUsersAsync()
         {
             var users = await _userRepo.GetUsersAsync();
 
@@ -24,7 +24,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShowcaseUserModel>> GetUserByIdAsync(Guid id)
+        public async Task<ActionResult<ShowcaseUser>> GetUserByIdAsync(Guid id)
         {
             var user = await _userRepo.GetUserByIdAsync(id);
 
@@ -32,7 +32,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ShowcaseUserModel>> CreateUserAsync(ShowcaseUserModel user)
+        public async Task<ActionResult<ShowcaseUser>> CreateUserAsync(ShowcaseUser user)
         {
             await _userRepo.CreateUserAsync(user);
 
@@ -40,7 +40,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUserAsync(Guid id, ShowcaseUserModel user)
+        public async Task<ActionResult> UpdateUserAsync(Guid id, ShowcaseUser user)
         {
             await _userRepo.UpdateUserAsync(id, user);
 

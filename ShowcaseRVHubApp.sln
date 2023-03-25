@@ -6,7 +6,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.MAUI", "Showc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.WebApi", "ShowcaseRVHub.WebApi\ShowcaseRVHub.WebApi.csproj", "{DDC2A93C-C4D0-44D1-902D-5C14313A294B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowcaseRVHub.XUnit", "ShowcaseRVHub.XUnit\ShowcaseRVHub.XUnit.csproj", "{6707B804-15AF-4D7C-9B1B-461B622DB54E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.XUnit", "ShowcaseRVHub.XUnit\ShowcaseRVHub.XUnit.csproj", "{6707B804-15AF-4D7C-9B1B-461B622DB54E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
