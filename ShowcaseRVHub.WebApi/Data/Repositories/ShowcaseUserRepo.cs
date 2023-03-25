@@ -1,0 +1,78 @@
+﻿using LinqToDB.EntityFrameworkCore;
+using ShowcaseRVHub.WebApi.Data.Interfaces;
+using ShowcaseRVHub.WebApi.Models;
+
+namespace ShowcaseRVHub.WebApi.Data.Repositories
+{
+    public class ShowcaseUserRepo : IShowcaseUserRepo
+    {
+        private readonly ShowcaseDbContext _context;
+        public ShowcaseUserRepo(ShowcaseDbContext context)
+        {
+            _context = context;
+        }
+        public async Task CreateUserAsync(ShowcaseUserModel user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            await _context.ShowcaseUsers.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteUserAsync(Guid id)
+        {
+            var deleteUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
+
+            if (deleteUser == null)
+            {
+                throw new ArgumentNullException(nameof(deleteUser));
+            }
+
+            _context.ShowcaseUsers.Remove(deleteUser);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<ShowcaseUserModel> GetUserByIdAsync(Guid id)
+        {
+            var user = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
+
+            if(user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            return user;
+        }
+
+        public async Task<IEnumerable<ShowcaseUserModel>> GetUsersAsync()
+        {
+            return await _context.ShowcaseUsers.ToListAsyncEF();
+        }
+
+        public async Task UpdateUserAsync(Guid id, ShowcaseUserModel newUser)
+        {
+            var updateUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
+
+            if (updateUser == null)
+            {
+                throw new ArgumentNullException(nameof(updateUser));
+            }
+
+            updateUser.FirstName = string.IsNullOrEmpty(newUser.FirstName) ? updateUser.FirstName : newUser.FirstName;
+            updateUser.LastName = string.IsNullOrEmpty(newUser.LastName) ? updateUser.LastName : newUser.LastName;
+            updateUser.Email = string.IsNullOrEmpty(newUser.Email) ? updateUser.Email : newUser.Email;
+            updateUser.Phone = string.IsNullOrEmpty(newUser.Phone) ? updateUser.Phone : newUser.Phone;
+            updateUser.Username = string.IsNullOrEmpty(newUser.Username) ? updateUser.Username : newUser.Username;
+            updateUser.Password = string.IsNullOrEmpty(newUser.Password) ? updateUser.Password : newUser.Password;
+            updateUser.ModifiedOn = DateTime.UtcNow;
+            updateUser.IsRemembered = newUser.IsRemembered;
+
+            _context.ShowcaseUsers.Update(updateUser);
+
+            await _context.SaveChangesAsync();
+        }
+    }
+}
