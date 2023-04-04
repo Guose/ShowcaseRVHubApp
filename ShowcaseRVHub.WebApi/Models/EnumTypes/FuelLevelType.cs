@@ -1,4 +1,4 @@
-﻿namespace ShowcaseRVHub.MAUI.Model.EnumTypes
+﻿namespace ShowcaseRVHub.WebApi.Models.EnumTypes
 {
     public enum FuelLevelType : byte
     {

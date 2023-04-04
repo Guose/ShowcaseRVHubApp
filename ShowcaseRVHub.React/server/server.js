@@ -4,7 +4,11 @@ const cors = require('cors')
 const axios = require('axios')
 const app = express()
 
-app.use(cors())
+app.use(cors({origin: 'http://192.168.1.10:3000'}))
+app.use((req, res, next) => {
+    res.setHeader('Access--Control-Allow-Origin', 'http://192.168.1.10:3000')
+    next()
+})
 app.use(bodyParser.json())
 
 const baseAddress = 'http://localhost:5012'
@@ -27,7 +31,7 @@ app.put('/update/user', (req, res) => {
     }
     try {
         
-    fetch(url + '/user/' + req.body.id , {
+    fetch(url + '/users/' + req.body.id , {
         method: 'PUT',
         headers: { "Content-Type": "application/json"},
         body: JSON.stringify(req.body)
@@ -45,5 +49,5 @@ app.put('/update/user', (req, res) => {
 app.listen(PORT, () => {
     console.log('Server is running on PORT: ', PORT)
     console.log('React server url: http://localhost:3001/update/user')
-    console.log('Webservice api url is: ', url + '/user/{id}')
+    console.log('Webservice api url is: ', url + '/users/{id}')
 })

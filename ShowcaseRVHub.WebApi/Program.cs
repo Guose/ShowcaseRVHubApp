@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data;
 using ShowcaseRVHub.WebApi.Data.Interfaces;

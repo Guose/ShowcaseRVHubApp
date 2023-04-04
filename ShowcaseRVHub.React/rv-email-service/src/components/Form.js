@@ -22,6 +22,15 @@ const Form = () => {
     const handleUpdatePasswordSubmit = async (event) => {
         event.preventDefault()
 
+        // validate email
+        
+        // userData.forEach(userDate => {
+        //     if (userData.email !== userDate.email) {
+        //         alert('Email does not match users... please add user.')
+        //     return
+        //     }
+        // });
+
         // Validate password and confrim password
         if (password !== confirmPass) {
             alert('Passwords do not match')
@@ -59,14 +68,15 @@ const Form = () => {
             const response = await axios.put('http://localhost:3001/update/user', updateUserPassword)
             console.log(response.data)
             isSuccess = true
+            setEmail('')
+            setPassword('')
+            setConfirmPass('') 
+
         } catch (error) {
             alert(error)
             console.error(error)
             isSuccess = false;
-        } finally {
-            setEmail('')
-            setPassword('')
-            setConfirmPass('')            
+        } finally {                       
             checkSuccessRun(isSuccess)
         }
     }

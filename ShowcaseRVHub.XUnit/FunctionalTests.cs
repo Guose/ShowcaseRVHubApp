@@ -6,10 +6,10 @@ namespace ShowcaseRVHub.XUnit
     {
         [Fact]
         public void ShowcaseMauiUpdateApiTest()
-        {
+         {
             ShowcaseUserDataService dataService = new ShowcaseUserDataService();
 
-            Assert.Null(dataService);
+            Assert.NotNull(dataService);
         }
     }
 }

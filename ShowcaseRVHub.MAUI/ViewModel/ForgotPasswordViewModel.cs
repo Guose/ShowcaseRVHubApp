@@ -29,7 +29,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
         bool isPasswordResetSuccessful;
 
         [RelayCommand]
-        public async Task RetrievePasswordAsync(string newPassword)
+        public async Task RetrievePasswordAsync()
         {
             if (IsBusy)
                 return;
@@ -49,18 +49,8 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 
                 if (IsPasswordResetSuccessful)
                 {
-                    UserModel user = await _userRepository.GetUserByEmailAsync(email);
-                    if (user != null)
-                    {
-                        await Shell.Current.DisplayAlert("Forgot Passord?", $"Password for {email} is: \"{user.Password}\"", "OK");
-                        //user.Password = newPassword;
-                        //await _dataService.UpdateUserAsync(user);
-                    }
-                    else
-                    {
-                        await Shell.Current.DisplayAlert("Something is wrong!", $"Failed to retrieve password for {user.Username}", "OK");
-                        Debug.WriteLine("---> FAILED TO RETRIEVE PASSWORD { User is null }");
-                    }
+                    // Simulate sending a password reset email
+                    // In a real implementation, you would send an email with a unique link for resetting the password                                       
                 }
                 else
                 {
