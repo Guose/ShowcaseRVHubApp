@@ -8,8 +8,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.WebApi", "Sho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.XUnit", "ShowcaseRVHub.XUnit\ShowcaseRVHub.XUnit.csproj", "{6707B804-15AF-4D7C-9B1B-461B622DB54E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailTest", "EmailTest\EmailTest.csproj", "{89AEAC1C-EEF1-4861-8637-147E28B3E6C5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.Email", "ShowcaseRVHub.Email\ShowcaseRVHub.Email.csproj", "{78F1A02E-E85E-497A-A34D-81263EB13D2F}"
 EndProject
 Global
@@ -32,10 +30,6 @@ Global
 		{6707B804-15AF-4D7C-9B1B-461B622DB54E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6707B804-15AF-4D7C-9B1B-461B622DB54E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6707B804-15AF-4D7C-9B1B-461B622DB54E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89AEAC1C-EEF1-4861-8637-147E28B3E6C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89AEAC1C-EEF1-4861-8637-147E28B3E6C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89AEAC1C-EEF1-4861-8637-147E28B3E6C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89AEAC1C-EEF1-4861-8637-147E28B3E6C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78F1A02E-E85E-497A-A34D-81263EB13D2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78F1A02E-E85E-497A-A34D-81263EB13D2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78F1A02E-E85E-497A-A34D-81263EB13D2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,7 +39,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {981B1FF0-A8A8-4487-9408-C23EE4CCDF64}
 		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+		SolutionGuid = {981B1FF0-A8A8-4487-9408-C23EE4CCDF64}
 	EndGlobalSection
 EndGlobal

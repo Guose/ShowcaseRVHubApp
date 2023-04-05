@@ -49,13 +49,13 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 
                 if (IsPasswordResetSuccessful)
                 {
-                    // Simulate sending a password reset email
-                    // In a real implementation, you would send an email with a unique link for resetting the password                                       
+                    await Shell.Current.DisplayAlert("Message Sent!", $"Password Reset email has been sent to {email}", "OK");
                 }
                 else
                 {
                     await Shell.Current.DisplayAlert("Something is wrong!", $"Failed to retrieve password... Please enter your email", "OK");
                     Debug.WriteLine("---> FAILED TO RETRIEVE PASSWORD { IsPasswordResetSuccessful is false }");
+                    return;
                 }
             }
             catch (Exception ex)

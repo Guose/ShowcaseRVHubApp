@@ -1,33 +1,61 @@
-﻿using SendGrid.Helpers.Mail;
-using SendGrid;
-using ShowcaseRVHub.MAUI.Model;
+﻿using ShowcaseRVHub.MAUI.Model;
 using ShowcaseRVHub.MAUI.Services.Interfaces;
+using System.Text;
 
 namespace ShowcaseRVHub.MAUI.Services
 {
     public class UserEmailService : IUserEmailService
     {
+        private readonly HttpClient _httpClient;
+        private readonly string _baseAddress;
+        private readonly string _url;
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
         private readonly IUserRepository _userRepository;
-        private readonly ISendGridEmailService _sendGridEmailService;
-        public UserEmailService(IUserRepository userRepository, ISendGridEmailService sendGridEmailService)
+        public UserEmailService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _sendGridEmailService = sendGridEmailService;
+            _httpClient = new HttpClient();
+            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5093" : "http://localhost:5093";
+            _url = $"{_baseAddress}/email";
 
+            _jsonSerializerOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
         }
 
         public async Task<bool> ResetPasswordAsync(string email)
         {
-            UserModel user = await _userRepository.GetUserByEmailAsync(email);
-
-            if (user != null)
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
-                // Sending a password reset email
-                await _sendGridEmailService.SendResetPasswordEmailAsync(email, user.FirstName, "first_name", user.FirstName);
-
-                return true;
+                Debug.WriteLine("---> No internet access...");
+                return false;
             }
-            return false;
+            try
+            {
+                UserModel user = await _userRepository.GetUserByEmailAsync(email);
+
+                if (user != null)
+                {
+                    string jsonUser = JsonSerializer.Serialize(user, _jsonSerializerOptions);
+                    StringContent content = new(jsonUser, Encoding.UTF8, "application/json");
+
+                    var response = await _httpClient.PutAsync(_url, content);
+
+                    if (response.IsSuccessStatusCode)
+                        Debug.WriteLine("Successfully sent user reset password email");
+                    else
+                        Debug.WriteLine("---> Non Http 2xx response for CREATE api");
+
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"---> Exception: {ex.Message}");
+                return false;
+            }
         }
 
         public async Task<bool> RetrieveUsernameAsync(string email)
