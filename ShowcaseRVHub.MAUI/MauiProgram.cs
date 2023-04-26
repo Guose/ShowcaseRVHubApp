@@ -32,12 +32,14 @@ namespace ShowcaseRVHub.MAUI
 
             builder.Services.AddTransient<ShowcaseUserFormViewModel>();
             builder.Services.AddTransient<AddUserView>();
-
             builder.Services.AddTransient<ForgotPasswordViewModel>();
             builder.Services.AddTransient<ForgotPasswordView>();
 
             builder.Services.AddTransient<RVNavigationViewModel>();
             builder.Services.AddTransient<RVNavigationView>();
+
+            builder.Services.AddTransient<RVChecklistViewModel>();
+            builder.Services.AddTransient<RVChecklistView>();
 
             return builder.Build();
         }        

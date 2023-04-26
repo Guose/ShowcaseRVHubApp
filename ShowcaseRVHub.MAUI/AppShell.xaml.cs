@@ -9,6 +9,7 @@ namespace ShowcaseRVHub.MAUI
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(RVNavigationView), typeof(RVNavigationView));
+            Routing.RegisterRoute(nameof(RVChecklistView), typeof(RVChecklistView));
         }
     }
 }

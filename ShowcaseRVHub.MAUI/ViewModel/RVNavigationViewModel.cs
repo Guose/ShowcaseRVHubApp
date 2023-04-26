@@ -7,7 +7,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
     [QueryProperty(nameof(User), "User")]
     public partial class RVNavigationViewModel : ViewModelBase
     {
-        RVService _rvService;
+        readonly RVService _rvService;
         public RVNavigationViewModel()
         {
             _rvService = new RVService();
@@ -16,17 +16,17 @@ namespace ShowcaseRVHub.MAUI.ViewModel
         [ObservableProperty]
         UserModel user;
 
-        public ObservableCollection<RVModel> RVs { get; } = new();
+        public ObservableCollection<RVModel> RVsCollection { get; set; } = new();
 
         [RelayCommand]
-        async Task GoToDetails(RVModel rvModel)
+        async Task GoToChecklist(RVModel model)
         {
-            if (rvModel == null)
+            if (model == null)
                 return;
 
-            await Shell.Current.GoToAsync(nameof(RVDetailsPage), true, new Dictionary<string, object>
+            await Shell.Current.GoToAsync(nameof(RVChecklistView), true, new Dictionary<string, object>
             {
-                {"RvModel", rvModel }
+                { nameof(RVModel), model }
             });
         }
 
@@ -45,6 +45,9 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                 }
 
                 IsBusy = true;
+
+                RVsCollection.Clear();
+
                 var vehicles = await _rvService.GetRVsAsync();
 
                 foreach (var vehicle in vehicles)
@@ -52,7 +55,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                     if (!vehicle.IsBooked)
                         continue;
 
-                    RVs.Add(vehicle);
+                    RVsCollection.Add(vehicle);
                 }
             }
             catch (Exception ex)
@@ -82,6 +85,9 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                 }
 
                 IsBusy = true;
+
+                RVsCollection.Clear();
+
                 var vehicles = await _rvService.GetRVsAsync();
 
                 foreach (var vehicle in vehicles)
@@ -89,7 +95,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                     if (vehicle.IsBooked)
                         continue;
 
-                    RVs.Add(vehicle);
+                    RVsCollection.Add(vehicle);
                 }
             }
             catch (Exception ex)

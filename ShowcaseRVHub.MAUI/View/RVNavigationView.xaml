@@ -4,7 +4,7 @@
              x:Class="ShowcaseRVHub.MAUI.View.RVNavigationView"
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
              xmlns:model="clr-namespace:ShowcaseRVHub.MAUI.Model"
-             xmlns:view="clr-namespace:ShowcaseRVHub.MAUI.View"             
+             xmlns:view="clr-namespace:ShowcaseRVHub.MAUI.View"
              Title="{Binding User.Username}"
              x:DataType="viewmodel:RVNavigationViewModel">
     
@@ -18,10 +18,13 @@
         <RefreshView 
             Grid.ColumnSpan="2"
             IsRefreshing="{Binding IsRefreshing}">
+
+            <!--<controls:RVDetailContentView />-->
+
             <CollectionView
-                ItemsSource="{Binding RVs}"
-                BackgroundColor="Transparent"
-                SelectionMode="None">
+                        ItemsSource="{Binding RVsCollection}"
+                        BackgroundColor="Transparent"
+                        SelectionMode="None">
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:RVModel">
@@ -29,7 +32,7 @@
                             <Frame HeightRequest="125" Style="{StaticResource CardView}">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RVSelectorViewModel}}, Path=GoToDetailsCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RVNavigationViewModel}}, Path=GoToChecklistCommand}"
                                         CommandParameter="{Binding .}"/>
                                 </Frame.GestureRecognizers>
                                 <Grid Padding="0" ColumnDefinitions="125, *">
@@ -39,11 +42,22 @@
                                         Source="{Binding Image}"
                                         WidthRequest="125"/>
                                     <VerticalStackLayout 
-                                        Grid.Column="1" 
-                                        Padding="10">
-                                        <Label Style="{StaticResource LargeLabel}" Text="{Binding Year}"/>
-                                        <Label Style="{StaticResource LargeLabel}" Text="{Binding Make}" />
+                                                Grid.Column="1" 
+                                                Padding="10">
+                                        <Grid ColumnDefinitions="55,*">
+                                            <Label 
+                                                Grid.Column="0"
+                                                Grid.Row="0"
+                                                Style="{StaticResource LargeLabel}" 
+                                                Text="{Binding Year}"/>
+                                            <Label 
+                                                Grid.Column="1"
+                                                Grid.Row="0"
+                                                Style="{StaticResource LargeLabel}" 
+                                                Text="{Binding Make}" />
+                                        </Grid>                                        
                                         <Label Style="{StaticResource MediumLabel}" Text="{Binding Model}"/>
+                                        
                                     </VerticalStackLayout>
                                 </Grid>
                             </Frame>
