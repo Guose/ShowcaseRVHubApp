@@ -4,9 +4,9 @@ const cors = require('cors')
 const axios = require('axios')
 const app = express()
 
-app.use(cors({origin: 'http://192.168.1.10:3000'}))
+app.use(cors({origin: 'http://localhost:3000'}))
 app.use((req, res, next) => {
-    res.setHeader('Access--Control-Allow-Origin', 'http://192.168.1.10:3000')
+    res.setHeader('Access--Control-Allow-Origin', 'http://localhost:3000')
     next()
 })
 app.use(bodyParser.json())

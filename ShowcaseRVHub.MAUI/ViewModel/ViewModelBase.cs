@@ -13,6 +13,9 @@
         string username;
 
         [ObservableProperty]
+        bool isRefreshing;
+
+        [ObservableProperty]
         string password;
 
         [ObservableProperty]

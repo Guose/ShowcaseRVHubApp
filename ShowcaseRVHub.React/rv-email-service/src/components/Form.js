@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
 import './form.css'
 
-const Form = () => {
+function Form() {
     let isSuccess = false;
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -21,15 +21,6 @@ const Form = () => {
 
     const handleUpdatePasswordSubmit = async (event) => {
         event.preventDefault()
-
-        // validate email
-        
-        // userData.forEach(userDate => {
-        //     if (userData.email !== userDate.email) {
-        //         alert('Email does not match users... please add user.')
-        //     return
-        //     }
-        // });
 
         // Validate password and confrim password
         if (password !== confirmPass) {
@@ -77,19 +68,14 @@ const Form = () => {
             console.error(error)
             isSuccess = false;
         } finally {                       
-            checkSuccessRun(isSuccess)
+            checkSuccessRun(isSuccess)            
         }
     }
     const checkSuccessRun = async (success) => {
-         if (success) {
+        if (success) {
             toast.success('Password has been changed, succesfully!', {
-                onclose: () => {
-                    const newWindow = window.open(window.location.href, '_self')
-
-                    // Close the new window after a short delay
-                    setTimeout(() => {
-                        newWindow.close()
-                    }, 1000)
+                onClose: () => {
+                    window.location.href = '/success'
                 }
             })
          } else {

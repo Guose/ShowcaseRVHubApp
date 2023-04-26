@@ -71,6 +71,9 @@
 	  <Compile Update="View\MainView.xaml.cs">
 	    <DependentUpon>MainView.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="View\RVSelectorView.xaml.cs">
+	    <DependentUpon>RVSelectorView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\RVNavigationView.xaml.cs">
 	    <DependentUpon>RVNavigationView.xaml</DependentUpon>
 	  </Compile>
@@ -81,6 +84,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\ForgotPasswordView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\RVDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\RVSelectorView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\RVNavigationView.xaml">

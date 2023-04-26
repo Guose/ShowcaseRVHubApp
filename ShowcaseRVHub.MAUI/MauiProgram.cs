@@ -25,6 +25,7 @@ namespace ShowcaseRVHub.MAUI
             builder.Services.AddSingleton<IShowcaseUserDataService, ShowcaseUserDataService>();
             builder.Services.AddSingleton<IUserEmailService, UserEmailService>();
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
+            builder.Services.AddSingleton<IRvService, RVService>();
 
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<MainView>();

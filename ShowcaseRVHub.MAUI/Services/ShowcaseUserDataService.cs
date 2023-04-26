@@ -86,7 +86,7 @@ namespace ShowcaseRVHub.MAUI.Services
 
             try
             {
-                var response = await _httpClient.GetAsync($"{_url}/user/{id}");
+                var response = await _httpClient.GetAsync($"{_url}/users/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -147,7 +147,7 @@ namespace ShowcaseRVHub.MAUI.Services
                 string jsonUser = JsonSerializer.Serialize(user, _jsonSerializerOptions);
                 StringContent content = new(jsonUser, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PutAsync($"{_url}/user/{user.Id}", content);
+                var response = await _httpClient.PutAsync($"{_url}/users/{user.Id}", content);
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine("Successfully updated user");

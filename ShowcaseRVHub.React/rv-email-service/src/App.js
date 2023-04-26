@@ -1,11 +1,16 @@
 import './App.css';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Layout from './components/Layout'
+import Success from './components/success';
 
 function App() {
   return (
-    <div className="App">      
-      <Layout/>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Layout/>} />
+        <Route path='/success' element={<Success />} />
+      </Routes>
+    </Router>
   );
 }
 

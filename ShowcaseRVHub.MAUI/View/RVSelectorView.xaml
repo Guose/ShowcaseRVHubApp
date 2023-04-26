@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ShowcaseRVHub.MAUI.View.RVNavigationView"
-             xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
              xmlns:model="clr-namespace:ShowcaseRVHub.MAUI.Model"
-             xmlns:view="clr-namespace:ShowcaseRVHub.MAUI.View"             
-             Title="{Binding User.Username}"
-             x:DataType="viewmodel:RVNavigationViewModel">
-    
-    <Grid 
-        ColumnDefinitions="*,*"
-        ColumnSpacing="5"
-        RowDefinitions="*,auto"
-        RowSpacing="0"
-        BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}">
-
-        <RefreshView 
-            Grid.ColumnSpan="2"
-            IsRefreshing="{Binding IsRefreshing}">
+             xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
+             x:Class="ShowcaseRVHub.MAUI.View.RVSelectorView"
+             x:DataType="viewmodel:RVSelectorViewModel">
+    <Grid>
+        <RefreshView IsRefreshing="{Binding IsRefreshing}">
             <CollectionView
                 ItemsSource="{Binding RVs}"
                 BackgroundColor="Transparent"
                 SelectionMode="None">
-
+                
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:RVModel">
                         <Grid Padding="10">
@@ -53,28 +42,6 @@
             </CollectionView>
         </RefreshView>
 
-        <Button 
-            Grid.Row="1"
-            Grid.Column="0"
-            Margin="20"
-            FontAttributes="Bold" 
-            FontSize="22" 
-            Command="{Binding GetDepartureRvsCommand}"
-            IsEnabled="{Binding IsNotBusy}"
-            Style="{StaticResource ButtonOutline}"
-            Text="Departures"/>
-
-        <Button 
-            Grid.Row="1"
-            Grid.Column="1"
-            Margin="20"
-            FontAttributes="Bold" 
-            FontSize="22" 
-            Command="{Binding GetArrivalRvsCommand}"
-            IsEnabled="{Binding IsNotBusy}"
-            Style="{StaticResource ButtonOutline}"
-            Text="Arrivals" />
-
         <ActivityIndicator
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"
@@ -82,5 +49,6 @@
             IsRunning="{Binding IsBusy}"
             IsVisible="{Binding IsBusy}"
             VerticalOptions="CenterAndExpand"/>
+
     </Grid>
 </ContentPage>
