@@ -6,10 +6,93 @@
              x:Class="ShowcaseRVHub.MAUI.View.RVChecklistView"
              x:DataType="viewmodel:RVChecklistViewModel"
              Title="{Binding RVModel.Model}">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid
+                ColumnDefinitions="*,auto,*"
+                RowDefinitions="160,auto">
+                
+                <BoxView
+                    Grid.ColumnSpan="3"
+                    BackgroundColor="{StaticResource Primary}"
+                    HeightRequest="160"
+                    HorizontalOptions="FillAndExpand"/>
+                <Grid 
+                    ColumnDefinitions="55,auto,*,*,*"
+                    RowDefinitions="auto,auto,auto,auto,auto"
+                    Padding="10">
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Style="{StaticResource LargeLabel}" 
+                        TextColor="{StaticResource CardBackgroundDark}"
+                        FontAttributes="Bold"
+                        Text="{Binding RVModel.Year}"/>
+                    <Label 
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Style="{StaticResource LargeLabel}" 
+                        TextColor="{StaticResource CardBackgroundDark}"
+                        FontAttributes="Bold"
+                        Text="{Binding RVModel.Make}"/>
+                    <Label
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Grid.Row="1"
+                        Style="{StaticResource LargeLabel}" 
+                        TextColor="{StaticResource CardBackgroundDark}"
+                        Text="{Binding RVModel.Class, StringFormat='Class: {0}'}"/>
+                    <Label
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Grid.Row="2"
+                        Style="{StaticResource LargeLabel}" 
+                        TextColor="{StaticResource CardBackgroundDark}"
+                        Text="{Binding RVModel.Length, StringFormat='Length: {0}`'}"/>
+                    <Label
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Grid.Row="3"
+                        Style="{StaticResource LargeLabel}" 
+                        TextColor="{StaticResource CardBackgroundDark}"
+                        Text="{Binding RVModel.Sleeps, StringFormat='Sleeps: {0}'}"/>
+                    <Label
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Grid.Row="4"
+                        Style="{StaticResource LargeLabel}" 
+                        TextColor="{StaticResource CardBackgroundDark}"
+                        Text="{Binding RVModel.MasterBedType, StringFormat='Master Bed: {0}'}"/>
+                </Grid>
+                <Frame
+                    Grid.RowSpan="2"
+                    Grid.Column="1"
+                    Margin="0,80,0,0"
+                    HeightRequest="160"
+                    WidthRequest="160"
+                    HorizontalOptions="Center"
+                    Padding="0"
+                    IsClippedToBounds="True"
+                    CornerRadius="80">
+                    <Image
+                        Aspect="AspectFill"
+                        HeightRequest="160"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Source="{Binding RVModel.Image}"
+                        WidthRequest="160"/>
+                </Frame>
+            </Grid>
+            <VerticalStackLayout Padding="10" Spacing="10">
+                <Button
+                    Text="Check In/Out"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    WidthRequest="200"
+                    Margin="8"
+                    Style="{StaticResource ButtonOutline}"/>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

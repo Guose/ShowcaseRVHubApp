@@ -52,7 +52,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 
                 foreach (var vehicle in vehicles)
                 {
-                    if (!vehicle.IsBooked)
+                    if (vehicle.IsBooked)
                         continue;
 
                     RVsCollection.Add(vehicle);
@@ -92,7 +92,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 
                 foreach (var vehicle in vehicles)
                 {
-                    if (vehicle.IsBooked)
+                    if (!vehicle.IsBooked)
                         continue;
 
                     RVsCollection.Add(vehicle);
