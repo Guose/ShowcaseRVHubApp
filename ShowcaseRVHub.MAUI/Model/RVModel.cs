@@ -1,5 +1,6 @@
 ﻿using ShowcaseRVHub.MAUI.Model.Enums;
 
+
 namespace ShowcaseRVHub.MAUI.Model
 {
     public class RVModel
@@ -16,8 +17,11 @@ namespace ShowcaseRVHub.MAUI.Model
         public string Image { get; set; }
         public string Description { get; set; }
         public BedType MasterBedType { get; set; }
+        public double Odometer { get; set; }
+        public int GeneratorHours { get; set; }
         public bool IsBooked { get; set; }
         public bool HasSlideout { get; set; }
         public bool HasGenerator { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

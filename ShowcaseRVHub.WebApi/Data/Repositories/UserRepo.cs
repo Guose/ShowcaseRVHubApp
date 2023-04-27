@@ -4,19 +4,17 @@ using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Data.Repositories
 {
-    public class ShowcaseUserRepo : IShowcaseUserRepo
+    public class UserRepo : IUserRepo
     {
         private readonly ShowcaseDbContext _context;
-        public ShowcaseUserRepo(ShowcaseDbContext context)
+        public UserRepo(ShowcaseDbContext context)
         {
             _context = context;
         }
         public async Task CreateUserAsync(ShowcaseUser user)
         {
             if (user == null)
-            {
                 throw new ArgumentNullException(nameof(user));
-            }
 
             await _context.ShowcaseUsers.AddAsync(user);
             await _context.SaveChangesAsync();
@@ -27,9 +25,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             var deleteUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
 
             if (deleteUser == null)
-            {
                 throw new ArgumentNullException(nameof(deleteUser));
-            }
 
             _context.ShowcaseUsers.Remove(deleteUser);
 
@@ -41,9 +37,8 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             var user = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
 
             if(user == null)
-            {
                 throw new ArgumentNullException(nameof(user));
-            }
+
             return user;
         }
 
@@ -52,14 +47,12 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             return await _context.ShowcaseUsers.ToListAsyncEF();
         }
 
-        public async Task UpdateUserAsync(Guid id, ShowcaseUser newUser)
+        public async Task UpdateUserAsync(ShowcaseUser newUser)
         {
-            var updateUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
+            var updateUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == newUser.Id);
 
             if (updateUser == null)
-            {
                 throw new ArgumentNullException(nameof(updateUser));
-            }
 
             updateUser.FirstName = string.IsNullOrEmpty(newUser.FirstName) ? updateUser.FirstName : newUser.FirstName;
             updateUser.LastName = string.IsNullOrEmpty(newUser.LastName) ? updateUser.LastName : newUser.LastName;
@@ -67,11 +60,10 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             updateUser.Phone = string.IsNullOrEmpty(newUser.Phone) ? updateUser.Phone : newUser.Phone;
             updateUser.Username = string.IsNullOrEmpty(newUser.Username) ? updateUser.Username : newUser.Username;
             updateUser.Password = string.IsNullOrEmpty(newUser.Password) ? updateUser.Password : newUser.Password;
-            updateUser.ModifiedOn = DateTime.UtcNow;
+            updateUser.ModifiedOn = DateTime.Now;
             updateUser.IsRemembered = newUser.IsRemembered;
 
             _context.ShowcaseUsers.Update(updateUser);
-
             await _context.SaveChangesAsync();
         }
     }

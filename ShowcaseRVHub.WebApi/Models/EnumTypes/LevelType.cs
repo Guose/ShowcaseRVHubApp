@@ -1,10 +1,10 @@
 ﻿namespace ShowcaseRVHub.WebApi.Models.EnumTypes
 {
-    public enum FuelLevelType : byte
+    public enum LevelType : byte
     {
         Empty = 1,
-        OneQuarter = 2,
-        TwoQuarter = 3,
+        Quarter = 2,
+        Half = 3,
         ThreeQuarter = 4,
         Full = 5,
     }

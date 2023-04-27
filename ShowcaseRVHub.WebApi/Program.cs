@@ -17,7 +17,8 @@ internal class Program
         });
         builder.Services.AddScoped<DbContextService>();
 
-        builder.Services.AddScoped<IShowcaseUserRepo, ShowcaseUserRepo>();
+        builder.Services.AddScoped<IUserRepo, UserRepo>();
+        builder.Services.AddScoped<IRVRepo, RVRepo>();
 
         builder.Services.AddControllers();
 

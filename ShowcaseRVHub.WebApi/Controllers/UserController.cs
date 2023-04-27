@@ -8,9 +8,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IShowcaseUserRepo _userRepo;
+        private readonly IUserRepo _userRepo;
 
-        public UserController(IShowcaseUserRepo userRepo)
+        public UserController(IUserRepo userRepo)
         {
             _userRepo = userRepo;
         }
@@ -40,9 +40,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUserAsync(Guid id, ShowcaseUser user)
+        public async Task<ActionResult> UpdateUserAsync(ShowcaseUser user)
         {
-            await _userRepo.UpdateUserAsync(id, user);
+            await _userRepo.UpdateUserAsync(user);
 
             return NoContent();
         }

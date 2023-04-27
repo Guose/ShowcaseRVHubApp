@@ -13,6 +13,8 @@
     "IsBooked": true,
     "HasSlideOut": false,
     "HasGenerator": true,
+    "GeneratorHours": 24,
+    "Odometer":79362,
     "MasterBedType": 2
   },
   {
@@ -29,6 +31,8 @@
     "IsBooked": true,
     "HasSlideOut": false,
     "HasGenerator": true,
+    "GeneratorHours": 48,
+    "Odometer": 35486,
     "MasterBedType": 2
   },
   {
@@ -45,6 +49,8 @@
     "IsBooked": false,
     "HasSlideOut": true,
     "HasGenerator": true,
+    "GeneratorHours": 60,
+    "Odometer": 68912,
     "MasterBedType": 2
   }
 ]

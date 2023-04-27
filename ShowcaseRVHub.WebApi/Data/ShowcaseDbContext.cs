@@ -8,6 +8,7 @@ namespace ShowcaseRVHub.WebApi.Data
         public ShowcaseDbContext(DbContextOptions<ShowcaseDbContext> options) : base(options) { }
 
         public DbSet<ShowcaseUser> ShowcaseUsers => Set<ShowcaseUser>();
+        public DbSet<VehicleRV> VehicleRVs => Set<VehicleRV>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
