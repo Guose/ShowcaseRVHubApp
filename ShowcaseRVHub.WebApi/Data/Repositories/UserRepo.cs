@@ -16,7 +16,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
-            await _context.ShowcaseUsers.AddAsync(user);
+            _context.ShowcaseUsers.Add(user);
             await _context.SaveChangesAsync();
         }
 

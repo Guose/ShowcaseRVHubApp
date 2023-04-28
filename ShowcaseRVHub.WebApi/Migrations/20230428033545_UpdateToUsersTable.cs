@@ -5,7 +5,7 @@
 namespace ShowcaseRVHub.WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateToDateTimeFields : Migration
+    public partial class UpdateToUsersTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

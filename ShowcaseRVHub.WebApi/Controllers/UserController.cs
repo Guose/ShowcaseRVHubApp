@@ -2,6 +2,7 @@
 using ShowcaseRVHub.WebApi.Data.Interfaces;
 using ShowcaseRVHub.WebApi.Models;
 
+
 namespace ShowcaseRVHub.WebApi.Controllers
 {
     [Route("api/users")]
@@ -36,7 +37,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             await _userRepo.CreateUserAsync(user);
 
-            return CreatedAtRoute(nameof(CreateUserAsync), new {id = user.Id}, user);
+            return Ok(user);
         }
 
         [HttpPut("{id}")]

@@ -19,7 +19,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             if (rv == null)
                 throw new ArgumentNullException(nameof(rv));
 
-            await _context.VehicleRVs.AddAsync(rv);
+            _context.VehicleRVs.Add(rv);
             await _context.SaveChangesAsync();
         }
 

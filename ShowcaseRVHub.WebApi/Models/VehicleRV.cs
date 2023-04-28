@@ -9,7 +9,7 @@ namespace ShowcaseRVHub.WebApi.Models
         [Key] public int Id { get; set; }
         [Required] public string Make { get; set; } = string.Empty;
         [Required]  public string Model { get; set; } = string.Empty;
-        [Required] public string Year { get; set; } = string.Empty;
+        [Nullable] public int Year { get; set; }
         [Nullable] public string Chassis { get; set; } = string.Empty;
         [Required] public RVClassType Class { get; set; }
         [Required] public int Sleeps { get; set; }
@@ -29,6 +29,6 @@ namespace ShowcaseRVHub.WebApi.Models
 
 
         [Required] public Guid UserId { get; set; }
-        public ShowcaseUser User { get; set; } = new ShowcaseUser();
+        public ShowcaseUser? User { get; set; }
     }
 }

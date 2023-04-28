@@ -5,7 +5,7 @@ using ShowcaseRVHub.WebApi.Models.DTO;
 
 namespace ShowcaseRVHub.WebApi.Controllers
 {
-    [Route("api/vehicle")]
+    [Route("api/vehicles")]
     [ApiController]
     public class VehicleController : ControllerBase
     {
@@ -37,7 +37,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             await _rvRepo.CreateVehicleRvAsync(rv);
 
-            return CreatedAtRoute(nameof(CreateRVAsync), new {id = rv.Id }, rv);
+            return Ok(rv);
         }
 
         [HttpPut("{id}")]
