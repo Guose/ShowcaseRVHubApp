@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShowcaseRVHub.MAUI.View.MainView" 
-             xmlns:model="clr-namespace:ShowcaseRVHub.Domain.Model;assembly=ShowcaseRVHub.Domain"
+             xmlns:model="clr-namespace:ShowcaseRVHub.MAUI.Model;assembly=ShowcaseRVHub.MAUI"
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="True"
@@ -49,7 +49,7 @@
                 <Switch 
                     Margin="30,0,0,0"
                     OnColor="{StaticResource Accent}"
-                    IsToggled="{Binding IsRemembered}" />                
+                    IsToggled="{Binding IsRemembered}" />
                 
             </StackLayout>
 
@@ -57,7 +57,7 @@
                 Text="Login" 
                 HorizontalOptions="StartAndExpand"
                 WidthRequest="250"
-                Margin="0,30,0,20"
+                Margin="0,40,0,20"
                 FontAttributes="Bold" 
                 FontSize="22"
                 Command="{Binding ValidateUserCommand}"

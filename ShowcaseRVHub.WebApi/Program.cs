@@ -17,8 +17,8 @@ internal class Program
         // Add services to the container.
         builder.Services.AddDbContext<ShowcaseDbContext>(options =>
         {
-            //options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection"));
-            options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection"));
+            options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection"));
+            //options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection"));
         });
         builder.Services.AddScoped<DbContextService>();
 

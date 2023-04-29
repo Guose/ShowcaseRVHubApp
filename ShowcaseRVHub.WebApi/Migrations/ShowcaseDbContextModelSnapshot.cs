@@ -33,32 +33,32 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(25)");
 
                     b.Property<bool>("IsRemembered")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(25)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(13)");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(25)");
 
                     b.HasKey("Id");
 
@@ -75,7 +75,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.Property<string>("Chassis")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(25)");
 
                     b.Property<byte>("Class")
                         .HasColumnType("tinyint");
@@ -85,7 +85,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(250)");
 
                     b.Property<byte>("FuelLevel")
                         .HasColumnType("tinyint");
@@ -104,7 +104,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.Property<string>("Image")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(250)");
 
                     b.Property<bool>("IsBooked")
                         .HasColumnType("bit");
@@ -114,14 +114,14 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.Property<string>("Make")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("MasterBedType")
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("datetime2");

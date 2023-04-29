@@ -1,9 +1,7 @@
-﻿using ShowcaseRVHub.MAUI.Model;
-
-namespace ShowcaseRVHub.MAUI.ViewModel
+﻿namespace ShowcaseRVHub.MAUI.ViewModel
 {
     [QueryProperty(nameof(RVModel), "RVModel")]
-    [QueryProperty(nameof(RVChecklistModel), "RVChecklistModel")]
+    [QueryProperty(nameof(ButtonText), "ButtonText")]
     public partial class RVChecklistViewModel : ViewModelBase
     {
         [ObservableProperty]

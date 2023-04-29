@@ -1,39 +1,23 @@
-﻿using ShowcaseRVHub.MAUI.Model;
-using ShowcaseRVHub.MAUI.Services.Interfaces;
-using ShowcaseRVHub.MAUI.View;
-
-namespace ShowcaseRVHub.MAUI.ViewModel
+﻿namespace ShowcaseRVHub.MAUI.ViewModel
 {
     public partial class MainViewModel : ViewModelBase
     {
-        IShowcaseUserDataService _dataService;
-        IQueryable<UserModel> _users;
+        readonly IShowcaseUserDataService _dataService;
         UserModel _user;
 
         public MainViewModel(IShowcaseUserDataService dataService)
         {
             _dataService = dataService;
             _user = new UserModel();
-            LoadUsersFromDatabase();
-        }        
+        }
+
+        List<UserModel> Users { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsNotRemembered))]
         bool isRemembered;
 
-        public bool IsNotRemembered => !IsRemembered;
-
-        private async void LoadUsersFromDatabase()
-        {
-            _users = await _dataService.GetAllUsersAsync();
-
-            if (_users == null || !_users.Any())
-            {
-                Debug.WriteLine("---> Database connection failed.");
-                await Shell.Current.DisplayAlert("Something went wrong!", $"Make sure service is running to the database...", "OK");
-                return;
-            }
-        }        
+        public bool IsNotRemembered => !IsRemembered;       
 
         [RelayCommand]
         public async Task ValidateUser()
@@ -52,12 +36,14 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 
                 IsBusy = true;
 
+                Users = await _dataService.GetAllUsersAsync();
+
                 // Perform authentication logic here (e.g., call an API endpoint, check against a database)
-                _user = _users.FirstOrDefault(u => u.Username == Username && u.Password == Password);                          
+                _user = Users.Where(u => u.Username == Username && u.Password == Password).FirstOrDefault();                         
 
                 // Authenticate the user with the entered credentials
                 AuthenticationService auth = new AuthenticationService(_user);
-                if (await auth.Authenticate(Username, Password) || _user == null)
+                if (await auth.Authenticate(Username, Password) || _user != null)
                 {
                     // Save the user's credentials if they opted to remember them
                     if (!_user.IsRemembered && IsRemembered || _user.IsRemembered && IsNotRemembered)
@@ -69,7 +55,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                     // Navigate to the main page
                     await Shell.Current.GoToAsync(nameof(RVNavigationView), true, new Dictionary<string, object>
                     {
-                        {"User", _user }
+                        { "User", _user }
                     });
                 }
                 else
@@ -84,14 +70,14 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
             finally 
-            { 
-                IsBusy = false; 
-
+            {
                 if (IsNotRemembered)
                 {
                     Password = string.Empty;
                     Username = string.Empty;
                 }
+
+                IsBusy = false;
             }
         }
     }

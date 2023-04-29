@@ -7,11 +7,15 @@ namespace ShowcaseRVHub.MAUI.ViewModel
     [QueryProperty(nameof(User), "User")]
     public partial class RVNavigationViewModel : ViewModelBase
     {
+        readonly RVChecklistViewModel _checklistViewModel;
         readonly RVService _rvService;
         public RVNavigationViewModel()
         {
+            _checklistViewModel = new RVChecklistViewModel();
             _rvService = new RVService();
-        }        
+        }
+
+        bool isCheckOut;
 
         [ObservableProperty]
         UserModel user;
@@ -19,10 +23,15 @@ namespace ShowcaseRVHub.MAUI.ViewModel
         public ObservableCollection<RVModel> RVsCollection { get; set; } = new();
 
         [RelayCommand]
-        async Task GoToChecklist(RVModel model)
+        public async Task GoToChecklist(RVModel model)
         {
             if (model == null)
                 return;
+
+            if (isCheckOut)
+                _checklistViewModel.ButtonText = "Check Out";
+            else
+                _checklistViewModel.ButtonText = "Check In";
 
             await Shell.Current.GoToAsync(nameof(RVChecklistView), true, new Dictionary<string, object>
             {
@@ -45,6 +54,8 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                 }
 
                 IsBusy = true;
+
+                isCheckOut = true;
 
                 RVsCollection.Clear();
 
@@ -87,6 +98,8 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                 IsBusy = true;
 
                 RVsCollection.Clear();
+
+                isCheckOut = false;
 
                 var vehicles = await _rvService.GetRVsAsync();
 

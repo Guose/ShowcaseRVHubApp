@@ -1,7 +1,4 @@
-﻿using ShowcaseRVHub.MAUI.Model;
-using ShowcaseRVHub.MAUI.Services.Interfaces;
-
-namespace ShowcaseRVHub.MAUI.ViewModel
+﻿namespace ShowcaseRVHub.MAUI.ViewModel
 {
     public partial class ShowcaseUserFormViewModel : ViewModelBase
     {
@@ -75,7 +72,12 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                 Debug.WriteLine($"Unable to validate user: {ex.Message}");
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
-            finally { IsBusy = false; }
+            finally 
+            {
+                await Shell.Current.GoToAsync("..").WaitAsync(TimeSpan.FromSeconds(1));
+                MainViewModel mvm = new(_dataService);
+                IsBusy = false; 
+            }
         }        
     }
 }

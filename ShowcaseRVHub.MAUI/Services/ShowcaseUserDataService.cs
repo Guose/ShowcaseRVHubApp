@@ -104,14 +104,14 @@ namespace ShowcaseRVHub.MAUI.Services
             return user;
         }
 
-        public async Task<IQueryable<UserModel>> GetAllUsersAsync()
+        public async Task<List<UserModel>> GetAllUsersAsync()
         {
             List<UserModel> users = new List<UserModel>();
 
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
                 Debug.WriteLine("---> No internet access...");
-                return users.AsQueryable();
+                return users;
             }
 
             try
@@ -131,7 +131,7 @@ namespace ShowcaseRVHub.MAUI.Services
                 Debug.WriteLine($"---> Exception: {ex.Message}");
             }
 
-            return users.AsQueryable();
+            return users;
         }
 
         public async Task UpdateUserAsync(UserModel user)

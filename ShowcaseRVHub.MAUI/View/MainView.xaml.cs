@@ -1,6 +1,4 @@
 ﻿using LinqToDB;
-using ShowcaseRVHub.MAUI.Model;
-using ShowcaseRVHub.MAUI.Services.Interfaces;
 
 namespace ShowcaseRVHub.MAUI.View
 {
@@ -48,17 +46,18 @@ namespace ShowcaseRVHub.MAUI.View
             // Load the saved credentials if the user previously opted to remember them
             if (BindingContext is MainViewModel viewModel)
             {
-                IQueryable<UserModel> users = await _dataService.GetAllUsersAsync();
+                List<UserModel> users = await _dataService.GetAllUsersAsync();
 
-                UserModel user = await users
-                                        .OrderByDescending(m => m.ModifiedOn)
-                                        .Where(u => u.IsRemembered == true)
-                                        .FirstOrDefaultAsync();
+                UserModel user = users
+                                    .OrderByDescending(m => m.ModifiedOn)
+                                    .Where(u => u.IsRemembered == true)
+                                    .FirstOrDefault();
 
                 if (user != null)
                 {
                     viewModel.Username = user.Username;
                     viewModel.Password = user.Password;
+                    viewModel.IsRemembered = true;
                 }
             }
         }
