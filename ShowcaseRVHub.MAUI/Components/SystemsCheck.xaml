@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel.ComponentViewModel"
+             x:DataType="viewmodel:SystemsCheckViewModel"
+             x:Class="ShowcaseRVHub.MAUI.Components.SystemsCheck">
+    <VerticalStackLayout IsVisible="{Binding IsSystemsCheck}">
+        <Label 
+            Text="Systems Check" 
+            Style="{StaticResource LargeLabel}"
+            FontAttributes="Bold"/>
+        <Label 
+            TextColor="{StaticResource LightBackground}"
+            Text="Generator, awning, slide-out, furnace, refrigerator, stove, oven, and water heater."
+            VerticalOptions="Center" />
+        <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+            <CheckBox 
+                IsChecked="{Binding IsSystemsCheckComplete}" 
+                Color="{StaticResource LightBackground}" />
+            <Label 
+                Margin="0,12,0,0"
+                Text="Completed" 
+                FontAttributes="Bold"
+                TextColor="{StaticResource LightBackground}"/>
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentView>

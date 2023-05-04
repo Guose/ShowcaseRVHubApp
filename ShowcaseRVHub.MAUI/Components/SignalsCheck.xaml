@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel.ComponentViewModel"
+             x:DataType="viewmodel:SignalsCheckViewModel"
+             x:Class="ShowcaseRVHub.MAUI.Components.SignalsCheck">
+    <VerticalStackLayout IsVisible="{Binding IsSignalsCheck}">
+        <Label 
+            Text="Signals Check" 
+            Style="{StaticResource LargeLabel}"
+            FontAttributes="Bold"/>
+        <Label 
+            TextColor="{StaticResource LightBackground}"
+            Text="Driving lights, high beam lights, rear driving lights, brake lights, front turn signals, and rear turn signals."
+            VerticalOptions="Center"/>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+            <CheckBox 
+                IsChecked="{Binding IsSignalsCheckComplete}" 
+                Color="{StaticResource LightBackground}" />
+            <Label 
+                Margin="0,12,0,0"
+                Text="Completed" 
+                FontAttributes="Bold"
+                TextColor="{StaticResource LightBackground}"/>
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentView>

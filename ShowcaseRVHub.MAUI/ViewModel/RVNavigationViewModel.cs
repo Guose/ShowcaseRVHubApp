@@ -1,42 +1,43 @@
-﻿using ShowcaseRVHub.MAUI.Model;
-using ShowcaseRVHub.MAUI.View;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace ShowcaseRVHub.MAUI.ViewModel
 {
     [QueryProperty(nameof(User), "User")]
     public partial class RVNavigationViewModel : ViewModelBase
     {
-        readonly RVChecklistViewModel _checklistViewModel;
         readonly RVService _rvService;
         public RVNavigationViewModel()
         {
-            _checklistViewModel = new RVChecklistViewModel();
             _rvService = new RVService();
         }
 
-        bool isCheckOut;
-
         [ObservableProperty]
         UserModel user;
+
+        [ObservableProperty]
+        string buttonText;
 
         public ObservableCollection<RVModel> RVsCollection { get; set; } = new();
 
         [RelayCommand]
         public async Task GoToChecklist(RVModel model)
         {
-            if (model == null)
-                return;
-
-            if (isCheckOut)
-                _checklistViewModel.ButtonText = "Check Out";
-            else
-                _checklistViewModel.ButtonText = "Check In";
-
-            await Shell.Current.GoToAsync(nameof(RVChecklistView), true, new Dictionary<string, object>
+            try
             {
-                { nameof(RVModel), model }
-            });
+                if (model == null)
+                    return;
+
+                await Shell.Current.GoToAsync($"{nameof(RVChecklistView)}?ButtonText={ButtonText}", true, 
+                    new Dictionary<string, object>
+                    {
+                        { "RvModel", model }
+                    });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"---> Unable to navigate to the next page. EXCEPTION: {ex.Message}");
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            }            
         }
 
         [RelayCommand]
@@ -55,7 +56,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 
                 IsBusy = true;
 
-                isCheckOut = true;
+                ButtonText = "Check Out";
 
                 RVsCollection.Clear();
 
@@ -97,9 +98,9 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 
                 IsBusy = true;
 
-                RVsCollection.Clear();
+                ButtonText = "Check In";
 
-                isCheckOut = false;
+                RVsCollection.Clear();
 
                 var vehicles = await _rvService.GetRVsAsync();
 

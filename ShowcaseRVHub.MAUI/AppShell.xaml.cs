@@ -1,4 +1,4 @@
-﻿using ShowcaseRVHub.MAUI.View;
+﻿using ShowcaseRVHub.MAUI.Components;
 
 namespace ShowcaseRVHub.MAUI
 {
@@ -10,6 +10,7 @@ namespace ShowcaseRVHub.MAUI
 
             Routing.RegisterRoute(nameof(RVNavigationView), typeof(RVNavigationView));
             Routing.RegisterRoute(nameof(RVChecklistView), typeof(RVChecklistView));
+            Routing.RegisterRoute(nameof(ChecklistView), typeof (ChecklistView));
         }
     }
 }

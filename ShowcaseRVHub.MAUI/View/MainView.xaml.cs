@@ -48,6 +48,12 @@ namespace ShowcaseRVHub.MAUI.View
             {
                 List<UserModel> users = await _dataService.GetAllUsersAsync();
 
+                if (users.Count <= 0 || users == null)
+                {
+                    Debug.WriteLine($"---> Unable to retrieve users. Database is NOT connected");
+                    await Shell.Current.DisplayAlert("Error! Database is NOT connected", "Server is not running...", "OK");
+                }
+
                 UserModel user = users
                                     .OrderByDescending(m => m.ModifiedOn)
                                     .Where(u => u.IsRemembered == true)

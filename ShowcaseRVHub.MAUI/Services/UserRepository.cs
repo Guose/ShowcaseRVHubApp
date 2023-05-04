@@ -1,8 +1,4 @@
-﻿using LinqToDB;
-using ShowcaseRVHub.MAUI.Model;
-using ShowcaseRVHub.MAUI.Services.Interfaces;
-
-namespace ShowcaseRVHub.MAUI.Services
+﻿namespace ShowcaseRVHub.MAUI.Services
 {
     public class UserRepository : IUserRepository
     {

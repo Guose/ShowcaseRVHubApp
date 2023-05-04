@@ -19,8 +19,6 @@
             Grid.ColumnSpan="2"
             IsRefreshing="{Binding IsRefreshing}">
 
-            <!--<controls:RVDetailContentView />-->
-
             <CollectionView
                         ItemsSource="{Binding RVsCollection}"
                         BackgroundColor="Transparent"

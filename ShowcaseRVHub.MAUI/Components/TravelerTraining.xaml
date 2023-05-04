@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel.ComponentViewModel"
+             x:DataType="viewmodel:TravelerTrainingViewModel"
+             x:Class="ShowcaseRVHub.MAUI.Components.TravelerTraining">
+    <VerticalStackLayout IsVisible="{Binding IsRenterTraining}">
+        <Label 
+            Text="Traveler Training" 
+            Style="{StaticResource LargeLabel}"
+            FontAttributes="Bold"/>
+        <Label 
+            TextColor="{StaticResource LightBackground}"
+            Text="Train the driver and select passengers, on all systems, driving instructions, etc. (Add disclosure and two check marks as signature)"
+            VerticalOptions="Center" />
+        <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+            <CheckBox 
+                IsChecked="{Binding IsTrainingComplete}" 
+                Color="{StaticResource LightBackground}" />
+            <Label 
+                Margin="0,12,0,0"
+                Text="Completed" 
+                FontAttributes="Bold"
+                TextColor="{StaticResource LightBackground}"/>
+        </StackLayout>
+    </VerticalStackLayout>
+</ContentView>

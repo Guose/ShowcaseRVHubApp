@@ -9,7 +9,10 @@
              Title="Login"
              x:DataType="viewmodel:MainViewModel" >
 
-    <Grid Margin="20" RowDefinitions="auto,auto,auto,auto,auto,auto,auto">
+    <Grid 
+        Margin="20" 
+        RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
+        BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}">
         
         <StackLayout Margin="75,20" >
             
