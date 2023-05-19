@@ -1,6 +1,3 @@
-using ShowcaseRVHub.MAUI.Services.Interfaces;
-using ShowcaseRVHub.MAUI.ViewModel;
-
 namespace ShowcaseRVHub.MAUI.View;
 
 public partial class AddUserView : ContentPage
@@ -10,6 +7,9 @@ public partial class AddUserView : ContentPage
 	{
 		_dataService = dataService;
 		InitializeComponent();
-		BindingContext = new ShowcaseUserFormViewModel(_dataService);
+
+		var userViewModel = new ShowcaseUserFormViewModel(_dataService);
+		userViewModel.IsSubmitEnabled = false;
+        BindingContext = userViewModel;
 	}
 }

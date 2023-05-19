@@ -104,7 +104,7 @@
                 <Entry 
                     Grid.Column="1" 
                     Placeholder="Create password"
-                    Text="{Binding Password, Mode=OneWayToSource}"
+                    Text="{Binding Password, Mode=TwoWay}"
                     IsPassword="True"/>
             </Grid>
 
@@ -118,7 +118,7 @@
                 <Entry 
                     Grid.Column="1"
                     Placeholder="Re-enter password"
-                    Text="{Binding ConfirmPassword, Mode=OneWayToSource}"
+                    Text="{Binding ConfirmPassword, Mode=TwoWay}"
                     IsPassword="True"/>
             </Grid>
 
@@ -132,8 +132,21 @@
                     Margin="10"
                     FontAttributes="Bold" 
                     FontSize="22"
+                    IsEnabled="{Binding IsSubmitEnabled, Mode=OneWay}"
                     Command="{Binding CreateUserCommand}"
-                    Style="{StaticResource ButtonOutline}"/>
+                    Style="{StaticResource ButtonOutline}">
+
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="UserVisual">
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="LightGray"/>
+                                    <Setter Property="TextColor" Value="LightGray"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Button>
 
                 <Button 
                     Grid.Column="1"

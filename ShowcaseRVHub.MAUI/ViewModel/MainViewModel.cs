@@ -52,7 +52,7 @@
                         await _dataService.UpdateUserAsync(_user);
                     }
 
-                    // Navigate to the main page
+                    // Navigate to the main RV page
                     await Shell.Current.GoToAsync(nameof(RVNavigationView), true, new Dictionary<string, object>
                     {
                         { "User", _user }

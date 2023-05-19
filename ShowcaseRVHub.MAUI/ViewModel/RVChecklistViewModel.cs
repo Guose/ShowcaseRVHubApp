@@ -1,6 +1,4 @@
-﻿using ShowcaseRVHub.MAUI.Components;
-
-namespace ShowcaseRVHub.MAUI.ViewModel
+﻿namespace ShowcaseRVHub.MAUI.ViewModel
 {
     [QueryProperty(nameof(RvModel), "RvModel")]
     [QueryProperty(nameof(ButtonText), nameof(ButtonText))]
@@ -12,6 +10,9 @@ namespace ShowcaseRVHub.MAUI.ViewModel
         [ObservableProperty]
         string buttonText;
 
+        //[ObservableProperty]
+        //bool isVisible;
+
         [ObservableProperty]
         bool isStartChecklist;
 
@@ -22,26 +23,6 @@ namespace ShowcaseRVHub.MAUI.ViewModel
         }
 
         [RelayCommand]
-        async void StartCheckout()
-        {
-            try
-            {
-                if (RvModel == null)
-                    return;
-
-                IsStartChecklist = true;
-
-                await Shell.Current.GoToAsync($"{nameof(ChecklistView)}?IsStartChecklist={IsStartChecklist}", true,
-                    new Dictionary<string, object>
-                    {
-                        { "RvModel", RvModel }
-                    });
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"---> Unable to navigate to the next page. EXCEPTION: {ex.Message}");
-                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
-            }
-        }
+        void StartCheckout() => IsStartChecklist = true;
     }
 }

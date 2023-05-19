@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:ShowcaseRVHub.MAUI.Model"
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
-             xmlns:component="clr-namespace:ShowcaseRVHub.MAUI.Components"
              x:Class="ShowcaseRVHub.MAUI.View.RVChecklistView"
              x:DataType="viewmodel:RVChecklistViewModel"
              Title="{Binding RvModel.Model}">
@@ -101,13 +100,14 @@
             
         </VerticalStackLayout>
 
-        <!--<ScrollView
-            VerticalOptions="FillAndExpand"
+        <ScrollView
+            Orientation="Vertical"
             Grid.Row="3"
             Grid.ColumnSpan="5"
             Margin="20,5"
-            IsVisible="{Binding IsStartCheckout}">
-
-        </ScrollView>-->
+            VerticalOptions="FillAndExpand" >
+            
+        </ScrollView>
+        
     </Grid>
 </ContentPage>
