@@ -2,10 +2,10 @@ namespace ShowcaseRVHub.MAUI.View;
 
 public partial class RVChecklistView : ContentPage
 {
-	public RVChecklistView(RVChecklistViewModel vm)
+    public RVChecklistView()
 	{
 		InitializeComponent();
-		//vm.IsVisible = true;
-		BindingContext = vm;
-	}
+
+		BindingContext = new RVChecklistViewModel();
+    }
 }

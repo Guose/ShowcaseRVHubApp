@@ -1,6 +1,4 @@
-﻿using LinqToDB;
-
-namespace ShowcaseRVHub.MAUI.View
+﻿namespace ShowcaseRVHub.MAUI.View
 {
     public partial class MainView : ContentPage
     {
@@ -8,14 +6,14 @@ namespace ShowcaseRVHub.MAUI.View
         private readonly TapGestureRecognizer _forgotPassword;
         private readonly IShowcaseUserDataService _dataService;
         private readonly IUserRepository _userRepository;
-        private readonly IUserEmailService _userService;
+        private readonly IUserEmailService _userMailService;
 
-        public MainView(IUserEmailService userService, IUserRepository userRepository, IShowcaseUserDataService dataService)
+        public MainView(IUserEmailService userMailService, IUserRepository userRepository, IShowcaseUserDataService dataService)
         {
             InitializeComponent();
             _dataService = dataService;
             _userRepository = userRepository;
-            _userService = userService;
+            _userMailService = userMailService;
 
             BindingContext = new MainViewModel(_dataService);
 
@@ -27,13 +25,13 @@ namespace ShowcaseRVHub.MAUI.View
         }
         
 
-        private async void ForgotPassword_Tapped(object sender, TappedEventArgs e)
+        private async void ForgotPassword_Tapped(object sender, EventArgs e)
         {
-            var forgotPasswordModal = new ForgotPasswordView(_userService, _userRepository, _dataService);
+            var forgotPasswordModal = new ForgotPasswordView(_userMailService, _userRepository);
             await Navigation.PushModalAsync(forgotPasswordModal);
         }
 
-        private async void CreateUser_Tapped(object sender, TappedEventArgs e)
+        private async void CreateUser_Tapped(object sender, EventArgs e)
         {
             var addUserModal = new AddUserView(_dataService);
             await Navigation.PushModalAsync(addUserModal);
@@ -51,13 +49,20 @@ namespace ShowcaseRVHub.MAUI.View
                 if (users.Count <= 0 || users == null)
                 {
                     Debug.WriteLine($"---> Unable to retrieve users. Database is NOT connected");
-                    await Shell.Current.DisplayAlert("Error! Database is NOT connected", "Server is not running...", "OK");
+                    bool userResponse = await Shell.Current.DisplayAlert("Error! Database is NOT connected", "Server is not running...\nPlease contact tech support", "OK", "Cancel");
+
+                    if (userResponse)
+                    {
+                        await Shell.Current.DisplayAlert("GOOD-BYE...", "Sorry for the inconvenience","OK");
+                        // Close the app
+                        Application.Current.Quit();
+                    }
                 }
 
                 UserModel user = users
                                     .OrderByDescending(m => m.ModifiedOn)
                                     .Where(u => u.IsRemembered == true)
-                                    .FirstOrDefault();
+                                    .SingleOrDefault();
 
                 if (user != null)
                 {

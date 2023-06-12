@@ -14,6 +14,8 @@ namespace ShowcaseRVHub.MAUI.Model
 
         public int RVId { get; set; }
         public RVModel RVModel { get; set; }
+
+
         public List<FluidType> Fluids { get; set; }
         public List<LevelType> Levels { get; set; }
         public List<RoutineMaintenanceType> RoutineMaintenances { get; set; }

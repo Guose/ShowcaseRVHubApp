@@ -1,22 +1,14 @@
-﻿using ShowcaseRVHub.MAUI.Model;
-using ShowcaseRVHub.MAUI.Services.Interfaces;
-
-namespace ShowcaseRVHub.MAUI.ViewModel
+﻿namespace ShowcaseRVHub.MAUI.ViewModel
 {
     public partial class ForgotPasswordViewModel : ViewModelBase
     {
-        private readonly IShowcaseUserDataService _dataService;
         private readonly IUserEmailService _userService;
         private readonly IUserRepository _userRepository;
 
-        public ForgotPasswordViewModel(
-            IUserEmailService userService,
-            IUserRepository userRepository,
-            IShowcaseUserDataService dataService)
+        public ForgotPasswordViewModel(IUserEmailService userService, IUserRepository userRepository)
         {
             _userService = userService;
             _userRepository = userRepository;
-            _dataService = dataService;
         }
 
         [ObservableProperty]

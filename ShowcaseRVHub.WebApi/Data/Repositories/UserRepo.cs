@@ -14,7 +14,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
         public async Task CreateUserAsync(ShowcaseUser user)
         {
             if (user == null)
-                throw new ArgumentNullException(nameof(user));
+                return;
 
             _context.ShowcaseUsers.Add(user);
             await _context.SaveChangesAsync();
@@ -28,7 +28,6 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                 throw new ArgumentNullException(nameof(deleteUser));
 
             _context.ShowcaseUsers.Remove(deleteUser);
-
             await _context.SaveChangesAsync();
         }
 
@@ -47,12 +46,25 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             return await _context.ShowcaseUsers.ToListAsyncEF();
         }
 
+        public async Task UpdateUsersPasswordAsync(Guid userId, ShowcaseUser user)
+        {
+            var updateUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == userId);
+
+            if (updateUser == null)
+                return;
+
+            updateUser.Password = user.Password;
+
+            _context.ShowcaseUsers.Update(updateUser);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task UpdateUserAsync(ShowcaseUser newUser)
         {
             var updateUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == newUser.Id);
 
             if (updateUser == null)
-                throw new ArgumentNullException(nameof(updateUser));
+                return;
 
             updateUser.FirstName = string.IsNullOrEmpty(newUser.FirstName) ? updateUser.FirstName : newUser.FirstName;
             updateUser.LastName = string.IsNullOrEmpty(newUser.LastName) ? updateUser.LastName : newUser.LastName;

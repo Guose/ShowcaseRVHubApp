@@ -1,6 +1,4 @@
-﻿using ShowcaseRVHub.MAUI.Components;
-
-namespace ShowcaseRVHub.MAUI
+﻿namespace ShowcaseRVHub.MAUI
 {
     public partial class AppShell : Shell
     {
@@ -10,7 +8,7 @@ namespace ShowcaseRVHub.MAUI
 
             Routing.RegisterRoute(nameof(RVNavigationView), typeof(RVNavigationView));
             Routing.RegisterRoute(nameof(RVChecklistView), typeof(RVChecklistView));
-            //Routing.RegisterRoute(nameof(ChecklistView), typeof (ChecklistView));
+            Routing.RegisterRoute(nameof(ChecklistView), typeof(ChecklistView));
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using ShowcaseRVHub.MAUI.Components;
-using ShowcaseRVHub.MAUI.Services.Interfaces;
-using ShowcaseRVHub.MAUI.View;
+﻿using Syncfusion.Maui.Core.Hosting;
 
 namespace ShowcaseRVHub.MAUI
 {
@@ -11,6 +8,8 @@ namespace ShowcaseRVHub.MAUI
         {
             var builder = MauiApp.CreateBuilder();
 
+            builder.ConfigureSyncfusionCore();
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -19,17 +18,13 @@ namespace ShowcaseRVHub.MAUI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-#if DEBUG
-		    builder.Logging.AddDebug();
-#endif
-
             builder.Services.AddSingleton<IShowcaseUserDataService, ShowcaseUserDataService>();
             builder.Services.AddSingleton<IUserEmailService, UserEmailService>();
             builder.Services.AddSingleton<IUserRepository, UserRepository>();
             builder.Services.AddSingleton<IRvService, RVService>();
 
-            builder.Services.AddSingleton<MainViewModel>();
-            builder.Services.AddSingleton<MainView>();
+            builder.Services.AddTransient<MainViewModel>();
+            builder.Services.AddTransient<MainView>();
 
             builder.Services.AddTransient<ShowcaseUserFormViewModel>();
             builder.Services.AddTransient<AddUserView>();
@@ -39,6 +34,9 @@ namespace ShowcaseRVHub.MAUI
 
             builder.Services.AddTransient<RVChecklistViewModel>();
             builder.Services.AddTransient<RVChecklistView>();
+
+            builder.Services.AddTransient<ChecklistViewModel>();
+            builder.Services.AddTransient<ChecklistView>();
 
             return builder.Build();
         }        

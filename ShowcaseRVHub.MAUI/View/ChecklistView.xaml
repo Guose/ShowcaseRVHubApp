@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShowcaseRVHub.MAUI.View.ChecklistView"
+             xmlns:model="clr-namespace:ShowcaseRVHub.MAUI.Model"
+             xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
+             xmlns:view="clr-namespace:ShowcaseRVHub.MAUI.View"
+             x:DataType="viewmodel:ChecklistViewModel"
+             Title="{Binding HeaderText}">
+    <VerticalStackLayout>
+        <Label 
+            Text="Exterior Cleaning"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start"
+            FontSize="Large"
+            Padding="10"/>
+        <FlexLayout>            
+            <CheckBox 
+                Margin="10,0,0,0"/>
+            <Label
+                Text="Make sure that the exterior of your RV has been thoroughly cleaned before the arrival of your travelers"
+                LineBreakMode="WordWrap"/>
+        </FlexLayout>
+        <HorizontalStackLayout Padding="25">
+            <Button
+                Text="Cancel"
+                FontSize="20"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                Margin="8"
+                Style="{StaticResource CancelButtonOutline}"/>
+            
+            <Button
+                Text="Complete"
+                IsEnabled="True"
+                FontSize="20"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                Margin="8"
+                Style="{StaticResource ButtonOutline}"/>
+        </HorizontalStackLayout>
+        
+    </VerticalStackLayout>
+</ContentPage>

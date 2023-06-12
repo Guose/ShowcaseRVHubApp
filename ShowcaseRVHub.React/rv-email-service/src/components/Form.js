@@ -38,7 +38,7 @@ function Form() {
             firstName: filterUser[0].firstName,
             lastName: filterUser[0].lastName,
             isRemembered: filterUser[0].isRemembered,
-            modifiedOn: null,
+            modifiedOn: new Date(),
             phone: filterUser[0].phone,
             password: password,
             username: filterUser[0].username
@@ -75,7 +75,9 @@ function Form() {
         if (success) {
             toast.success('Password has been changed, succesfully!', {
                 onClose: () => {
-                    window.location.href = '/success'
+                    setTimeout(() => {
+                        window.location.href = '/success'
+                    }, 5000)
                 }
             })
          } else {

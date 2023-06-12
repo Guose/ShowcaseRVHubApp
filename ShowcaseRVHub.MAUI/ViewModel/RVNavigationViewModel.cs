@@ -20,7 +20,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
         public ObservableCollection<RVModel> RVsCollection { get; set; } = new();
 
         [RelayCommand]
-        public async Task GoToChecklist(RVModel model)
+        public async Task GoToRVChecklist(RVModel model)
         {
             try
             {

@@ -1,6 +1,4 @@
-﻿using ShowcaseRVHub.MAUI.Model;
-using ShowcaseRVHub.MAUI.Services.Interfaces;
-using System.Text;
+﻿using System.Text;
 
 namespace ShowcaseRVHub.MAUI.Services
 {
@@ -34,6 +32,7 @@ namespace ShowcaseRVHub.MAUI.Services
             try
             {
                 string jsonUser = JsonSerializer.Serialize(user, _jsonSerializerOptions);
+
                 StringContent content = new(jsonUser, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PostAsync($"{_url}/users", content);
@@ -159,6 +158,11 @@ namespace ShowcaseRVHub.MAUI.Services
                 Debug.WriteLine($"---> Exception: {ex.Message}");
             }
             return;
+        }
+
+        public Task UpdateUsersEmailAsync(Guid id, string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }

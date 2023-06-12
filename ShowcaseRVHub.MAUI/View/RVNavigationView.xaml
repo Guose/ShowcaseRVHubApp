@@ -30,7 +30,7 @@
                             <Frame HeightRequest="125" Style="{StaticResource CardView}">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RVNavigationViewModel}}, Path=GoToChecklistCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RVNavigationViewModel}}, Path=GoToRVChecklistCommand}"
                                         CommandParameter="{Binding .}"/>
                                 </Frame.GestureRecognizers>
                                 <Grid Padding="0" ColumnDefinitions="125, *">

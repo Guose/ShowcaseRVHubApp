@@ -13,8 +13,6 @@ namespace ShowcaseRVHub.WebApi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<ShowcaseUserModel>().HasKey(x => x.Id);
         }
     }
 }

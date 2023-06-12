@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace ShowcaseRVHub.MAUI.ViewModel
+﻿namespace ShowcaseRVHub.MAUI.ViewModel
 {
     public partial class ViewModelBase : ObservableObject
     {

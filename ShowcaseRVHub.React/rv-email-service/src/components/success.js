@@ -1,10 +1,12 @@
 import React from 'react'
+import './success.css'
 
 const Success = () => {
+
     return (
-        <>
-            <h1>Password succesfully changed!!! Close Window!</h1>
-        </>
+        <div className='success-message'>
+            <h1>Password succesfully changed... Please close window</h1>
+        </div>
     )
 }
 

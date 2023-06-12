@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
 using ShowcaseRVHub.WebApi.Models;
 
@@ -35,6 +36,10 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<ShowcaseUser>> CreateUserAsync(ShowcaseUser user)
         {
+            if (user == null)
+                return BadRequest();
+
+            user.Id = Guid.NewGuid();
             await _userRepo.CreateUserAsync(user);
 
             return Ok(user);
@@ -45,7 +50,20 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             await _userRepo.UpdateUserAsync(user);
 
-            return NoContent();
+            return Ok(user);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> UpdateUserPasswordAsync(Guid id, JsonPatchDocument<ShowcaseUser> updateUser)
+        {
+            ShowcaseUser showcaseUser = await _userRepo.GetUserByIdAsync(id);
+            if (showcaseUser == null)
+                return NotFound(new { Message = $"Item with id {id} does not exist." });
+
+            updateUser.ApplyTo(showcaseUser);
+            await _userRepo.UpdateUsersPasswordAsync(id, showcaseUser);
+
+            return Ok(showcaseUser);
         }
 
         [HttpDelete("{id}")]

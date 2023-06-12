@@ -8,6 +8,7 @@ namespace ShowcaseRVHub.WebApi.Data.Interfaces
         Task<IEnumerable<ShowcaseUser>> GetUsersAsync();
         Task<ShowcaseUser> GetUserByIdAsync(Guid id);
         Task UpdateUserAsync(ShowcaseUser user);
+        Task UpdateUsersPasswordAsync(Guid userId, ShowcaseUser user);
         Task DeleteUserAsync(Guid id);
     }
 }

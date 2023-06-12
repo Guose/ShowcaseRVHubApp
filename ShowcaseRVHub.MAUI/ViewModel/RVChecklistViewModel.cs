@@ -10,19 +10,32 @@
         [ObservableProperty]
         string buttonText;
 
-        //[ObservableProperty]
-        //bool isVisible;
-
-        [ObservableProperty]
-        bool isStartChecklist;
+        //public string RvYearAndMake => $"{RvModel.Year} {RvModel.Make}";
+        public string HeaderText => $"{RvModel.Model} - {ButtonText}";
+        public bool IsCheckout { get; set; }
 
         [RelayCommand]
-        async Task GoBack()
+        public async Task GoToChecklist()
         {
-            await Shell.Current.GoToAsync("..");
-        }
+            try
+            {
+                if (RvModel == null)
+                    return;
+                if (ButtonText == "Check Out")
+                    IsCheckout = true;
 
-        [RelayCommand]
-        void StartCheckout() => IsStartChecklist = true;
+                await Shell.Current.GoToAsync($"{nameof(ChecklistView)}?HeaderText={HeaderText}&IsCheckout={IsCheckout}", true,
+                    new Dictionary<string, object>
+                    {
+                        { "RvModel", RvModel }
+                    });
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"---> Unable to navigate to the next page. EXCEPTION: {ex.Message}");
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            }
+        }
     }
 }

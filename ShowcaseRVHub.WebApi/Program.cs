@@ -14,13 +14,11 @@ internal class Program
         builder.Services.AddScoped<IUserRepo, UserRepo>();
         builder.Services.AddScoped<IRVRepo, RVRepo>();
         
-        // Add services to the container.
+        // Add DbContext to the services to the container.
         builder.Services.AddDbContext<ShowcaseDbContext>(options =>
         {
             options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection"));
-            //options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection"));
         });
-        //builder.Services.AddScoped<DbContextService>();
 
 
         builder.Services.AddControllers().AddNewtonsoftJson(s =>
@@ -31,23 +29,23 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         var app = builder.Build();
 
-        //using (var scope = app.Services.CreateAsyncScope())
-        //{
-        //    DbContextService? dbService = scope.ServiceProvider.GetService<DbContextService>();
-        //    await dbService!.MigrateDatabaseAsync();
-        //}
-
         // Configure the HTTP request pipeline.
-
+        app.UseCors(options =>
+        {
+            options
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
 
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
 
-        //app.UseRouting();
+        app.UseRouting();
 
-        //app.UseHttpsRedirection();
+        app.UseHttpsRedirection();
 
         app.UseAuthorization();
 

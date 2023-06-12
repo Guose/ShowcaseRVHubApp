@@ -10,5 +10,6 @@
         Brake = 5,
         Transmission = 6,
         GeneratorOil = 7,
+        PowerSteering = 8,
     }
 }
