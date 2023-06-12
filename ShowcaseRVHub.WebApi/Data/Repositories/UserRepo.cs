@@ -46,14 +46,16 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             return await _context.ShowcaseUsers.ToListAsyncEF();
         }
 
-        public async Task UpdateUsersPasswordAsync(Guid userId, ShowcaseUser user)
+        public async Task UpdateUsersPasswordAsync(Guid userId, ShowcaseUser newUser)
         {
             var updateUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == userId);
 
             if (updateUser == null)
                 return;
 
-            updateUser.Password = user.Password;
+            // Update User's password and update ModifiedOn property
+            updateUser.Password = string.IsNullOrEmpty(newUser.Password) ? updateUser.Password : newUser.Password;
+            updateUser.ModifiedOn = DateTime.Now;
 
             _context.ShowcaseUsers.Update(updateUser);
             await _context.SaveChangesAsync();
@@ -66,6 +68,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             if (updateUser == null)
                 return;
 
+            // Update User and update ModifiedOn property
             updateUser.FirstName = string.IsNullOrEmpty(newUser.FirstName) ? updateUser.FirstName : newUser.FirstName;
             updateUser.LastName = string.IsNullOrEmpty(newUser.LastName) ? updateUser.LastName : newUser.LastName;
             updateUser.Email = string.IsNullOrEmpty(newUser.Email) ? updateUser.Email : newUser.Email;

@@ -33,15 +33,7 @@ function Form() {
         // Update password field of user data
         const updateUserPassword = {
             id: filterUser[0].id,
-            createdOn: filterUser[0].createdOn,
-            email: filterUser[0].email,
-            firstName: filterUser[0].firstName,
-            lastName: filterUser[0].lastName,
-            isRemembered: filterUser[0].isRemembered,
-            modifiedOn: new Date(),
-            phone: filterUser[0].phone,
-            password: password,
-            username: filterUser[0].username
+            password: password
         }
         console.log('User to change: ', updateUserPassword)
         
@@ -56,12 +48,18 @@ function Form() {
 
         try {
             // Send updated user data to server using PUT method
-            const response = await axios.put('http://localhost:3001/update/user', updateUserPassword)
-            console.log(response.data)
-            isSuccess = true
-            setEmail('')
-            setPassword('')
-            setConfirmPass('') 
+            const response = await axios.patch('http://localhost:3001/update/password', updateUserPassword)
+            if (response.status >= 200 && response.status < 300) {
+                console.log(response.data)
+                isSuccess = true
+                setEmail('')
+                setPassword('')
+                setConfirmPass('') 
+            } else {
+                console.error('Received an unexpected status code:', response.status)
+                isSuccess = false
+            }
+            
 
         } catch (error) {
             alert(error)

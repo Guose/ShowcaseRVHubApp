@@ -46,8 +46,12 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUserAsync(ShowcaseUser user)
+        public async Task<ActionResult> UpdateUserAsync(Guid id, ShowcaseUser user)
         {
+            ShowcaseUser showcaseUser = await _userRepo.GetUserByIdAsync(id);
+            if (showcaseUser == null)
+                return NotFound(new { Message = $"Item with id {id} does not exist." });
+
             await _userRepo.UpdateUserAsync(user);
 
             return Ok(user);

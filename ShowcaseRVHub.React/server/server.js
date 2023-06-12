@@ -16,12 +16,6 @@ app.get('/users', (req, res) => {
     .then(response => {
         res.json(response.data)
     })
-    // fetch(url + '/users')
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log(data)
-    //     res.json(data)
-    // })
 })
 
 app.patch('/update/password', (req, res) => {
@@ -37,10 +31,17 @@ app.patch('/update/password', (req, res) => {
         }], {
             headers: {"Content-Type": "application/json"}
         })
-        .then(response => {
-            console.log(req.body.password)
-            console.log('Password updated successfully')
-            res.json({message: 'Password updated successfully'})
+        .then((response) => {
+            if (response.status >= 200 && response.status < 300) {
+                // Successfull status code
+                console.log(req.body.password)
+                console.log('Password updated successfully')
+                res.json({message: 'Password updated successfully'})
+            } else {
+                // Handle other status codes
+                console.log('Received an unexpected status code:', response.status)
+                res.status(response.status).send('Received an unexpected status code')
+            }
         })
         .catch(error => {
             console.error('.then catch error: ', error)
@@ -58,17 +59,20 @@ app.put('/update/user', (req, res) => {
         return
     }
     try {        
-    axios.put(url + '/users/' + req.body.id, {
-        method: 'PUT',
-        headers: { "Content-Type": "application/json"},
-        body: JSON.stringify(req.body)
+    axios.put(url + '/users/' + req.body.id, req.body, {
+        headers: { "Content-Type": "application/json"}
     })
-    .then(console.log('Update to id: ', req.body.id))
-    .catch((err) => {console.log(err.message)})
-
-    res.send("Send was successfull")
+    .then(() => {
+        console.log('Update to id: ', req.body.id)
+        res.send("Send was successfull")
+    })
+    .catch((err) => {
+        console.log(err.message)
+        res.status(500).send('An error has occurred in the \'PUT\'/.then/catch')
+    })
     } catch (error) {
         console.error(error)
+        res.status(500).send('An error has occurred in the try/catch')
     }
     
 })
