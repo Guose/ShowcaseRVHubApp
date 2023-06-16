@@ -17,7 +17,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VehicleRV>>> GetVehiclesAsync()
+        public async Task<ActionResult<IEnumerable<VehicleRv>>> GetVehiclesAsync()
         {
             var rvs = await _rvRepo.GetVehiclesAsync();
 
@@ -25,7 +25,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<VehicleRV>> GetVehicleByIdAsync(int id)
+        public async Task<ActionResult<VehicleRv>> GetVehicleByIdAsync(int id)
         {
             var rv = await _rvRepo.GetVehicleByIdAsync(id);
 
@@ -33,7 +33,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<VehicleRV>> CreateRVAsync(VehicleRV rv)
+        public async Task<ActionResult<VehicleRv>> CreateRVAsync(VehicleRv rv)
         {
             await _rvRepo.CreateVehicleRvAsync(rv);
 

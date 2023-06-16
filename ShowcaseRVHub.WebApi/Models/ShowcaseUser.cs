@@ -15,13 +15,13 @@ namespace ShowcaseRVHub.WebApi.Models
         public DateTime? ModifiedOn { get; set; }
         public bool IsRemembered { get; set; } = false;
 
-        public List<VehicleRV> Vehicles { get; set; }
+        public List<VehicleRv> Vehicles { get; set; }
 
         public ShowcaseUser()
         {
             CreatedOn = DateTime.UtcNow;
             ModifiedOn = null;
-            Vehicles = new List<VehicleRV>();
+            Vehicles = new List<VehicleRv>();
         }
     }
 }

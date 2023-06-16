@@ -5,9 +5,9 @@ namespace ShowcaseRVHub.WebApi.Data.Interfaces
 {
     public interface IRVRepo
     {
-        Task CreateVehicleRvAsync(VehicleRV rv);
-        Task<IEnumerable<VehicleRV>> GetVehiclesAsync();
-        Task<VehicleRV> GetVehicleByIdAsync(int id);
+        Task CreateVehicleRvAsync(VehicleRv rv);
+        Task<IEnumerable<VehicleRv>> GetVehiclesAsync();
+        Task<VehicleRv> GetVehicleByIdAsync(int id);
         Task UpdateUserAsync(VehicleRvDTO rv);
         Task DeleteUserAsync(int id);
     }

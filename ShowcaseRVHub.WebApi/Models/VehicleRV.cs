@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ShowcaseRVHub.WebApi.Models
 {
-    public class VehicleRV
+    public class VehicleRv
     {
         [Key] public int Id { get; set; }
         [Required] public string Make { get; set; } = string.Empty;
@@ -23,10 +23,12 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public int GeneratorHours { get; set; }
         [Required] public LevelType FuelLevel { get; set; }
         [Required] public BedType MasterBedType { get; set; }
-        [Required] public bool IsBooked { get; set; }
-        [Required] public bool HasSlideout { get; set; }
-        [Required] public bool HasGenerator { get; set; }
+        [Required] public bool IsBooked { get; set; } = false;
+        [Required] public bool HasSlideout { get; set; } = false;
+        [Required] public bool HasGenerator { get; set; } = false;
 
+        [Required] public int RenterId { get; set; }
+        public ShowcaseRenter Renter { get; set; } = new ShowcaseRenter();
 
         [Required] public Guid UserId { get; set; }
         public ShowcaseUser? User { get; set; }

@@ -14,7 +14,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
         {
             _context = context;
         }
-        public async Task CreateVehicleRvAsync(VehicleRV rv)
+        public async Task CreateVehicleRvAsync(VehicleRv rv)
         {
             if (rv == null)
                 throw new ArgumentNullException(nameof(rv));
@@ -34,7 +34,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<VehicleRV> GetVehicleByIdAsync(int id)
+        public async Task<VehicleRv> GetVehicleByIdAsync(int id)
         {
             var vehicle = await _context.VehicleRVs.FirstOrDefaultAsyncEF(v => v.Id == id);
 
@@ -44,7 +44,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             return vehicle;
         }
 
-        public async Task<IEnumerable<VehicleRV>> GetVehiclesAsync()
+        public async Task<IEnumerable<VehicleRv>> GetVehiclesAsync()
         {
             return await _context.VehicleRVs.ToListAsyncEF();
         }
