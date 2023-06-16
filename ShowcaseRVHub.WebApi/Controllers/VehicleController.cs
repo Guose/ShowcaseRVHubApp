@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
 using ShowcaseRVHub.WebApi.Models;
-using ShowcaseRVHub.WebApi.Models.DTO;
 
 namespace ShowcaseRVHub.WebApi.Controllers
 {

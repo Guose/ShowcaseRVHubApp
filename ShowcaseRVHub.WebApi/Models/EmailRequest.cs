@@ -12,6 +12,7 @@
         public string LastName { get; set; } = string.Empty;
         public string ToEmail { get; set; }
         public string TemplateId { get; set; }
+        public string Email { get; set; } = string.Empty;
         public Dictionary<string, string> TemplateData { get; set; }
     }
 }

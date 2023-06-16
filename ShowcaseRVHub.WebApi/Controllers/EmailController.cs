@@ -23,9 +23,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
             var response = await client.SendEmailAsync(msg);
 
             if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
-            {
                 throw new Exception($"Faild to send email. Staus Code: {response.StatusCode}");
-            }
+
+            return Ok(response);
         }
     }
 }

@@ -2,8 +2,6 @@
 using LinqToDB.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
 using ShowcaseRVHub.WebApi.Models;
-using ShowcaseRVHub.WebApi.Models.DTO;
-using ShowcaseRVHub.WebApi.Models.EnumTypes;
 
 namespace ShowcaseRVHub.WebApi.Data.Repositories
 {

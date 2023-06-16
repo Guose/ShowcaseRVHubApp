@@ -15,9 +15,12 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public bool IsRenterTrained { get; set; }
 
         [Required] public int RentalId { get; set; }
-        public ShowcaseRenter? Renter { get; set; }
+        public ShowcaseRenter Renter { get; set; } = new ShowcaseRenter();
 
         [Required] public int UserId { get; set; }
-        public 
+        public ShowcaseUser User { get; set; } = new ShowcaseUser();
+
+        [Required] public int VehicleId { get; set; }
+        public VehicleRv Vehicle { get; set; } = new VehicleRv();
     }
 }
