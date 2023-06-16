@@ -4,10 +4,10 @@ namespace ShowcaseRVHub.WebApi.Data.Interfaces
 {
     public interface IRenterRepo
     {
-        Task CreateUserAsync(Rental rental);
-        Task<IEnumerable<Rental>> GetlRentalsAsync();
+        Task CreateUserAsync(ShowcaseRenter rental);
+        Task<IEnumerable<ShowcaseRenter>> GetlRentalsAsync();
         Task<Rental> GetRentalByIdAsync(int id);
-        Task UpdateRentalAsync(Rental rental);
+        Task UpdateRentalAsync(ShowcaseRenter rental);
         Task DeleteRentalAsync(int id);
     }
 }
