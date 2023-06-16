@@ -40,9 +40,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateRVAsync(VehicleRvDTO rvDto)
+        public async Task<ActionResult> UpdateRVAsync(VehicleRv newRv)
         {
-            await _rvRepo.UpdateUserAsync(rvDto);
+            await _rvRepo.UpdateUserAsync(newRv);
 
             return NoContent();
         }

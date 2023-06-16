@@ -7,7 +7,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-const baseAddress = 'http://localhost:5012'
+const baseAddress = 'http://192.168.1.10:5012'
 const url = baseAddress + '/api'
 const PORT = process.env.PORT || 3001
 

@@ -47,7 +47,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             return await _context.VehicleRVs.ToListAsyncEF();
         }
 
-        public async Task UpdateUserAsync(VehicleRvDTO newRv)
+        public async Task UpdateUserAsync(VehicleRv newRv)
         {
             var updateRv = await _context.VehicleRVs.FirstOrDefaultAsyncEF(v => v.Id == newRv.Id);
 
