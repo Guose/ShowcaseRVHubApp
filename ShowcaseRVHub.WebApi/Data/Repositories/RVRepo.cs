@@ -1,5 +1,5 @@
-﻿using LinqToDB;
-using LinqToDB.EntityFrameworkCore;
+﻿using LinqToDB.EntityFrameworkCore;
+using Microsoft.AspNetCore.JsonPatch;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
 using ShowcaseRVHub.WebApi.Models;
 
@@ -45,6 +45,24 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
         public async Task<IEnumerable<VehicleRv>> GetVehiclesAsync()
         {
             return await _context.VehicleRVs.ToListAsyncEF();
+        }
+
+        public async Task UpdateRvWithRenter(VehicleRv rv, ShowcaseRenter renter)
+        {
+            var updateRv = await _context.VehicleRVs.FirstOrDefaultAsyncEF(rv => rv.Id == rv.Id);
+
+            if (updateRv == null)
+                throw new ArgumentNullException(nameof(updateRv));
+
+            updateRv.RenterId = renter.Id;
+
+            _context.VehicleRVs.Update(updateRv);
+            await _context.SaveChangesAsync();
+        }
+
+        public Task UpdateRvWithRenter(VehicleRv vehicle, JsonPatchDocument<ShowcaseRenter> renter)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task UpdateUserAsync(VehicleRv newRv)

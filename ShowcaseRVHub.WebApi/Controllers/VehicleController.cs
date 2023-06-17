@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using LinqToDB.Tools;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
 using ShowcaseRVHub.WebApi.Models;
 
@@ -9,10 +12,12 @@ namespace ShowcaseRVHub.WebApi.Controllers
     public class VehicleController : ControllerBase
     {
         private readonly IRVRepo _rvRepo;
+        private readonly IRenterRepo _renterRepo;
 
-        public VehicleController(IRVRepo rvRepo)
+        public VehicleController(IRVRepo rvRepo, IRenterRepo renterRepo)
         {
             _rvRepo = rvRepo;
+            _renterRepo = renterRepo;
         }
 
         [HttpGet]

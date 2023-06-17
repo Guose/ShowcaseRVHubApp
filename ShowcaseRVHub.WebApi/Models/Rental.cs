@@ -4,7 +4,7 @@ namespace ShowcaseRVHub.WebApi.Models
 {
     public class Rental
     {
-        [Required] public int Id { get; set; }
+        [Key] public int Id { get; set; }
         [Required] public bool IsExteriorCleaned { get; set; }
         [Required] public bool IsInteriorCleaned { get; set; }
         [Required] public bool IsTireInspected { get; set; }
@@ -17,7 +17,7 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public int RentalId { get; set; }
         public ShowcaseRenter Renter { get; set; } = new ShowcaseRenter();
 
-        [Required] public int UserId { get; set; }
+        [Required] public Guid UserId { get; set; }
         public ShowcaseUser User { get; set; } = new ShowcaseUser();
 
         [Required] public int VehicleId { get; set; }

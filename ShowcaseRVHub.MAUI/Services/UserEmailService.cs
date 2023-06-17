@@ -13,7 +13,7 @@ namespace ShowcaseRVHub.MAUI.Services
         {
             _userRepository = userRepository;
             _httpClient = new HttpClient();
-            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5093" : "http://localhost:5093";
+            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5093" : "http://192.168.1.10:5093";
             _url = $"{_baseAddress}/email";
 
             _jsonSerializerOptions = new JsonSerializerOptions

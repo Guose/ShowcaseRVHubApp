@@ -17,17 +17,17 @@ namespace ShowcaseRVHub.WebApi.Models
         [Nullable] public double Height { get; set; }
         [Nullable] public string Image { get; set; } = string.Empty;
         [Nullable] public string Description { get; set; } = string.Empty;
-        [Required] public DateTime CreatedOn { get; set; }
-        [Required] public DateTime ModifiedOn { get; set; }
+        [Required] public DateTime CreatedOn { get; set; } = DateTime.Now;
+        [Nullable] public DateTime ModifiedOn { get; set; }
         [Required] public double Odometer { get; set; }
         [Required] public int GeneratorHours { get; set; }
         [Required] public LevelType FuelLevel { get; set; }
         [Required] public BedType MasterBedType { get; set; }
-        [Required] public bool IsBooked { get; set; } = false;
-        [Required] public bool HasSlideout { get; set; } = false;
-        [Required] public bool HasGenerator { get; set; } = false;
+        [Nullable] public bool IsBooked { get; set; } = false;
+        [Nullable] public bool HasSlideout { get; set; } = false;
+        [Nullable] public bool HasGenerator { get; set; } = false;
 
-        [Required] public int RenterId { get; set; }
+        [Nullable] public int RenterId { get; set; }
         public ShowcaseRenter Renter { get; set; } = new ShowcaseRenter();
 
         [Required] public Guid UserId { get; set; }

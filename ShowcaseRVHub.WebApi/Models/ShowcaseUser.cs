@@ -15,6 +15,7 @@ namespace ShowcaseRVHub.WebApi.Models
         public DateTime? ModifiedOn { get; set; }
         public bool IsRemembered { get; set; } = false;
 
+        public List<Rental> Rentals { get; set; }
         public List<VehicleRv> Vehicles { get; set; }
 
         public ShowcaseUser()
@@ -22,6 +23,7 @@ namespace ShowcaseRVHub.WebApi.Models
             CreatedOn = DateTime.UtcNow;
             ModifiedOn = null;
             Vehicles = new List<VehicleRv>();
+            Rentals = new List<Rental>();
         }
     }
 }
