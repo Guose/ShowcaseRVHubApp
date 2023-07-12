@@ -4,7 +4,8 @@
     {
         King = 1,
         Queen = 2,
-        Twin = 3,
-        Single = 4,
+        Full = 3,
+        Twin = 4,
+        Single = 5,
     }
 }

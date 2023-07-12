@@ -6,80 +6,130 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
 {
     public class UserRepo : IUserRepo
     {
-        private readonly ShowcaseDbContext _context;
+        public ShowcaseDbContext Context { get; set; }
         public UserRepo(ShowcaseDbContext context)
         {
-            _context = context;
+            Context = context;
         }
-        public async Task CreateUserAsync(ShowcaseUser user)
+        public async Task<bool> CreateUserAsync(ShowcaseUser user)
         {
-            if (user == null)
-                return;
+            try
+            {
+                if (user == null)
+                    return false;
 
-            _context.ShowcaseUsers.Add(user);
-            await _context.SaveChangesAsync();
-        }
+                Context.ShowcaseUsers.Add(user);
+                await Context.SaveChangesAsync();
 
-        public async Task DeleteUserAsync(Guid id)
-        {
-            var deleteUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
-
-            if (deleteUser == null)
-                throw new ArgumentNullException(nameof(deleteUser));
-
-            _context.ShowcaseUsers.Remove(deleteUser);
-            await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
 
-        public async Task<ShowcaseUser> GetUserByIdAsync(Guid id)
+        public async Task<bool> DeleteUserAsync(Guid id)
         {
-            var user = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
+            try
+            {
+                ShowcaseUser? deleteUser = await Context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
 
-            if(user == null)
-                throw new ArgumentNullException(nameof(user));
+                if (deleteUser == null)
+                    return false;
 
-            return user;
+                Context.ShowcaseUsers.Remove(deleteUser);
+                await Context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
 
-        public async Task<IEnumerable<ShowcaseUser>> GetUsersAsync()
+        public async Task<ShowcaseUser?> GetUserByIdAsync(Guid id)
         {
-            return await _context.ShowcaseUsers.ToListAsyncEF();
+            try
+            {
+                ShowcaseUser? user = await Context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == id);
+
+                if (user == null)
+                    return null;
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentNullException(ex.Message);
+            }
         }
 
-        public async Task UpdateUsersPasswordAsync(Guid userId, ShowcaseUser newUser)
+        public async Task<IEnumerable<ShowcaseUser>?> GetUsersAsync()
         {
-            var updateUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == userId);
-
-            if (updateUser == null)
-                return;
-
-            // Update User's password and update ModifiedOn property
-            updateUser.Password = string.IsNullOrEmpty(newUser.Password) ? updateUser.Password : newUser.Password;
-            updateUser.ModifiedOn = DateTime.Now;
-
-            _context.ShowcaseUsers.Update(updateUser);
-            await _context.SaveChangesAsync();
+            try
+            {
+                return await Context.ShowcaseUsers.ToListAsyncEF();
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentNullException(ex.Message);
+            }
         }
 
-        public async Task UpdateUserAsync(ShowcaseUser newUser)
+        public async Task<bool> UpdateUsersPasswordAsync(Guid userId, ShowcaseUser newUser)
         {
-            var updateUser = await _context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == newUser.Id);
+            try
+            {
+                ShowcaseUser? updateUser = await Context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == userId);
 
-            if (updateUser == null)
-                return;
+                if (updateUser == null)
+                    return false;
 
-            // Update User and update ModifiedOn property
-            updateUser.FirstName = string.IsNullOrEmpty(newUser.FirstName) ? updateUser.FirstName : newUser.FirstName;
-            updateUser.LastName = string.IsNullOrEmpty(newUser.LastName) ? updateUser.LastName : newUser.LastName;
-            updateUser.Email = string.IsNullOrEmpty(newUser.Email) ? updateUser.Email : newUser.Email;
-            updateUser.Phone = string.IsNullOrEmpty(newUser.Phone) ? updateUser.Phone : newUser.Phone;
-            updateUser.Username = string.IsNullOrEmpty(newUser.Username) ? updateUser.Username : newUser.Username;
-            updateUser.Password = string.IsNullOrEmpty(newUser.Password) ? updateUser.Password : newUser.Password;
-            updateUser.ModifiedOn = DateTime.Now;
-            updateUser.IsRemembered = newUser.IsRemembered;
+                // Update User's password and update ModifiedOn property
+                updateUser.Password = string.IsNullOrEmpty(newUser.Password) ? updateUser.Password : newUser.Password;
+                updateUser.ModifiedOn = DateTime.Now;
 
-            _context.ShowcaseUsers.Update(updateUser);
-            await _context.SaveChangesAsync();
+                Context.ShowcaseUsers.Update(updateUser);
+                await Context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
+
+        public async Task<bool> UpdateUserAsync(ShowcaseUser newUser)
+        {
+            try
+            {
+                var updateUser = await Context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == newUser.Id);
+
+                if (updateUser == null)
+                    return false;
+
+                // Update User and update ModifiedOn property
+                updateUser.FirstName = string.IsNullOrEmpty(newUser.FirstName) ? updateUser.FirstName : newUser.FirstName;
+                updateUser.LastName = string.IsNullOrEmpty(newUser.LastName) ? updateUser.LastName : newUser.LastName;
+                updateUser.Email = string.IsNullOrEmpty(newUser.Email) ? updateUser.Email : newUser.Email;
+                updateUser.Phone = string.IsNullOrEmpty(newUser.Phone) ? updateUser.Phone : newUser.Phone;
+                updateUser.Username = string.IsNullOrEmpty(newUser.Username) ? updateUser.Username : newUser.Username;
+                updateUser.Password = string.IsNullOrEmpty(newUser.Password) ? updateUser.Password : newUser.Password;
+                updateUser.ModifiedOn = DateTime.Now;
+                updateUser.IsRemembered = newUser.IsRemembered;
+
+                Context.ShowcaseUsers.Update(updateUser);
+                await Context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
     }
 }

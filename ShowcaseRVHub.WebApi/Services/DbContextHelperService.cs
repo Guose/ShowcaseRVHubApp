@@ -3,11 +3,11 @@ using ShowcaseRVHub.WebApi.Data;
 
 namespace ShowcaseRVHub.WebApi.Services
 {
-    public class DbContextService
+    public class DbContextHelperService
     {
         private readonly ShowcaseDbContext _context;
 
-        public DbContextService(ShowcaseDbContext context)
+        public DbContextHelperService(ShowcaseDbContext context)
         {
             _context = context;
         }

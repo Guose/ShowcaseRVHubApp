@@ -7,81 +7,127 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
 {
     public class RVRepo : IRVRepo
     {
-        private readonly ShowcaseDbContext _context;
+        public ShowcaseDbContext Context { get; set; }
         public RVRepo(ShowcaseDbContext context)
         {
-            _context = context;
+            Context = context;
         }
-        public async Task CreateVehicleRvAsync(VehicleRv rv)
+        public async Task<bool> CreateVehicleRvAsync(VehicleRv rv)
         {
-            if (rv == null)
-                throw new ArgumentNullException(nameof(rv));
+            try
+            {
+                if (rv == null)
+                    return false;
 
-            _context.VehicleRVs.Add(rv);
-            await _context.SaveChangesAsync();
-        }
+                Context.VehicleRVs.Add(rv);
+                await Context.SaveChangesAsync();
 
-        public async Task DeleteUserAsync(int id)
-        {
-            var deleteVehicle = await _context.VehicleRVs.FirstOrDefaultAsyncEF(v => v.Id == id);
-
-            if (deleteVehicle == null)
-                throw new ArgumentNullException(nameof(deleteVehicle));
-
-            _context.VehicleRVs.Remove(deleteVehicle);
-            await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
 
-        public async Task<VehicleRv> GetVehicleByIdAsync(int id)
+        public async Task<bool> DeleteUserAsync(int id)
         {
-            var vehicle = await _context.VehicleRVs.FirstOrDefaultAsyncEF(v => v.Id == id);
+            try
+            {
+                VehicleRv? deleteVehicle = await Context.VehicleRVs.FirstOrDefaultAsyncEF(v => v.Id == id);
 
-            if (vehicle == null)
-                throw new ArgumentNullException(nameof(vehicle));
+                if (deleteVehicle == null)
+                    return false;
 
-            return vehicle;
+                Context.VehicleRVs.Remove(deleteVehicle);
+                await Context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
 
-        public async Task<IEnumerable<VehicleRv>> GetVehiclesAsync()
+        public async Task<VehicleRv?> GetVehicleByIdAsync(int id)
         {
-            return await _context.VehicleRVs.ToListAsyncEF();
+            try
+            {
+                VehicleRv? vehicle = await Context.VehicleRVs.FirstOrDefaultAsyncEF(v => v.Id == id);
+
+                if (vehicle == null)
+                    return null;
+
+                return vehicle;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
 
-        public async Task UpdateRvWithRenter(VehicleRv rv, ShowcaseRenter renter)
+        public async Task<IEnumerable<VehicleRv>?> GetVehiclesAsync()
         {
-            var updateRv = await _context.VehicleRVs.FirstOrDefaultAsyncEF(rv => rv.Id == rv.Id);
-
-            if (updateRv == null)
-                throw new ArgumentNullException(nameof(updateRv));
-
-            updateRv.RenterId = renter.Id;
-
-            _context.VehicleRVs.Update(updateRv);
-            await _context.SaveChangesAsync();
+            try
+            {
+                return await Context.VehicleRVs.ToListAsyncEF();
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
 
-        public Task UpdateRvWithRenter(VehicleRv vehicle, JsonPatchDocument<ShowcaseRenter> renter)
+        public async Task<bool> UpdateRvWithRenter(VehicleRv rv, ShowcaseRenter renter)
         {
-            throw new NotImplementedException();
+            try
+            {
+                VehicleRv? updateRv = await Context.VehicleRVs.FirstOrDefaultAsyncEF(rv => rv.Id == rv.Id);
+
+                if (updateRv == null)
+                    return false;
+
+                updateRv.RenterId = renter.Id;
+                updateRv.ModifiedOn = DateTime.Now;
+
+                Context.VehicleRVs.Update(updateRv);
+                await Context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
 
-        public async Task UpdateUserAsync(VehicleRv newRv)
+        public async Task<bool> UpdateUserAsync(VehicleRv newRv)
         {
-            var updateRv = await _context.VehicleRVs.FirstOrDefaultAsyncEF(v => v.Id == newRv.Id);
+            try
+            {
+                var updateRv = await Context.VehicleRVs.FirstOrDefaultAsyncEF(v => v.Id == newRv.Id);
 
-            if (updateRv == null)
-                throw new ArgumentNullException(nameof(updateRv));
-            
-            updateRv.Image = string.IsNullOrEmpty(newRv.Image) ? updateRv.Image : newRv.Image;
-            updateRv.Description = string.IsNullOrEmpty(newRv.Description) ? updateRv.Description : newRv.Description;
-            updateRv.Odometer = newRv.Odometer < 1 ? updateRv.Odometer : newRv.Odometer;
-            updateRv.GeneratorHours = newRv.GeneratorHours < 1 ? updateRv.GeneratorHours : newRv.GeneratorHours;
-            updateRv.FuelLevel = newRv == null ? updateRv.FuelLevel : newRv.FuelLevel;
-            updateRv.IsBooked = newRv == null ? updateRv.IsBooked : newRv.IsBooked;
-            updateRv.ModifiedOn = DateTime.Now;
+                if (updateRv == null)
+                    return false;
 
-            _context.VehicleRVs.Update(updateRv);
-            await _context.SaveChangesAsync();
+                updateRv.Image = string.IsNullOrEmpty(newRv.Image) ? updateRv.Image : newRv.Image;
+                updateRv.Description = string.IsNullOrEmpty(newRv.Description) ? updateRv.Description : newRv.Description;
+                updateRv.Odometer = newRv.Odometer < 1 ? updateRv.Odometer : newRv.Odometer;
+                updateRv.GeneratorHours = newRv.GeneratorHours < 1 ? updateRv.GeneratorHours : newRv.GeneratorHours;
+                updateRv.FuelLevel = newRv == null ? updateRv.FuelLevel : newRv.FuelLevel;
+                updateRv.IsBooked = newRv == null ? updateRv.IsBooked : newRv.IsBooked;
+                updateRv.ModifiedOn = DateTime.Now;
+
+                Context.VehicleRVs.Update(updateRv);
+                await Context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
     }
 }

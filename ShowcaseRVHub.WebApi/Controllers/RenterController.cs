@@ -17,9 +17,12 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShowcaseRenter>>> GetAllRenters()
+        public async Task<ActionResult<IEnumerable<ShowcaseRenter>>> GetRenters()
         {
-            var renters = await _renterRepo.GetRentersAsync();
+            IEnumerable<ShowcaseRenter>? renters = await _renterRepo.GetRentersAsync();
+
+            if (renters == null)
+                return NotFound(new { Message = $"Your request could not be made." });
 
             return Ok(renters.Take(5));
         }
@@ -27,7 +30,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ShowcaseRenter>> GetRenterById(int id)
         {
-            ShowcaseRenter renter = await _renterRepo.GetRenterByIdAsync(id);
+            ShowcaseRenter? renter = await _renterRepo.GetRenterByIdAsync(id);
 
             if (renter == null)
                 return NotFound(new { Message = $"Item with id {id} does not exist." });
@@ -38,45 +41,43 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateRental(ShowcaseRenter renter)
         {
-            if (renter == null)
+            if (await _renterRepo.CreateRenterAsync(renter))
+                return Ok(renter);
+            else
                 return BadRequest(new { Message = $"Your request could not be made." });
-
-            await _renterRepo.UpdateRenterAsync(renter);
-
-            return Ok(renter);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateRental(ShowcaseRenter updateRenter)
+        public async Task<ActionResult> UpdateRental(int id, ShowcaseRenter updateRenter)
         {
-            ShowcaseRenter renter = await _renterRepo.GetRenterByIdAsync(updateRenter.Id);
-            if (renter == null)
-                return NotFound(new { Message = $"Item with id {updateRenter.Id} does not exist." });
-
-            await _renterRepo.UpdateRenterAsync(renter);
-
-            return Ok(renter);
+            if (await _renterRepo.UpdateRenterAsync(updateRenter))
+                return Ok(updateRenter);
+            else
+                return NotFound(new { Message = $"Renter with id {id} does not exist." });
         }
 
         [HttpPatch("{id}")]
         public async Task<ActionResult> UpdateRentalPatch(int id, JsonPatchDocument<ShowcaseRenter> updateRenter)
         {
-            ShowcaseRenter renterPatch = await _renterRepo.GetRenterByIdAsync(id);
+            ShowcaseRenter? renterPatch = await _renterRepo.GetRenterByIdAsync(id);
+
             if (renterPatch == null)
-                return NotFound(new { Message = $"Item with id {id} does not exist." });
+                return NotFound(new { Message = $"Renter with id {id} does not exist." });
 
             updateRenter.ApplyTo(renterPatch);
-            await _renterRepo.UpdateRenterAsync(renterPatch);
-
-            return Ok(renterPatch);
+            if (await _renterRepo.UpdateRenterAsync(renterPatch))
+                return Ok(renterPatch);
+            else
+                return BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteRental(int id)
         {
-            await _renterRepo.DeleteRenterAsync(id);
-
-            return Ok();
+            if (await _renterRepo.DeleteRenterAsync(id))
+                return NoContent();
+            else
+                return BadRequest(new { Message = $"Your request could not be made." });
         }
     }
 }

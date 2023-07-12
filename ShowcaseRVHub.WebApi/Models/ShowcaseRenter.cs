@@ -9,6 +9,6 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public string Lastname { get; set; } = string.Empty;
         [Required] public string Email { get; set; } = string.Empty;
         [Required] public string Phone { get; set; } = string.Empty;
-        public List<VehicleRv> Vehicles { get; set; } = new List<VehicleRv>();
+        public List<VehicleRv>? Vehicles { get; set; }
     }
 }

@@ -28,9 +28,16 @@ namespace ShowcaseRVHub.WebApi.Models
         [Nullable] public bool HasGenerator { get; set; } = false;
 
         [Nullable] public int RenterId { get; set; }
-        public ShowcaseRenter Renter { get; set; } = new ShowcaseRenter();
+        public ShowcaseRenter? Renter { get; set; }
 
         [Required] public Guid UserId { get; set; }
         public ShowcaseUser? User { get; set; }
+
+        public List<Rental>? Rentals { get; set; }
+
+        public VehicleRv()
+        {
+            User = new ShowcaseUser();
+        }
     }
 }
