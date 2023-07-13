@@ -131,5 +131,15 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                 throw new ArgumentException(ex.Message);
             }
         }
+
+        public Task<ShowcaseUser?> GetUserVehicleRVs(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ShowcaseUser?> GetUserRentals(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

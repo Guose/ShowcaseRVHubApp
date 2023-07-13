@@ -9,7 +9,7 @@ namespace ShowcaseRVHub.WebApi.Data.Interfaces
         Task<IEnumerable<VehicleRv>?> GetVehiclesAsync();
         Task<VehicleRv?> GetVehicleByIdAsync(int id);
         Task<bool> UpdateUserAsync(VehicleRv rv);
-        Task<bool> UpdateRvWithRenter(VehicleRv rv, ShowcaseRenter renter);
+        Task<bool> UpdateRvWithRentalAsync(Rental rental);
         Task<bool> DeleteUserAsync(int id);
     }
 }

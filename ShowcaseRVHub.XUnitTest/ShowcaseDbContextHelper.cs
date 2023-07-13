@@ -31,18 +31,17 @@ namespace ShowcaseRVHub.XUnitTest
                 db.SaveChangesAsync();
             }
 
-            if (!db.Rentals.Any())
-            {
-                db.Rentals.AddRangeAsync(DbSeedData.GetRentalSeedData());
-                db.SaveChangesAsync();
-            }
-
             if (!db.VehicleRVs.Any())
             {
                 db.VehicleRVs.AddRangeAsync(DbSeedData.GetRvSeedData());
                 db.SaveChangesAsync();
             }
 
+            if (!db.Rentals.Any())
+            {
+                db.Rentals.AddRangeAsync(DbSeedData.GetRentalSeedData());
+                db.SaveChangesAsync();
+            }
             return db;
         }
     }

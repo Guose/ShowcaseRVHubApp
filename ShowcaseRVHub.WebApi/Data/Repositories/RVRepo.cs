@@ -1,5 +1,4 @@
 ﻿using LinqToDB.EntityFrameworkCore;
-using Microsoft.AspNetCore.JsonPatch;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
 using ShowcaseRVHub.WebApi.Models;
 
@@ -79,7 +78,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<bool> UpdateRvWithRenter(VehicleRv rv, ShowcaseRenter renter)
+        public async Task<bool> UpdateRvWithRentalAsync(Rental rental)
         {
             try
             {
@@ -88,7 +87,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                 if (updateRv == null)
                     return false;
 
-                updateRv.RenterId = renter.Id;
+                updateRv.Rentals?.Add(rental);
                 updateRv.ModifiedOn = DateTime.Now;
 
                 Context.VehicleRVs.Update(updateRv);

@@ -36,7 +36,8 @@ namespace ShowcaseRVHub.XUnitTest
                     HasGenerator = true,
                     GeneratorHours = 48,
                     Odometer = 68912,
-                    MasterBedType = BedType.Queen
+                    MasterBedType = BedType.Queen,
+                    UserId = _userId
                 },
                 new VehicleRv
                 {
@@ -65,7 +66,8 @@ namespace ShowcaseRVHub.XUnitTest
                     HasGenerator = true,
                     GeneratorHours = 72,
                     Odometer = 79362,
-                    MasterBedType = BedType.Full
+                    MasterBedType = BedType.Full,
+                    UserId = _userId
                 }
             };
 
