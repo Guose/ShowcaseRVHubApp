@@ -78,29 +78,6 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<bool> UpdateRvWithRentalAsync(Rental rental)
-        {
-            try
-            {
-                VehicleRv? updateRv = await Context.VehicleRVs.FirstOrDefaultAsyncEF(rv => rv.Id == rv.Id);
-
-                if (updateRv == null)
-                    return false;
-
-                updateRv.Rentals?.Add(rental);
-                updateRv.ModifiedOn = DateTime.Now;
-
-                Context.VehicleRVs.Update(updateRv);
-                await Context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-        }
-
         public async Task<bool> UpdateUserAsync(VehicleRv newRv)
         {
             try

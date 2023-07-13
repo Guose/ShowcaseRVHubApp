@@ -38,5 +38,16 @@ namespace ShowcaseRVHub.XUnitTest
 
             Assert.True(await rvAPIs.DeleteUserAsync(rv.Id));
         }
+
+        [Fact]
+        public async Task Can_Test_Relationship_Rental_To_RV()
+        {
+            VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(2);
+
+            if (rv == null || rv.Rentals == null)
+                Assert.Fail();
+
+            Assert.True(rv.Rentals?.Count > 0);
+        }
     }
 }

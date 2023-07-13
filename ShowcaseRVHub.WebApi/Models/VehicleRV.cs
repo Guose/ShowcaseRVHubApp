@@ -30,12 +30,13 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public Guid UserId { get; set; }
         public ShowcaseUser? User { get; set; }
 
-        public List<Rental>? Rentals { get; set; }
+        public List<Rental> Rentals { get; set; }
 
         public VehicleRv()
         {
             CreatedOn = DateTime.Now;
             ModifiedOn = null;
+            Rentals = new List<Rental>();
         }
     }
 }

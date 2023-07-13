@@ -98,9 +98,9 @@ namespace ShowcaseRVHub.XUnitTest
             return rentals;
         }
 
-        public static ShowcaseUser[] GetUserSeedData()
+        public static List<ShowcaseUser> GetUserSeedData()
         {
-            var users = new[]
+            List<ShowcaseUser> users = new()
             {
                 new ShowcaseUser
                 {

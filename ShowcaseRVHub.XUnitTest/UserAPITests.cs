@@ -39,10 +39,10 @@ namespace ShowcaseRVHub.XUnitTest
             Assert.True(await userAPIs.DeleteUserAsync(user.Id));
         }
 
-        [Fact]
-        public async Task Can_GetAll_User_Vehicles()
-        {
-            //var userQuery = from u in 
-        }
+        //[Fact]
+        //public async Task Can_GetAll_User_Vehicles()
+        //{
+            
+        //}
     }
 }
