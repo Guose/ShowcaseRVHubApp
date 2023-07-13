@@ -1,18 +1,18 @@
 ﻿using ShowcaseRVHub.WebApi.Models;
 using ShowcaseRVHub.WebApi.Models.EnumTypes;
 
-namespace ShowcaseRVHub.XUnitTest
+namespace ShowcaseRVHub.WebApi.Extensions
 {
-    public static class DbSeedData
+    public class DbSeedData
     {
-        private static readonly Guid _userId = new("BD06B1F3-5381-48FE-A444-C1054F1E0BF6");
+        private static readonly Guid _userId = new("CF3E94B7-4052-4585-86E8-B4EA68BA1BDF");
         public static List<VehicleRv> GetRvSeedData()
         {
             List<VehicleRv> rvs = new()
             {
                 new VehicleRv
                 {
-                    Id = 1,
+                    Id = -1,
                     Make = "Forest River",
                     Chassis = "Ford",
                     Year = 2019,
@@ -41,7 +41,7 @@ namespace ShowcaseRVHub.XUnitTest
                 },
                 new VehicleRv
                 {
-                    Id = 2,
+                    Id = -2,
                     Make = "Winnebago",
                     Chassis = "Ford",
                     Year = 2015,
@@ -80,7 +80,7 @@ namespace ShowcaseRVHub.XUnitTest
             {
                 new Rental
                 {
-                    Id = 1,
+                    Id = -1,
                     IsExteriorCleaned = true,
                     IsFluidChecked = true,
                     IsInteriorCleaned = true,
@@ -90,8 +90,8 @@ namespace ShowcaseRVHub.XUnitTest
                     IsSystemsChecked = true,
                     IsTireInspected = true,
                     UserId = _userId,
-                    RenterId = 1,
-                    VehicleId = 2,
+                    RenterId = -1,
+                    VehicleId = -2,
                 }
             };
 
@@ -122,7 +122,7 @@ namespace ShowcaseRVHub.XUnitTest
             {
                 new ShowcaseRenter
                 {
-                    Id = 1,
+                    Id = -1,
                     Firstname = "John",
                     Lastname = "Doe",
                     Email = "john@gmail.com",
@@ -130,7 +130,7 @@ namespace ShowcaseRVHub.XUnitTest
                 },
                 new ShowcaseRenter
                 {
-                    Id = 2,
+                    Id = -2,
                     Firstname = "Jane",
                     Lastname = "Doe",
                     Email = "jane@gmail.com",

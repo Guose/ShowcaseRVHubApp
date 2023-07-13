@@ -3,7 +3,7 @@ using Newtonsoft.Json.Serialization;
 using ShowcaseRVHub.WebApi.Data;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
 using ShowcaseRVHub.WebApi.Data.Repositories;
-using ShowcaseRVHub.WebApi.Services;
+using ShowcaseRVHub.WebApi.Extensions;
 using System.Diagnostics;
 
 internal class Program

@@ -17,7 +17,7 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Can_Get_Renter_By_ID()
         {
-            ShowcaseRenter? renter = await renterAPIs.GetRenterByIdAsync(1);
+            ShowcaseRenter? renter = await renterAPIs.GetRenterByIdAsync(-1);
             Assert.Equal("John", renter?.Firstname);
         }
 
@@ -31,7 +31,7 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Can_Delete_Renter_By_ID()
         {
-            ShowcaseRenter? renter = await renterAPIs.GetRenterByIdAsync(2);
+            ShowcaseRenter? renter = await renterAPIs.GetRenterByIdAsync(-2);
 
             if (renter == null)
                 Assert.Fail();

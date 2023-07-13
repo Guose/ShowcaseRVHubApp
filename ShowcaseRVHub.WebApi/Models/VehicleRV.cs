@@ -27,16 +27,15 @@ namespace ShowcaseRVHub.WebApi.Models
         public bool HasSlideout { get; set; } = false;
         public bool HasGenerator { get; set; } = false;
 
-        [Required] public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
         public ShowcaseUser? User { get; set; }
 
-        public List<Rental> Rentals { get; set; }
+        public List<Rental>? Rentals { get; set; }
 
         public VehicleRv()
         {
             CreatedOn = DateTime.Now;
             ModifiedOn = null;
-            Rentals = new List<Rental>();
         }
     }
 }

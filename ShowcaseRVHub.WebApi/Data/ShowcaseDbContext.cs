@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShowcaseRVHub.WebApi.Extensions;
 using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Data
@@ -15,6 +16,8 @@ namespace ShowcaseRVHub.WebApi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Seed();
         }
     }
 }

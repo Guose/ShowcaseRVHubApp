@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShowcaseRVHub.WebApi.Data;
 
@@ -10,9 +11,11 @@ using ShowcaseRVHub.WebApi.Data;
 namespace ShowcaseRVHub.WebApi.Migrations
 {
     [DbContext(typeof(ShowcaseDbContext))]
-    partial class ShowcaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230713203005_AddRVSeedData")]
+    partial class AddRVSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.7");
@@ -71,24 +74,6 @@ namespace ShowcaseRVHub.WebApi.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("Rentals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            CreatedOn = new DateTime(2023, 7, 13, 14, 8, 33, 138, DateTimeKind.Local).AddTicks(4661),
-                            IsExteriorCleaned = true,
-                            IsFluidChecked = true,
-                            IsInteriorCleaned = true,
-                            IsMaintenance = true,
-                            IsRenterTrained = true,
-                            IsSignalsChecked = true,
-                            IsSystemsChecked = true,
-                            IsTireInspected = true,
-                            RenterId = -1,
-                            UserId = new Guid("cf3e94b7-4052-4585-86e8-b4ea68ba1bdf"),
-                            VehicleId = -2
-                        });
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.ShowcaseRenter", b =>
@@ -243,6 +228,54 @@ namespace ShowcaseRVHub.WebApi.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("VehicleRVs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Chassis = "Ford",
+                            Class = (byte)3,
+                            CreatedOn = new DateTime(2023, 7, 13, 13, 30, 4, 925, DateTimeKind.Local).AddTicks(4706),
+                            Description = "Excellent for family vacations with all the extras included to make your trip enjoyable, feasible, and easy to use. Features include: RV has solar panels, thermal windows, and Artic Pack for winter travels, one slide out to increase living space, private master bedroom with memory foam queen bed & wardrobe area/cabinet, full queen bed above driver's seat, dinette converts to bed, full bathroom and shower, stove/oven combo, microwave, refrigerator/freezer, 2 AC units, motorized awning for easy access, and plenty of undercarriage storage area. Clean bedding, pots, pans, plates, bowls, coffee maker, cups, and kitchen utensils are included in rental. Other add-ons are available for rental: inflatable rafting tube, kayaks, paddle boards, sledding tubes, etc. 24/7 support with certified techs available to address the unexpected. We do offer delivery and pickup services and flexible with pickup & return times. Secure onsite parking of your vehicle is available on request. Towing of any trailer, boat, or vehicle is prohibited. Reservation dates confirmed once payment is made. If you have questions, please let us know.",
+                            FuelLevel = (byte)0,
+                            GeneratorHours = 48,
+                            HasGenerator = true,
+                            HasSlideout = true,
+                            Height = 12.6,
+                            Image = "C:/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.MAUI/Resources/Images/sunseeker.jpg",
+                            IsBooked = false,
+                            Length = 27,
+                            Make = "Forest River",
+                            MasterBedType = (byte)2,
+                            Model = "Sunseeker",
+                            Odometer = 68912.0,
+                            Sleeps = 6,
+                            UserId = new Guid("cf3e94b7-4052-4585-86e8-b4ea68ba1bdf"),
+                            Year = 2019
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Chassis = "Ford",
+                            Class = (byte)3,
+                            CreatedOn = new DateTime(2023, 7, 13, 13, 30, 4, 925, DateTimeKind.Local).AddTicks(4765),
+                            Description = "Great for family vacations with all the extras included to make your trip enjoyable, feasible, and easy to use. Features include: RV has master bedroom with queen bed & wardrobe cabinet, queen bed over the cab, dinette converts to bed, full bathroom & shower, stove/oven combo, microwave, refrigerator/freezer, AC unit, electric awning, & plenty of storage. Clean bedding, pots, pans, plates, bowls, coffee maker, cups, & kitchen utensils included in rental. Other add-ons are available for rental: inflatable rafting tube, kayaks, paddle boards, sledding tubes, etc. 24/7 support with certified techs available to address the unexpected. We do offer delivery and pickup services and flexible with pickup & return times. Secure onsite parking of your vehicle is available on request. Towing of any trailer, boat, or vehicle is prohibited. Reservation dates confirmed once payment is made. If you have questions, please let us know.",
+                            FuelLevel = (byte)0,
+                            GeneratorHours = 72,
+                            HasGenerator = true,
+                            HasSlideout = false,
+                            Height = 13.199999999999999,
+                            Image = "C:/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.MAUI/Resources/Images/minniewinnie.jpg",
+                            IsBooked = true,
+                            Length = 23,
+                            Make = "Winnebago",
+                            MasterBedType = (byte)3,
+                            Model = "Minnie Winnie 22R",
+                            Odometer = 79362.0,
+                            Sleeps = 6,
+                            UserId = new Guid("cf3e94b7-4052-4585-86e8-b4ea68ba1bdf"),
+                            Year = 2015
+                        });
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.Rental", b =>

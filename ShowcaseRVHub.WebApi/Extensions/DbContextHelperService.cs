@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data;
 
-namespace ShowcaseRVHub.WebApi.Services
+namespace ShowcaseRVHub.WebApi.Extensions
 {
     public class DbContextHelperService
     {

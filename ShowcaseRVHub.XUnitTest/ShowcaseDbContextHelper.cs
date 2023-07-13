@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data;
+using ShowcaseRVHub.WebApi.Extensions;
 
 namespace ShowcaseRVHub.XUnitTest
 {

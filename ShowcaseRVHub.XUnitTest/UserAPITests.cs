@@ -7,8 +7,11 @@ namespace ShowcaseRVHub.XUnitTest
         private readonly UserRepo userAPIs = new(
             ShowcaseDbContextHelper.GetMockDb(nameof(UserAPITests)));
 
+        private readonly Guid _userId = new("CF3E94B7-4052-4585-86E8-B4EA68BA1BDF");
+        public ShowcaseUser? User { get; set; }
+
         [Fact]
-        public async Task Can_GetAll_Users()
+        public async Task Can_Get_All_Users()
         {
             IEnumerable<ShowcaseUser>? users = await userAPIs.GetUsersAsync();
             Assert.NotNull(users);
@@ -17,32 +20,33 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Can_Get_User_By_ID()
         {
-            ShowcaseUser? user = await userAPIs.GetUserByIdAsync(Guid.Parse("BD06B1F3-5381-48FE-A444-C1054F1E0BF6"));
-            Assert.NotNull(user);
+            User = await userAPIs.GetUserByIdAsync(_userId);
+            Assert.NotNull(User);
         }
 
         [Fact]
         public async Task Can_Get_User_By_ID_FAIL_Firstname()
         {
-            ShowcaseUser? user = await userAPIs.GetUserByIdAsync(Guid.Parse("BD06B1F3-5381-48FE-A444-C1054F1E0BF6"));
-            Assert.NotEqual("Johnson", user?.FirstName);
+            User = await userAPIs.GetUserByIdAsync(_userId);
+            Assert.NotEqual("Johnson", User?.FirstName);
         }
 
         [Fact]
         public async Task Can_Delete_User_By_ID()
         {
-            ShowcaseUser? user = await userAPIs.GetUserByIdAsync(Guid.Parse("BD06B1F3-5381-48FE-A444-C1054F1E0BF6"));
+            User = await userAPIs.GetUserByIdAsync(_userId);
 
-            if (user == null)
+            if (User == null)
                 Assert.Fail();
 
-            Assert.True(await userAPIs.DeleteUserAsync(user.Id));
+            Assert.True(await userAPIs.DeleteUserAsync(User.Id));
         }
 
-        //[Fact]
-        //public async Task Can_GetAll_User_Vehicles()
-        //{
-            
-        //}
+        [Fact]
+        public async Task Can_Get_All_User_Vehicles_2()
+        {
+            User = await userAPIs.GetUserByIdAsync(_userId);
+            Assert.True(User?.Vehicles?.Count == 2);
+        }
     }
 }

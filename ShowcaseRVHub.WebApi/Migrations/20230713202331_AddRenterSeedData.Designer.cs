@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShowcaseRVHub.WebApi.Data;
 
@@ -10,9 +11,11 @@ using ShowcaseRVHub.WebApi.Data;
 namespace ShowcaseRVHub.WebApi.Migrations
 {
     [DbContext(typeof(ShowcaseDbContext))]
-    partial class ShowcaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230713202331_AddRenterSeedData")]
+    partial class AddRenterSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.7");
@@ -71,24 +74,6 @@ namespace ShowcaseRVHub.WebApi.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("Rentals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            CreatedOn = new DateTime(2023, 7, 13, 14, 8, 33, 138, DateTimeKind.Local).AddTicks(4661),
-                            IsExteriorCleaned = true,
-                            IsFluidChecked = true,
-                            IsInteriorCleaned = true,
-                            IsMaintenance = true,
-                            IsRenterTrained = true,
-                            IsSignalsChecked = true,
-                            IsSystemsChecked = true,
-                            IsTireInspected = true,
-                            RenterId = -1,
-                            UserId = new Guid("cf3e94b7-4052-4585-86e8-b4ea68ba1bdf"),
-                            VehicleId = -2
-                        });
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.ShowcaseRenter", b =>
@@ -122,6 +107,26 @@ namespace ShowcaseRVHub.WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Renters");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            CreatedOn = new DateTime(2023, 7, 13, 13, 23, 31, 477, DateTimeKind.Local).AddTicks(4156),
+                            Email = "john@gmail.com",
+                            Firstname = "John",
+                            Lastname = "Doe",
+                            Phone = "4257605962"
+                        },
+                        new
+                        {
+                            Id = -2,
+                            CreatedOn = new DateTime(2023, 7, 13, 13, 23, 31, 477, DateTimeKind.Local).AddTicks(4213),
+                            Email = "jane@gmail.com",
+                            Firstname = "Jane",
+                            Lastname = "Doe",
+                            Phone = "4252939006"
+                        });
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.ShowcaseUser", b =>

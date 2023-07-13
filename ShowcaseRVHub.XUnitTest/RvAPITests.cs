@@ -17,7 +17,7 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Can_Get_RV_By_ID()
         {
-            VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(1);
+            VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(-1);
             Assert.NotNull(rv);
         }
 
@@ -31,7 +31,7 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Can_Delete_RV_By_ID()
         {
-            VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(2);
+            VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(-2);
 
             if (rv == null)
                 Assert.Fail();
@@ -42,7 +42,7 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Can_Test_Relationship_Rental_To_RV()
         {
-            VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(2);
+            VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(-2);
 
             if (rv == null || rv.Rentals == null)
                 Assert.Fail();

@@ -17,7 +17,7 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Can_Get_Rental_By_ID()
         {
-            Rental? rental = await rentalAPIs.GetRentalByIdAsync(1);
+            Rental? rental = await rentalAPIs.GetRentalByIdAsync(-1);
             Assert.NotNull(rental);
         }
 
@@ -25,13 +25,13 @@ namespace ShowcaseRVHub.XUnitTest
         public async Task Can_Get_Rental_By_ID_FAIL()
         {
             Rental? rental = await rentalAPIs.GetRentalByIdAsync(1);
-            Assert.NotEqual(false, rental?.IsInteriorCleaned);
+            Assert.Null(rental);
         }
 
         [Fact]
         public async Task Can_Delete_Rental_By_ID()
         {
-            Rental? rental = await rentalAPIs.GetRentalByIdAsync(1);
+            Rental? rental = await rentalAPIs.GetRentalByIdAsync(-1);
 
             if (rental == null)
                 Assert.Fail();
