@@ -23,5 +23,10 @@ namespace ShowcaseRVHub.MAUI.Model
         public bool HasSlideout { get; set; }
         public bool HasGenerator { get; set; }
         public DateTime CreatedOn { get; set; }
+
+        public Guid UserId { get; set; }
+        public UserModel User { get; set; }
+
+        public List<RentalModel> Rentals { get; set; }
     }
 }

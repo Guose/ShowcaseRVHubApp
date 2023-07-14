@@ -1,12 +1,12 @@
-using ShowcaseRVHub.MAUI.Services.Interfaces;
+using ShowcaseRVHub.MAUI.Helpers;
 
 namespace ShowcaseRVHub.MAUI.View;
 
 public partial class ForgotPasswordView : ContentPage
 {
 	private readonly IUserEmailService _userService;
-	private readonly IUserRepository _userRepository;
-	public ForgotPasswordView(IUserEmailService userService, IUserRepository userRepository)
+	private readonly IUserDataServiceHelper _userRepository;
+	public ForgotPasswordView(IUserEmailService userService, IUserDataServiceHelper userRepository)
 	{
 		_userService = userService;
 		_userRepository = userRepository;

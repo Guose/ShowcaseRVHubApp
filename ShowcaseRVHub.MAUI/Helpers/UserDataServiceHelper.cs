@@ -1,11 +1,11 @@
-﻿namespace ShowcaseRVHub.MAUI.Services
+﻿namespace ShowcaseRVHub.MAUI.Helpers
 {
-    public class UserRepository : IUserRepository
+    public class UserDataServiceHelper : IUserDataServiceHelper
     {
         private readonly IShowcaseUserDataService _showcaseUserDataService;
         private List<UserModel> _users;
 
-        public UserRepository(IShowcaseUserDataService showcaseUserDataService)
+        public UserDataServiceHelper(IShowcaseUserDataService showcaseUserDataService)
         {
             _showcaseUserDataService = showcaseUserDataService;
         }

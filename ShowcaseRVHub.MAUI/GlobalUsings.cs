@@ -7,3 +7,4 @@ global using ShowcaseRVHub.MAUI.View;
 global using ShowcaseRVHub.MAUI.Services;
 global using System.Diagnostics;
 global using System.Text.Json;
+global using ShowcaseRVHub.MAUI.Helpers;

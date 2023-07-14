@@ -1,14 +1,16 @@
-﻿namespace ShowcaseRVHub.MAUI.View
+﻿using ShowcaseRVHub.MAUI.Helpers;
+
+namespace ShowcaseRVHub.MAUI.View
 {
     public partial class MainView : ContentPage
     {
         private readonly TapGestureRecognizer _addUserTapped;
         private readonly TapGestureRecognizer _forgotPassword;
         private readonly IShowcaseUserDataService _dataService;
-        private readonly IUserRepository _userRepository;
+        private readonly IUserDataServiceHelper _userRepository;
         private readonly IUserEmailService _userMailService;
 
-        public MainView(IUserEmailService userMailService, IUserRepository userRepository, IShowcaseUserDataService dataService)
+        public MainView(IUserEmailService userMailService, IUserDataServiceHelper userRepository, IShowcaseUserDataService dataService)
         {
             InitializeComponent();
             _dataService = dataService;

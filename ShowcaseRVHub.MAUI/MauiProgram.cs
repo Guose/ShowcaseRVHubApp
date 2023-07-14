@@ -18,23 +18,23 @@ namespace ShowcaseRVHub.MAUI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<IShowcaseUserDataService, ShowcaseUserDataService>();
-            builder.Services.AddSingleton<IUserEmailService, UserEmailService>();
-            builder.Services.AddSingleton<IUserRepository, UserRepository>();
-            builder.Services.AddSingleton<IRvService, RVService>();
+            builder.Services.AddSingleton<IShowcaseUserDataService, ShowcaseUserDataService>();            
+            builder.Services.AddSingleton<IRenterDataService, RenterDataService>();
+            builder.Services.AddSingleton<IRvDataService, RvDataService>();
+            builder.Services.AddSingleton<IRentalDataService, RentalDataService>();
+
+            builder.Services.AddTransient<IUserEmailService, UserEmailService>();
+            builder.Services.AddTransient<IUserDataServiceHelper, UserDataServiceHelper>();
+            builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
 
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<MainView>();
-
             builder.Services.AddTransient<ShowcaseUserFormViewModel>();
             builder.Services.AddTransient<AddUserView>();
-
             builder.Services.AddTransient<RVNavigationViewModel>();
             builder.Services.AddTransient<RVNavigationView>();
-
             builder.Services.AddTransient<RVChecklistViewModel>();
             builder.Services.AddTransient<RVChecklistView>();
-
             builder.Services.AddTransient<ChecklistViewModel>();
             builder.Services.AddTransient<ChecklistView>();
 

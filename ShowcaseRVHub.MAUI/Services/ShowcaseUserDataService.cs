@@ -44,7 +44,7 @@ namespace ShowcaseRVHub.MAUI.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"---> Exception: {ex.Message}");
+                Debug.WriteLine($"---> USER Exception: {ex.Message}");
             }
             return;
         }
@@ -68,7 +68,7 @@ namespace ShowcaseRVHub.MAUI.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"---> Exception: {ex.Message}");
+                Debug.WriteLine($"---> USER Exception: {ex.Message}");
             }
             return;
         }
@@ -97,7 +97,7 @@ namespace ShowcaseRVHub.MAUI.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"---> Exception: {ex.Message}");
+                Debug.WriteLine($"---> USER Exception: {ex.Message}");
             }
 
             return user;
@@ -127,7 +127,7 @@ namespace ShowcaseRVHub.MAUI.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"---> Exception: {ex.Message}");
+                Debug.WriteLine($"---> USER Exception: {ex.Message}");
             }
 
             return users;
@@ -155,14 +155,9 @@ namespace ShowcaseRVHub.MAUI.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"---> Exception: {ex.Message}");
+                Debug.WriteLine($"---> USER Exception: {ex.Message}");
             }
             return;
-        }
-
-        public Task UpdateUsersEmailAsync(Guid id, string email)
-        {
-            throw new NotImplementedException();
         }
     }
 }

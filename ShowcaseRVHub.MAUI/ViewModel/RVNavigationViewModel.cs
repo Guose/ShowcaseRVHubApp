@@ -5,10 +5,10 @@ namespace ShowcaseRVHub.MAUI.ViewModel
     [QueryProperty(nameof(User), "User")]
     public partial class RVNavigationViewModel : ViewModelBase
     {
-        readonly RVService _rvService;
+        readonly RvDataService _rvService;
         public RVNavigationViewModel()
         {
-            _rvService = new RVService();
+            _rvService = new RvDataService();
         }
 
         [ObservableProperty]
@@ -60,7 +60,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 
                 RVsCollection.Clear();
 
-                var vehicles = await _rvService.GetRVsAsync();
+                var vehicles = await _rvService.GetAllRVsAsync();
 
                 foreach (var vehicle in vehicles)
                 {
@@ -102,7 +102,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 
                 RVsCollection.Clear();
 
-                var vehicles = await _rvService.GetRVsAsync();
+                var vehicles = await _rvService.GetAllRVsAsync();
 
                 foreach (var vehicle in vehicles)
                 {

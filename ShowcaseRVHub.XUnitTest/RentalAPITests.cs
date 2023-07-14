@@ -1,4 +1,5 @@
 ﻿using ShowcaseRVHub.WebApi.Models;
+using System.Text.Json;
 
 namespace ShowcaseRVHub.XUnitTest
 {
@@ -6,6 +7,23 @@ namespace ShowcaseRVHub.XUnitTest
     {
         private readonly RentalRepo rentalAPIs = new(
             ShowcaseDbContextHelper.GetMockDb(nameof(RentalAPITests)));
+
+        private readonly HttpClient _httpClient;
+        private readonly string _baseAddress;
+        private readonly string _url;
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
+
+        public RentalAPITests()
+        {
+            _httpClient = new HttpClient();
+            _baseAddress = "http://192.168.1.10:5012";
+            _url = $"{_baseAddress}/api/rentals/";
+
+            _jsonSerializerOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+        }
 
         [Fact]
         public async Task Can_GetAll_Rentals()

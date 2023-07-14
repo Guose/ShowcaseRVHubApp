@@ -1,5 +1,4 @@
-﻿using LinqToDB.Mapping;
-using ShowcaseRVHub.WebApi.Models.EnumTypes;
+﻿using ShowcaseRVHub.WebApi.Models.EnumTypes;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShowcaseRVHub.WebApi.Models

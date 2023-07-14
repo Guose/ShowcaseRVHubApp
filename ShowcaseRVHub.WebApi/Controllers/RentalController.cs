@@ -5,7 +5,7 @@ using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Controllers
 {
-    [Route("/rental")]
+    [Route("/rentals")]
     [ApiController]
     public partial class RentalController : ControllerBase
     {

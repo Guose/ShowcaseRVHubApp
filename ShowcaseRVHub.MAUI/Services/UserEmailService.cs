@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using ShowcaseRVHub.MAUI.Helpers;
 
 namespace ShowcaseRVHub.MAUI.Services
 {
@@ -8,8 +9,8 @@ namespace ShowcaseRVHub.MAUI.Services
         private readonly string _baseAddress;
         private readonly string _url;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
-        private readonly IUserRepository _userRepository;
-        public UserEmailService(IUserRepository userRepository)
+        private readonly IUserDataServiceHelper _userRepository;
+        public UserEmailService(IUserDataServiceHelper userRepository)
         {
             _userRepository = userRepository;
             _httpClient = new HttpClient();
