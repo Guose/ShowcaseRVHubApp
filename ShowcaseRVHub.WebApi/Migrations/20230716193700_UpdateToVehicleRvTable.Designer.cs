@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShowcaseRVHub.WebApi.Data;
 
@@ -10,9 +11,11 @@ using ShowcaseRVHub.WebApi.Data;
 namespace ShowcaseRVHub.WebApi.Migrations
 {
     [DbContext(typeof(ShowcaseDbContext))]
-    partial class ShowcaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230716193700_UpdateToVehicleRvTable")]
+    partial class UpdateToVehicleRvTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.7");
@@ -70,41 +73,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Rentals", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            CreatedOn = new DateTime(2023, 7, 16, 12, 49, 6, 682, DateTimeKind.Local).AddTicks(8026),
-                            IsExteriorCleaned = true,
-                            IsFluidChecked = true,
-                            IsInteriorCleaned = true,
-                            IsMaintenance = true,
-                            IsRenterTrained = true,
-                            IsSignalsChecked = true,
-                            IsSystemsChecked = true,
-                            IsTireInspected = true,
-                            RenterId = -1,
-                            UserId = new Guid("cf3e94b7-4052-4585-86e8-b4ea68ba1bdf"),
-                            VehicleId = -2
-                        },
-                        new
-                        {
-                            Id = -2,
-                            CreatedOn = new DateTime(2023, 7, 16, 12, 49, 6, 682, DateTimeKind.Local).AddTicks(8101),
-                            IsExteriorCleaned = true,
-                            IsFluidChecked = true,
-                            IsInteriorCleaned = true,
-                            IsMaintenance = true,
-                            IsRenterTrained = true,
-                            IsSignalsChecked = true,
-                            IsSystemsChecked = true,
-                            IsTireInspected = true,
-                            RenterId = -2,
-                            UserId = new Guid("add00d60-8544-4fcc-9494-b4993b05472b"),
-                            VehicleId = -2
-                        });
+                    b.ToTable("Rentals");
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.ShowcaseRenter", b =>
@@ -137,7 +106,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Renters", (string)null);
+                    b.ToTable("Renters");
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.ShowcaseUser", b =>
@@ -180,7 +149,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShowcaseUsers", (string)null);
+                    b.ToTable("ShowcaseUsers");
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.VehicleRv", b =>
@@ -263,7 +232,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("VehicleRVs", (string)null);
+                    b.ToTable("VehicleRVs");
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.Rental", b =>

@@ -1,4 +1,5 @@
-﻿using ShowcaseRVHub.WebApi.Models.EnumTypes;
+﻿using Newtonsoft.Json;
+using ShowcaseRVHub.WebApi.Models.EnumTypes;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShowcaseRVHub.WebApi.Models
@@ -27,14 +28,17 @@ namespace ShowcaseRVHub.WebApi.Models
         public bool HasGenerator { get; set; } = false;
 
         public Guid? UserId { get; set; }
-        public ShowcaseUser? User { get; set; }
+        [JsonIgnore] public ShowcaseUser? User { get; set; }
+        public int? RenterId { get; set; }
+        [JsonIgnore] public ShowcaseRenter? Renter { get; set; }
 
-        public List<Rental>? Rentals { get; set; }
+        [JsonIgnore] public List<Rental> Rentals { get; set; }
 
         public VehicleRv()
         {
             CreatedOn = DateTime.Now;
             ModifiedOn = null;
+            Rentals = new List<Rental>();
         }
     }
 }

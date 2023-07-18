@@ -2,14 +2,14 @@
 {
     [QueryProperty(nameof(RvModel), "RvModel")]
     [QueryProperty(nameof(HeaderText), "HeaderText")]
-    [QueryProperty(nameof(IsCheckout),"IsCheckout")]
+    [QueryProperty(nameof(IsCheckout), "IsCheckout")]
     public partial class ChecklistViewModel : ViewModelBase
     {
         [ObservableProperty]
-        string headerText;
+        private string headerText;
 
         [ObservableProperty]
-        RVModel rvModel;
+        private RVModel rvModel;
 
         public bool IsCheckout { get; set; }
 

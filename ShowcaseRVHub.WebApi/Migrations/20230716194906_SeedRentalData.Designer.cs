@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShowcaseRVHub.WebApi.Data;
 
@@ -10,9 +11,11 @@ using ShowcaseRVHub.WebApi.Data;
 namespace ShowcaseRVHub.WebApi.Migrations
 {
     [DbContext(typeof(ShowcaseDbContext))]
-    partial class ShowcaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230716194906_SeedRentalData")]
+    partial class SeedRentalData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.7");
@@ -70,7 +73,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Rentals", (string)null);
+                    b.ToTable("Rentals");
 
                     b.HasData(
                         new
@@ -137,7 +140,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Renters", (string)null);
+                    b.ToTable("Renters");
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.ShowcaseUser", b =>
@@ -180,7 +183,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShowcaseUsers", (string)null);
+                    b.ToTable("ShowcaseUsers");
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.VehicleRv", b =>
@@ -263,7 +266,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("VehicleRVs", (string)null);
+                    b.ToTable("VehicleRVs");
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.Rental", b =>

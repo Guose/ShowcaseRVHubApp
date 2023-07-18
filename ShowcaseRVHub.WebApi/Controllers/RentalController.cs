@@ -5,7 +5,7 @@ using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Controllers
 {
-    [Route("/rentals")]
+    [Route("api/rentals")]
     [ApiController]
     public partial class RentalController : ControllerBase
     {
@@ -38,16 +38,16 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateRental(Rental rental)
+        public async Task<ActionResult> CreateRental([FromBody] Rental rental)
         {
-            if (await _rentalRepo.UpdateRentalAsync(rental))
-                return Ok(rental);
+            if (await _rentalRepo.CreateRentalAsync(rental))
+                return CreatedAtRoute(nameof(CreateRental), new {id = rental.Id}, rental);
             else
                 return BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateRental(int id, Rental updateRental)
+        public async Task<ActionResult> UpdateRental(int id, [FromBody] Rental updateRental)
         {
             Rental? rentalPatch = await _rentalRepo.GetRentalByIdAsync(id);
 
@@ -61,7 +61,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> UpdateRentalPatch(int id, JsonPatchDocument<Rental> updateRental)
+        public async Task<ActionResult> UpdateRentalPatch(int id, [FromBody] JsonPatchDocument<Rental> updateRental)
         {
             Rental? rentalPatch = await _rentalRepo.GetRentalByIdAsync(id);
 

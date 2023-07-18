@@ -17,7 +17,7 @@ namespace ShowcaseRVHub.WebApi.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Seed();
+            modelBuilder.Seed();
         }
     }
 }

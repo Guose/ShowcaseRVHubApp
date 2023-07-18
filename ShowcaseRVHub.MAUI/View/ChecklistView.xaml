@@ -6,7 +6,7 @@
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
              xmlns:view="clr-namespace:ShowcaseRVHub.MAUI.View"
              x:DataType="viewmodel:ChecklistViewModel"
-             Title="{Binding HeaderText}">
+             Title="PLACEHOLDER FOR RENTAL">
     <VerticalStackLayout>
         <Label 
             Text="Exterior Cleaning"

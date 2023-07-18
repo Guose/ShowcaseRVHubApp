@@ -55,15 +55,14 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
         {
             try
             {
-                var rental = await _context.Rentals.FirstOrDefaultAsyncEF(u => u.Id == id);
+                var rental = await _context.Rentals
+                                                .Include(r => r.Renter)
+                                                .Include(u => u.User)
+                                                .Include(v => v.Vehicle)
+                                                .FirstOrDefaultAsyncEF(u => u.Id == id);
 
-                if (rental != null)
-                {
-                    var rentQuery = from r in _context.Rentals
-                                    join v in _context.VehicleRVs on r.VehicleId equals v.Id
-                                    where v.Id == rental.VehicleId
-                                    select r;
-                }
+                if (rental == null)
+                    return null;
 
                 return rental;
             }
@@ -75,7 +74,24 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
 
         public async Task<IEnumerable<Rental>?> GetRentalsAsync()
         {
-            return await _context.Rentals.ToListAsyncEF();
+            
+            try
+            {
+                List<Rental> rentals = await _context.Rentals
+                                                    .Include(r => r.Renter)
+                                                    .Include(u => u.User)
+                                                    .Include(v => v.Vehicle)
+                                                    .ToListAsyncEF();
+
+                if (rentals == null)
+                    return null;
+
+                return rentals;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
 
         public async Task<bool> UpdateRentalAsync(Rental newRental)
@@ -95,6 +111,9 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                 updateRental.IsSignalsChecked = newRental.IsSignalsChecked;
                 updateRental.IsSystemsChecked = newRental.IsSystemsChecked;
                 updateRental.IsRenterTrained = newRental.IsRenterTrained;
+                updateRental.RentalStart = newRental.RentalStart;
+                updateRental.RentalEnd = newRental.RentalEnd;
+                updateRental.ModifiedOn = DateTime.Now;
 
                 _context.Rentals.Update(updateRental);
                 await _context.SaveChangesAsync();

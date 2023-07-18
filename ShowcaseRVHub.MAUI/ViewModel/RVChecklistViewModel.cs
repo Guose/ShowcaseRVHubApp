@@ -10,7 +10,7 @@
         [ObservableProperty]
         string buttonText;
 
-        //public string RvYearAndMake => $"{RvModel.Year} {RvModel.Make}";
+        public Range SelectedRange { get; set; }
         public string HeaderText => $"{RvModel.Model} - {ButtonText}";
         public bool IsCheckout { get; set; }
 

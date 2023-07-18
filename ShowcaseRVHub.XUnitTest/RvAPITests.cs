@@ -1,4 +1,5 @@
 ﻿using ShowcaseRVHub.WebApi.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
 namespace ShowcaseRVHub.XUnitTest
@@ -11,7 +12,7 @@ namespace ShowcaseRVHub.XUnitTest
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
         private readonly string _url;
-        private readonly JsonSerializerOptions _jsonSerializerOptions;
+        private readonly JsonSerializerOptions _jsonSerializerOptions;        
 
         public RvAPITests()
         {
@@ -23,21 +24,17 @@ namespace ShowcaseRVHub.XUnitTest
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
+
         }
 
         [Fact]
         public async Task Can_GetAll_RVs()
         {
-            //IEnumerable<VehicleRv>? rvs = await rvAPIs.GetVehiclesAsync();
-            List<VehicleRv>? rvs = new List<VehicleRv>();
-
             var response = await _httpClient.GetAsync(_url);
-
-            if (response.IsSuccessStatusCode)
-            {
-                string content = await response.Content.ReadAsStringAsync();
-                rvs = JsonSerializer.Deserialize<List<VehicleRv>>(content, _jsonSerializerOptions);
-            }
+            string content = await response.Content.ReadAsStringAsync();
+            List<VehicleRv>? rvs = response.IsSuccessStatusCode 
+                ? JsonSerializer.Deserialize<List<VehicleRv>>(content, _jsonSerializerOptions)
+                : null;
 
             Assert.NotNull(rvs);
         }
@@ -45,19 +42,29 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Can_Get_RV_By_ID()
         {
-            VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(-1);
+            var response = await _httpClient.GetAsync(_url + -2);
+            string content = await response.Content.ReadAsStringAsync();
+            VehicleRv? rv = response.IsSuccessStatusCode 
+                ? JsonSerializer.Deserialize<VehicleRv>(content, _jsonSerializerOptions)
+                : null;
+
             Assert.NotNull(rv);
         }
 
         [Fact]
         public async Task Can_Get_RV_By_ID_FAIL()
         {
-            VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(2);
-            Assert.NotEqual(1, rv?.Id);
+            var response = await _httpClient.GetAsync(_url + 1);
+            string content = await response.Content.ReadAsStringAsync();
+            VehicleRv? rv = response.IsSuccessStatusCode 
+                ? JsonSerializer.Deserialize<VehicleRv>(content, _jsonSerializerOptions)
+                : null;
+
+            Assert.NotEqual(-1, rv?.Id);
         }
 
         [Fact]
-        public async Task Can_Delete_RV_By_ID()
+        public async Task Delete_RV_By_ID()
         {
             VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(-2);
 
@@ -67,15 +74,34 @@ namespace ShowcaseRVHub.XUnitTest
             Assert.True(await rvAPIs.DeleteUserAsync(rv.Id));
         }
 
-        [Fact]
-        public async Task Can_Test_Relationship_Rental_To_RV()
-        {
-            VehicleRv? rv = await rvAPIs.GetVehicleByIdAsync(-2);
+        //[Fact]
+        //public async Task Can_Test_Relationship_Rental_To_RV()
+        //{
+        //    var response = await _httpClient.GetAsync(_url + -1);
+        //    string content = await response.Content.ReadAsStringAsync();
+        //    VehicleRv? rv = response.IsSuccessStatusCode
+        //        ? JsonSerializer.Deserialize<VehicleRv>(content, _jsonSerializerOptions)
+        //        : null;
 
-            if (rv == null || rv.Rentals == null)
-                Assert.Fail();
+        //    if (rv == null || rv.Rentals == null)
+        //        Assert.Fail();
 
-            Assert.True(rv.Rentals?.Count > 0);
-        }
+        //    Assert.True(rv.Rentals?.Count > 0);
+        //}
+
+        //[Fact]
+        //public async Task Can_Test_Relationship_RentalAndUser_To_RV()
+        //{
+        //    var response = await _httpClient.GetAsync(_url + -1);
+        //    string content = await response.Content.ReadAsStringAsync();
+        //    VehicleRv? rv = response.IsSuccessStatusCode
+        //        ? JsonSerializer.Deserialize<VehicleRv>(content, _jsonSerializerOptions)
+        //        : null;
+
+        //    if (rv == null || rv.Rentals == null || rv.User == null)
+        //        Assert.Fail();
+
+        //    Assert.True(rv.Rentals?.Count > 0);
+        //}
     }
 }

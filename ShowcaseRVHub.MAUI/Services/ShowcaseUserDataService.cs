@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace ShowcaseRVHub.MAUI.Services
+﻿namespace ShowcaseRVHub.MAUI.Services
 {
     public class ShowcaseUserDataService : IShowcaseUserDataService
     {

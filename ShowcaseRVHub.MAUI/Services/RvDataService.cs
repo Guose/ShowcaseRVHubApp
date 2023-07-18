@@ -13,7 +13,7 @@ namespace ShowcaseRVHub.MAUI.Services
         {
             _httpClient = new HttpClient();
             _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5012" : "http://192.168.1.10:5012";
-            _url = $"{_baseAddress}/api";
+            _url = $"{_baseAddress}/api/vehicles";
 
             _jsonSerializerOptions = new JsonSerializerOptions
             {
@@ -33,7 +33,7 @@ namespace ShowcaseRVHub.MAUI.Services
 
             try
             {
-                var response = await _httpClient.GetAsync($"{_url}/vehicles");
+                var response = await _httpClient.GetAsync(_url);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -69,7 +69,7 @@ namespace ShowcaseRVHub.MAUI.Services
 
             try
             {
-                var response = await _httpClient.GetAsync($"{_url}/vehicles/{id}");
+                var response = await _httpClient.GetAsync($"{_url}/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -101,7 +101,7 @@ namespace ShowcaseRVHub.MAUI.Services
 
                 StringContent content = new(jsonUser, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync($"{_url}/vehicles", content);
+                var response = await _httpClient.PostAsync(_url, content);
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine("Successfully created RV");
@@ -128,7 +128,7 @@ namespace ShowcaseRVHub.MAUI.Services
                 string jsonUser = JsonSerializer.Serialize(rvModel, _jsonSerializerOptions);
                 StringContent content = new(jsonUser, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PutAsync($"{_url}/vehicles/{rvModel.Id}", content);
+                var response = await _httpClient.PutAsync($"{_url}/{rvModel.Id}", content);
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine("Successfully updated RV");
@@ -152,7 +152,7 @@ namespace ShowcaseRVHub.MAUI.Services
 
             try
             {
-                var response = await _httpClient.DeleteAsync($"{_url}/vehicles/{id}");
+                var response = await _httpClient.DeleteAsync($"{_url}/{id}");
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine("Successfully deleted RV");

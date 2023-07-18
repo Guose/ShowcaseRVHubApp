@@ -6,6 +6,7 @@ namespace ShowcaseRVHub.WebApi.Extensions
     public class DbSeedData
     {
         private static readonly Guid _userId = new("CF3E94B7-4052-4585-86E8-B4EA68BA1BDF");
+
         public static List<VehicleRv> GetRvSeedData()
         {
             List<VehicleRv> rvs = new()
@@ -37,7 +38,8 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     GeneratorHours = 48,
                     Odometer = 68912,
                     MasterBedType = BedType.Queen,
-                    UserId = _userId
+                    UserId = _userId,
+                    RenterId = -1
                 },
                 new VehicleRv
                 {
@@ -67,7 +69,8 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     GeneratorHours = 72,
                     Odometer = 79362,
                     MasterBedType = BedType.Full,
-                    UserId = _userId
+                    UserId = _userId,
+                    RenterId = -1
                 }
             };
 
@@ -91,6 +94,21 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     IsTireInspected = true,
                     UserId = _userId,
                     RenterId = -1,
+                    VehicleId = -2,
+                },
+                new Rental
+                {
+                    Id = -2,
+                    IsExteriorCleaned = true,
+                    IsFluidChecked = true,
+                    IsInteriorCleaned = true,
+                    IsMaintenance = true,
+                    IsRenterTrained = true,
+                    IsSignalsChecked = true,
+                    IsSystemsChecked = true,
+                    IsTireInspected = true,
+                    UserId = new Guid("ADD00D60-8544-4FCC-9494-B4993B05472B"),
+                    RenterId = -2,
                     VehicleId = -2,
                 }
             };

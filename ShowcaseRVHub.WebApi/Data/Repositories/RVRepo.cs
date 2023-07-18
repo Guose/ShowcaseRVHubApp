@@ -1,4 +1,6 @@
-﻿using LinqToDB.EntityFrameworkCore;
+﻿using LinqToDB;
+using LinqToDB.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
 using ShowcaseRVHub.WebApi.Models;
 
@@ -66,11 +68,43 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
+        public async Task<VehicleRv?> GetVehicleWithRenterUserAndRentalsAsync(int id, Guid userId)
+        {
+            try
+            {
+                VehicleRv? vehicle = await Context.VehicleRVs
+                                        .Include(r => r.Rentals)
+                                            .ThenInclude(r => r.Renter)
+                                        .Include(r => r.Rentals)
+                                            .ThenInclude(u => u.User)
+                                        .FirstOrDefaultAsyncEF(v => v.Id == id);
+
+                if (vehicle == null)
+                    return null;
+
+                return vehicle;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<VehicleRv>?> GetVehiclesAsync()
         {
             try
             {
-                return await Context.VehicleRVs.ToListAsyncEF();
+                IEnumerable<VehicleRv>? vehicles = await Context.VehicleRVs
+                                        .Include(r => r.Rentals)
+                                            .ThenInclude(r => r.Renter)
+                                        .Include(r => r.Rentals)
+                                            .ThenInclude(u => u.User)
+                                        .ToListAsyncEF();
+
+                if (vehicles == null || vehicles.Count() <= 0)
+                    return null;
+
+                return vehicles;
             }
             catch (Exception ex)
             {
@@ -104,6 +138,6 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             {
                 throw new ArgumentException(ex.Message);
             }
-        }
+        }        
     }
 }

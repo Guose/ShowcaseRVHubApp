@@ -1,8 +1,4 @@
-﻿using Java.Net;
-using System.Text;
-using System.Text.Json;
-
-namespace ShowcaseRVHub.MAUI.Services
+﻿namespace ShowcaseRVHub.MAUI.Services
 {
     public class RentalDataService : IRentalDataService
     {
@@ -15,7 +11,7 @@ namespace ShowcaseRVHub.MAUI.Services
         {
             _httpClient = new HttpClient();
             _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5012" : "http://192.168.1.10:5012";
-            _url = $"{_baseAddress}/api";
+            _url = $"{_baseAddress}/api/rentals";
 
             _jsonSerializerOptions = new JsonSerializerOptions
             {
@@ -36,7 +32,7 @@ namespace ShowcaseRVHub.MAUI.Services
 
                 StringContent content = new(jsonUser, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync($"{_url}/rentals", content);
+                var response = await _httpClient.PostAsync(_url, content);
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine("Successfully created RENTAL");
@@ -60,7 +56,7 @@ namespace ShowcaseRVHub.MAUI.Services
 
             try
             {
-                var response = await _httpClient.DeleteAsync($"{_url}/rentals/{id}");
+                var response = await _httpClient.DeleteAsync($"{_url}/{id}");
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine("Successfully deleted RENTAL");
@@ -69,7 +65,7 @@ namespace ShowcaseRVHub.MAUI.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"---> RENTALS Exception: {ex.Message}");
+                Debug.WriteLine($"---> RENTAL Exception: {ex.Message}");
             }
             return true;
         }
@@ -86,7 +82,7 @@ namespace ShowcaseRVHub.MAUI.Services
 
             try
             {
-                var response = await _httpClient.GetAsync($"{_url}/rentals");
+                var response = await _httpClient.GetAsync(_url);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -116,7 +112,7 @@ namespace ShowcaseRVHub.MAUI.Services
 
             try
             {
-                var response = await _httpClient.GetAsync($"{_url}/rentals/{id}");
+                var response = await _httpClient.GetAsync($"{_url}/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -147,7 +143,7 @@ namespace ShowcaseRVHub.MAUI.Services
                 string jsonUser = JsonSerializer.Serialize(rental, _jsonSerializerOptions);
                 StringContent content = new(jsonUser, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PutAsync($"{_url}/rentals/{rental.Id}", content);
+                var response = await _httpClient.PutAsync($"{_url}/{rental.Id}", content);
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine("Successfully updated RENTAL");

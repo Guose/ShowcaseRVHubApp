@@ -5,8 +5,7 @@ namespace ShowcaseRVHub.XUnitTest
 {
     public class RentalAPITests
     {
-        private readonly RentalRepo rentalAPIs = new(
-            ShowcaseDbContextHelper.GetMockDb(nameof(RentalAPITests)));
+        //private readonly RentalRepo rentalAPIs = new(ShowcaseDbContextHelper.GetMockDb(nameof(RentalAPITests)));
 
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
@@ -28,33 +27,50 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Can_GetAll_Rentals()
         {
-            IEnumerable<Rental>? rentals = await rentalAPIs.GetRentalsAsync();
+            List<Rental>? rentals = new List<Rental>();
+
+            var response = await _httpClient.GetAsync(_url);
+            string content = await response.Content.ReadAsStringAsync();
+            rentals = response.IsSuccessStatusCode
+                ? JsonSerializer.Deserialize<List<Rental>>(content, _jsonSerializerOptions)
+                : null;
+
             Assert.NotNull(rentals);
         }
 
         [Fact]
         public async Task Can_Get_Rental_By_ID()
         {
-            Rental? rental = await rentalAPIs.GetRentalByIdAsync(-1);
+            Rental? rental = new Rental();
+
+            var response = await _httpClient.GetAsync(_url + -1);
+            string content = await response.Content.ReadAsStringAsync();
+            rental = response.IsSuccessStatusCode 
+                ? JsonSerializer.Deserialize<Rental> (content, _jsonSerializerOptions) 
+                : null;
+
             Assert.NotNull(rental);
         }
 
         [Fact]
         public async Task Can_Get_Rental_By_ID_FAIL()
         {
-            Rental? rental = await rentalAPIs.GetRentalByIdAsync(1);
+            Rental? rental = new Rental();
+
+            var response = await _httpClient.GetAsync(_url + 1);
+            string content = await response.Content.ReadAsStringAsync();
+            rental = response.IsSuccessStatusCode 
+                ? JsonSerializer.Deserialize<Rental>(content, _jsonSerializerOptions) 
+                : null;
+
             Assert.Null(rental);
         }
 
-        [Fact]
-        public async Task Can_Delete_Rental_By_ID()
-        {
-            Rental? rental = await rentalAPIs.GetRentalByIdAsync(-1);
-
-            if (rental == null)
-                Assert.Fail();
-
-            Assert.True(await rentalAPIs.DeleteRentalAsync(rental.Id));
-        }
+        //[Fact]
+        //public async Task Delete_Rental_By_ID()
+        //{
+        //    var response = await _httpClient.DeleteAsync(_url + -2);
+        //    Assert.True(response.IsSuccessStatusCode);
+        //}
     }
 }

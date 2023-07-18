@@ -11,7 +11,7 @@
         {
             _httpClient = new HttpClient();
             _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5012" : "http://192.168.1.10:5012";
-            _url = $"{_baseAddress}/api";
+            _url = $"{_baseAddress}/api/renters";
 
             _jsonSerializerOptions = new JsonSerializerOptions
             {
@@ -32,7 +32,7 @@
 
                 StringContent content = new(jsonUser, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync($"{_url}/renters", content);
+                var response = await _httpClient.PostAsync(_url, content);
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine("Successfully created RENTER");
@@ -56,7 +56,7 @@
 
             try
             {
-                var response = await _httpClient.DeleteAsync($"{_url}/renters/{id}");
+                var response = await _httpClient.DeleteAsync($"{_url}/{id}");
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine("Successfully deleted RENTERS");
@@ -82,7 +82,7 @@
 
             try
             {
-                var response = await _httpClient.GetAsync($"{_url}/renters");
+                var response = await _httpClient.GetAsync(_url);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -112,7 +112,7 @@
 
             try
             {
-                var response = await _httpClient.GetAsync($"{_url}/renters/{id}");
+                var response = await _httpClient.GetAsync($"{_url}/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -143,7 +143,7 @@
                 string jsonUser = JsonSerializer.Serialize(renter, _jsonSerializerOptions);
                 StringContent content = new(jsonUser, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PutAsync($"{_url}/renters/{renter.Id}", content);
+                var response = await _httpClient.PutAsync($"{_url}/{renter.Id}", content);
 
                 if (response.IsSuccessStatusCode)
                     Debug.WriteLine("Successfully updated RENTER");

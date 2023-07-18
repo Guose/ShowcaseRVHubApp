@@ -4,13 +4,13 @@ namespace ShowcaseRVHub.MAUI.ViewModel
 {
     public partial class ForgotPasswordViewModel : ViewModelBase
     {
-        private readonly IUserEmailService _userService;
-        private readonly IUserDataServiceHelper _userRepository;
+        private readonly IUserEmailService _userEmailService;
+        private readonly IUserDataServiceHelper _userServiceHelper;
 
-        public ForgotPasswordViewModel(IUserEmailService userService, IUserDataServiceHelper userRepository)
+        public ForgotPasswordViewModel(IUserEmailService userEmailService, IUserDataServiceHelper userServiceHelper)
         {
-            _userService = userService;
-            _userRepository = userRepository;
+            _userEmailService = userEmailService;
+            _userServiceHelper = userServiceHelper;
         }
 
         [ObservableProperty]
@@ -38,12 +38,13 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                     return;
                 }
 
-                string email = ForgotPasswordEmail == null ? string.Empty : ForgotPasswordEmail.ToLower();
-                IsPasswordResetSuccessful = await _userService.ResetPasswordAsync(email);
+                string emailPassword = !string.IsNullOrEmpty(ForgotPasswordEmail) ? ForgotPasswordEmail.ToLower() : string.Empty;
+
+                IsPasswordResetSuccessful = await _userEmailService.ResetPasswordAsync(emailPassword);
 
                 if (IsPasswordResetSuccessful)
                 {
-                    await Shell.Current.DisplayAlert("Message Sent!", $"Password Reset email has been sent to {email}", "OK");
+                    await Shell.Current.DisplayAlert("Message Sent!", $"Password Reset email has been sent to {emailPassword}", "OK");
                 }
                 else
                 {
@@ -78,19 +79,19 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                     return;
                 }
 
-                string email = ForgotUsernameEmail == null ? string.Empty : ForgotUsernameEmail.ToLower();
-                IsPasswordResetSuccessful = await _userService.RetrieveUsernameAsync(email);
+                string emailUsername = !string.IsNullOrEmpty(ForgotUsernameEmail) ? ForgotUsernameEmail.ToLower() : string.Empty;
+                IsPasswordResetSuccessful = await _userEmailService.RetrieveUsernameAsync(emailUsername);
 
                 if (IsPasswordResetSuccessful)
                 {
-                    UserModel user = await _userRepository.GetUserByEmailAsync(email);
+                    UserModel user = await _userServiceHelper.GetUserByEmailAsync(emailUsername);
                     if (user != null)
                     {
-                        await Shell.Current.DisplayAlert("Forgot Username?", $"Username: \"{user.Username}\" - retrieved for {email}", "OK");
+                        await Shell.Current.DisplayAlert("Forgot Username?", $"Username: \"{user.Username}\" - retrieved for {emailUsername}", "OK");
                     }
                     else
                     {
-                        await Shell.Current.DisplayAlert("Something is wrong!", $"Failed to retrieve username for {email}", "OK");
+                        await Shell.Current.DisplayAlert("Something is wrong!", $"Failed to retrieve username for {emailUsername}", "OK");
                         Debug.WriteLine("---> FAILED TO RETRIEVE USERNAME { User is null }");
                     }
                 }

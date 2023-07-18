@@ -16,6 +16,8 @@ internal class Program
         
         builder.Services.AddScoped<IUserRepo, UserRepo>();
         builder.Services.AddScoped<IRVRepo, RVRepo>();
+        builder.Services.AddScoped<IRentalRepo, RentalRepo>();
+        builder.Services.AddScoped<IRenterRepo,  RenterRepo>();
         
         // Add DbContext to the services to the container.
         builder.Services.AddDbContext<ShowcaseDbContext>(options =>
@@ -27,6 +29,7 @@ internal class Program
         builder.Services.AddControllers().AddNewtonsoftJson(s =>
         {
             s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //s.SerializerSettings.ContractResolver = new ContractResolverExtension();
         });
                 
         builder.Services.AddEndpointsApiExplorer();

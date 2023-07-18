@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShowcaseRVHub.WebApi.Models
 {
@@ -12,13 +13,15 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
 
-        public List<Rental> Rentals { get; set; }
+        [JsonIgnore] public List<Rental> Rentals { get; set; }
+        [JsonIgnore] public List<VehicleRv> Vehicles { get; set; }
 
         public ShowcaseRenter()
         {
             CreatedOn = DateTime.Now;
             ModifiedOn = null;
             Rentals = new List<Rental>();
+            Vehicles = new List<VehicleRv>();
         }
     }
 }
