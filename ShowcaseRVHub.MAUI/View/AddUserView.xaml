@@ -17,17 +17,74 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid>
-        <Grid Margin="50,20" RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto">
-
+    <Grid ColumnDefinitions="auto,auto">
+        
+        <VerticalStackLayout Margin="50,20" Spacing="10">
+            
             <Label 
                 Text="Create User" 
                 FontSize="36" 
                 FontAttributes="Bold" 
                 Margin="0,5,0,20" 
-                TextColor="{StaticResource Accent}"/>
+                TextColor="{StaticResource Accent}"/>            
 
-            <Grid Grid.Row="1" RowDefinitions="auto" ColumnDefinitions="200,auto">
+            <Entry Placeholder="Enter email" Text="{Binding AddEmail}" />
+            <Entry Placeholder="Enter first name" Text="{Binding AddFirstName}" />
+            <Entry Placeholder="Enter last name" Text="{Binding AddLastName}"/>
+            <Entry Placeholder="Enter your phone number" Text="{Binding AddPhoneNumber}"/>
+            <Entry Placeholder="Create your username" Text="{Binding Username}"/>
+            <Entry Placeholder="Create password" Text="{Binding Password, Mode=TwoWay}" IsPassword="True"/>
+            <Entry TextChanged="Entry_TextChanged" Placeholder="Re-enter password" Text="{Binding ConfirmPassword, Mode=TwoWay}" IsPassword="True"/>
+
+            <HorizontalStackLayout Margin="0,20,0,0">
+                <Button 
+                    Text="Create"  
+                    HorizontalOptions="StartAndExpand"
+                    WidthRequest="175"
+                    Margin="10"
+                    FontAttributes="Bold" 
+                    FontSize="22"
+                    Command="{Binding CreateUserCommand}"
+                    Style="{StaticResource ButtonOutline}"/>
+
+                <!--<Button 
+                    Text="Create"  
+                    HorizontalOptions="StartAndExpand"
+                    WidthRequest="175"
+                    Margin="10"
+                    FontAttributes="Bold" 
+                    FontSize="22"
+                    IsVisible="{Binding IsButtonNotEnabled}"
+                    Style="{StaticResource DisabledButton}"/>-->
+
+                <!--<VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="UserVisual">
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="LightGray"/>
+                                    <Setter Property="TextColor" Value="LightGray"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Button>-->
+
+                <Button 
+                    Text="Cancel" 
+                    HorizontalOptions="StartAndExpand"
+                    WidthRequest="175"
+                    Margin="10"
+                    FontAttributes="Bold" 
+                    FontSize="22"
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource CancelButtonOutline}"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
+
+<!--<Grid Grid.Row="1" RowDefinitions="auto" ColumnDefinitions="200,auto">
 
                 <Label 
                     Grid.Column="0"
@@ -120,46 +177,4 @@
                     Placeholder="Re-enter password"
                     Text="{Binding ConfirmPassword, Mode=TwoWay}"
                     IsPassword="True"/>
-            </Grid>
-
-
-            <Grid Margin="0,30" Grid.Row="8" ColumnDefinitions="auto,auto">
-                <Button 
-                    Grid.Column="0"
-                    Text="Create"  
-                    HorizontalOptions="StartAndExpand"
-                    WidthRequest="175"
-                    Margin="10"
-                    FontAttributes="Bold" 
-                    FontSize="22"
-                    IsEnabled="{Binding IsSubmitEnabled, Mode=OneWay}"
-                    Command="{Binding CreateUserCommand}"
-                    Style="{StaticResource ButtonOutline}">
-
-                    <VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="UserVisual">
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="LightGray"/>
-                                    <Setter Property="TextColor" Value="LightGray"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                </Button>
-
-                <Button 
-                    Grid.Column="1"
-                    Text="Cancel" 
-                    HorizontalOptions="StartAndExpand"
-                    WidthRequest="175"
-                    Margin="10"
-                    FontAttributes="Bold" 
-                    FontSize="22"
-                    Command="{Binding CancelCommand}"
-                    Style="{StaticResource CancelButtonOutline}"/>
-            </Grid>
-
-        </Grid>
-    </Grid>
-</ContentPage>
+            </Grid>-->

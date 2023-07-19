@@ -5,8 +5,12 @@ namespace ShowcaseRVHub.MAUI.Helpers
     public class CalendarBehaviorHelper : Behavior<SfCalendar>
     {
         private SfCalendar sfCalendar;
-        public RentalModel Rental { get; set; }
+        public RentalModel Rental { get; set; } = new();
 
+        public CalendarBehaviorHelper()
+        {
+            
+        }
         public CalendarBehaviorHelper(RentalModel rental)
         {
             Rental = rental;

@@ -14,5 +14,8 @@ namespace ShowcaseRVHub.MAUI.Model
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public bool IsRemembered { get; set; } = false;
+
+        public List<RentalModel> Rentals { get; set; }
+        public List<RVModel> Vehicles { get; set; }
     }
 }

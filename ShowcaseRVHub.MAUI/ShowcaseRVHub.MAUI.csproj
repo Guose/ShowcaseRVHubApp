@@ -42,8 +42,14 @@
 	</ItemGroup>	
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 		<PackageReference Include="Syncfusion.Maui.Calendar" Version="21.2.8" />
+	</ItemGroup>	
+
+	<ItemGroup>
+	  <Compile Update="View\RentalCheckOutView.xaml.cs">
+	    <DependentUpon>RentalCheckOutView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>	
 
 </Project>

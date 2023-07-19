@@ -7,7 +7,7 @@
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(RVNavigationView), typeof(RVNavigationView));
-            Routing.RegisterRoute(nameof(RVChecklistView), typeof(RVChecklistView));
+            Routing.RegisterRoute(nameof(RentalCheckOutView), typeof(RentalCheckOutView));
             Routing.RegisterRoute(nameof(ChecklistView), typeof(ChecklistView));
         }
     }

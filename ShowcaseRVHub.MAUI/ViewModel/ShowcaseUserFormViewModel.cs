@@ -1,59 +1,44 @@
-﻿namespace ShowcaseRVHub.MAUI.ViewModel
+﻿using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+
+namespace ShowcaseRVHub.MAUI.ViewModel
 {
     public partial class ShowcaseUserFormViewModel : ViewModelBase
     {
         IShowcaseUserDataService _dataService;
         UserModel _user;
-
-        public ShowcaseUserFormViewModel()
-        {
-            IsSubmitEnabled = false;
-        }
-
-        public ShowcaseUserFormViewModel(IShowcaseUserDataService dataService)
+        public ShowcaseUserFormViewModel(IShowcaseUserDataService dataService) : base()
         {
             _dataService = dataService;
-            IsSubmitEnabled = false;
+            UpdateButtonEnabledState();
         }
 
         [ObservableProperty]
-        string addEmail;
-
-        [ObservableProperty]
-        string addFirstName;
-
-        [ObservableProperty]
-        string addLastName;
-
-        [ObservableProperty]
-        string addPhoneNumber;       
-        
+        [NotifyPropertyChangedFor(nameof(IsButtonNotEnabled))]
+        bool isButtonEnabled;
 
         public bool IsMatch => Password == ConfirmPassword && !string.IsNullOrEmpty(Password) || !string.IsNullOrEmpty(ConfirmPassword);
-
-        public bool CanSubmit => CanBeSubmitted();
+        public bool IsButtonNotEnabled => !IsButtonEnabled;
 
         public string ErrorMessage { get; set; }
         public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
 
-        public bool CanBeSubmitted()
+        public void UpdateButtonEnabledState()
         {
-            if (!string.IsNullOrEmpty(AddEmail) &&
-            !string.IsNullOrEmpty(AddFirstName) &&
-            !string.IsNullOrEmpty(AddLastName) &&
-            !string.IsNullOrEmpty(Username) &&
-            !string.IsNullOrEmpty(Password) &&
-            !string.IsNullOrEmpty(ConfirmPassword))
-                return true;
-            else
-                return false;
+            IsButtonEnabled = IsMatch
+                && !string.IsNullOrEmpty(AddFirstName)
+                && !string.IsNullOrEmpty(AddLastName)
+                && !string.IsNullOrEmpty(AddEmail)
+                && !string.IsNullOrEmpty(Username);
         }
-            
 
         [RelayCommand]
         public async Task CreateUserAsync()
         {
-            if (IsBusy || !IsMatch)
+            if (IsBusy)
+                return;
+
+            if (!IsMatch)
             {
                 await Shell.Current.DisplayAlert("Check Passwords",
                         $"Passwords need to match and cannot be blank.", "OK");
@@ -81,7 +66,7 @@
                     Phone = AddPhoneNumber,
                     Username = Username,
                     Password = Password,
-                    CreatedOn = DateTime.UtcNow,
+                    CreatedOn = DateTime.Now,
                 };
 
                 await _dataService.CreateUserAsync(_user);
@@ -97,6 +82,11 @@
                 MainViewModel mvm = new(_dataService);
                 IsBusy = false; 
             }
-        }        
+        }
+
+        public static explicit operator ShowcaseUserFormViewModel(Entry v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

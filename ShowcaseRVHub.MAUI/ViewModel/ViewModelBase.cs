@@ -2,14 +2,6 @@
 {
     public partial class ViewModelBase : ObservableObject
     {
-        string _password;
-        string _confirmPassword;
-        bool _isSubmitEnabled;
-        public ViewModelBase()
-        {
-            _isSubmitEnabled = false;
-        }
-
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsNotBusy))]
         bool isBusy;
@@ -21,42 +13,25 @@
         bool isRefreshing;
 
         [ObservableProperty]
+        string addFirstName;
+
+        [ObservableProperty]
+        string addLastName;
+
+        [ObservableProperty]
+        string addEmail;
+
+        [ObservableProperty]
+        string addPhoneNumber;
+
+        [ObservableProperty]
         string username;
 
-        public bool IsSubmitEnabled
-        {
-            get => _isSubmitEnabled;
-            set
-            {
-                SetProperty(ref _isSubmitEnabled, value);
-                OnPropertyChanged(nameof(IsSubmitEnabled));
-            }
-        }
-        public string Password
-        {
-            get => _password;
-            set
-            {
-                SetProperty(ref _password, value);
-            }
-        }
-        public string ConfirmPassword
-        {
-            get => _confirmPassword;
-            set
-            {
-                SetProperty(ref _confirmPassword, value);
-                CheckFormValidity();
-            }
-        }
+        [ObservableProperty]
+        string password;
 
-        private void CheckFormValidity()
-        {
-            if (Password == ConfirmPassword && !string.IsNullOrEmpty(Password))
-                IsSubmitEnabled = true;
-            else
-                IsSubmitEnabled = false;
-        }
+        [ObservableProperty]
+        string confirmPassword;
         public bool IsNotBusy => !IsBusy;        
 
         [RelayCommand]
@@ -67,7 +42,6 @@
 
         protected virtual void Dispose() 
         {
-            IsSubmitEnabled = false;
             Password = null;
         }
     }

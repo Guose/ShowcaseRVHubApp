@@ -27,7 +27,7 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                 if (model == null)
                     return;
 
-                await Shell.Current.GoToAsync($"{nameof(RVChecklistView)}?ButtonText={ButtonText}", true, 
+                await Shell.Current.GoToAsync($"{nameof(RentalCheckOutView)}?ButtonText={ButtonText}", true, 
                     new Dictionary<string, object>
                     {
                         { "RvModel", model }

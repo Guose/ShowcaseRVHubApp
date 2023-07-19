@@ -8,7 +8,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.WebApi", "Sho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.Email", "ShowcaseRVHub.Email\ShowcaseRVHub.Email.csproj", "{78F1A02E-E85E-497A-A34D-81263EB13D2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowcaseRVHub.XUnitTest", "ShowcaseRVHub.XUnitTest\ShowcaseRVHub.XUnitTest.csproj", "{3CEE6C87-0D8B-49A9-98DC-A0390DBA80B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShowcaseRVHub.XUnitTest", "ShowcaseRVHub.XUnitTest\ShowcaseRVHub.XUnitTest.csproj", "{3CEE6C87-0D8B-49A9-98DC-A0390DBA80B5}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShowcaseRVHub.React", "ShowcaseRVHub.React\", "{15E4CE19-752F-4F69-ACB1-EA051E5F1166}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_61856"
+		Debug.AspNetCompiler.PhysicalPath = "ShowcaseRVHub.React\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61856\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_61856"
+		Release.AspNetCompiler.PhysicalPath = "ShowcaseRVHub.React\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61856\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "61856"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,12 +54,16 @@ Global
 		{3CEE6C87-0D8B-49A9-98DC-A0390DBA80B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CEE6C87-0D8B-49A9-98DC-A0390DBA80B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CEE6C87-0D8B-49A9-98DC-A0390DBA80B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15E4CE19-752F-4F69-ACB1-EA051E5F1166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E4CE19-752F-4F69-ACB1-EA051E5F1166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15E4CE19-752F-4F69-ACB1-EA051E5F1166}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E4CE19-752F-4F69-ACB1-EA051E5F1166}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 		SolutionGuid = {981B1FF0-A8A8-4487-9408-C23EE4CCDF64}
+		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
 	EndGlobalSection
 EndGlobal

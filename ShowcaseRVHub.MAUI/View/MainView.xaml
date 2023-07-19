@@ -20,7 +20,7 @@
                 <Label 
                     Text="Username:" 
                     VerticalTextAlignment="Center" 
-                    TextColor="{StaticResource LabelTextDark}" 
+                    TextColor="{AppThemeBinding Dark={StaticResource LightBackground}, Light={StaticResource DarkBackground}}" 
                     Margin="0,0,10,0"/>
                 
                 <Entry 
@@ -33,7 +33,7 @@
                 <Label 
                     Text="Password:" 
                     VerticalTextAlignment="Center" 
-                    TextColor="{StaticResource LabelTextDark}" 
+                    TextColor="{AppThemeBinding Dark={StaticResource LightBackground}, Light={StaticResource DarkBackground}}"
                     Margin="0,0,10,0"/>
                 
                 <Entry 
@@ -70,7 +70,7 @@
             <Label 
                 Text="Don't have an account? Sign up"
                 Margin="0,30,0,0" 
-                TextColor="{StaticResource LabelTextDark}">
+                TextColor="{AppThemeBinding Dark={StaticResource LightBackground}, Light={StaticResource DarkBackground}}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="CreateUser_Tapped" />
                 </Label.GestureRecognizers>
@@ -79,7 +79,7 @@
             <Label 
                 Text="Forgot Password?" 
                 Margin="0,20,0,0" 
-                TextColor="{StaticResource LabelTextDark}">
+                TextColor="{AppThemeBinding Dark={StaticResource LightBackground}, Light={StaticResource DarkBackground}}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ForgotPassword_Tapped" />
                 </Label.GestureRecognizers>
