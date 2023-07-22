@@ -27,6 +27,8 @@ namespace ShowcaseRVHub.MAUI
             builder.Services.AddTransient<IUserDataServiceHelper, UserDataServiceHelper>();
             builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
 
+            builder.Services.AddTransient<CalendarBehaviorHelper>();
+
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<MainView>();
             builder.Services.AddTransient<ShowcaseUserFormViewModel>();

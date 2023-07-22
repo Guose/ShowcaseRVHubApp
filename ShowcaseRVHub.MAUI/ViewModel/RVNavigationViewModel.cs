@@ -11,6 +11,8 @@ namespace ShowcaseRVHub.MAUI.ViewModel
             _rvService = new RvDataService();
         }
 
+        public Dictionary<string, object> ParameterObjs { get; set; } = new Dictionary<string, object>();
+
         [ObservableProperty]
         UserModel user;
 
@@ -20,18 +22,20 @@ namespace ShowcaseRVHub.MAUI.ViewModel
         public ObservableCollection<RVModel> RVsCollection { get; set; } = new();
 
         [RelayCommand]
-        public async Task GoToRVChecklist(RVModel model)
+        public async Task GoToRVCheckInOrOut(RVModel model)
         {
             try
             {
                 if (model == null)
                     return;
 
-                await Shell.Current.GoToAsync($"{nameof(RentalCheckOutView)}?ButtonText={ButtonText}", true, 
-                    new Dictionary<string, object>
-                    {
-                        { "RvModel", model }
-                    });
+                if (ParameterObjs.Count <= 0)
+                {
+                    ParameterObjs.Add("RvModel", model);
+                    ParameterObjs.Add("User", User);
+                }
+
+                await Shell.Current.GoToAsync($"{nameof(RentalCheckOutView)}?ButtonText={ButtonText}", true, ParameterObjs);
             }
             catch (Exception ex)
             {

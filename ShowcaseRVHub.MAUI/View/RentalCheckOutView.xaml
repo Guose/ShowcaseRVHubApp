@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShowcaseRVHub.MAUI.View.RentalCheckOutView"
              xmlns:model="clr-namespace:ShowcaseRVHub.MAUI.Model"
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
              xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
              xmlns:calendarhelper ="clr-namespace:ShowcaseRVHub.MAUI.Helpers"
-             x:Class="ShowcaseRVHub.MAUI.View.RentalCheckOutView"
-             x:DataType="viewmodel:RentalCheckOutViewModel"
-             Title="{Binding RvModel.Model}">
+             Title="{Binding RvModel.Model}"
+             x:DataType="viewmodel:RentalCheckOutViewModel">
+
+    <ContentPage.BindingContext>
+        <viewmodel:RentalCheckOutViewModel/>
+    </ContentPage.BindingContext>
     
     <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}">
         <VerticalStackLayout>
@@ -98,7 +102,7 @@
                             BackgroundColor="LightGrey">
                             
                             <calendar:SfCalendar 
-                                x:Name="Calendar"
+                                x:Name="MyCalendar"
                                 Background="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}"
                                 ShowTrailingAndLeadingDates="False"
                                 EnablePastDates="False"
@@ -110,8 +114,9 @@
                                 View="Month"
                                 WidthRequest="300"
                                 HeightRequest="225">
+
                                 <calendar:SfCalendar.Behaviors>
-                                    <calendarhelper:CalendarBehaviorHelper/>
+                                    <calendarhelper:CalendarBehaviorHelper BindingContext="DataType" />
                                 </calendar:SfCalendar.Behaviors>
 
                                 <calendar:SfCalendar.YearView>

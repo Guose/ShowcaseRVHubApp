@@ -5,16 +5,25 @@ namespace ShowcaseRVHub.MAUI.Helpers
     public class CalendarBehaviorHelper : Behavior<SfCalendar>
     {
         private SfCalendar sfCalendar;
-        public RentalModel Rental { get; set; } = new();
 
-        public CalendarBehaviorHelper()
+        public static readonly BindableProperty StartRentalProperty = BindableProperty.Create(
+        nameof(StartRental), typeof(DateTime), typeof(CalendarBehaviorHelper), default(DateTime));
+
+        public static readonly BindableProperty EndRentalProperty = BindableProperty.Create(
+            nameof(EndRental), typeof(DateTime), typeof(CalendarBehaviorHelper), default(DateTime));
+
+        public DateTime StartRental
         {
-            
+            get => (DateTime)GetValue(StartRentalProperty);
+            set => SetValue(StartRentalProperty, value);
         }
-        public CalendarBehaviorHelper(RentalModel rental)
+
+        public DateTime EndRental
         {
-            Rental = rental;
+            get => (DateTime)GetValue(EndRentalProperty);
+            set => SetValue(EndRentalProperty, value);
         }
+        public bool IsDateRange { get; set; } = false;
 
         protected override void OnAttachedTo(SfCalendar bindable)
         {
@@ -27,18 +36,26 @@ namespace ShowcaseRVHub.MAUI.Helpers
         {
             if (sfCalendar.SelectedDateRange != null)
             {
-                Rental.RentalStart = (DateTime)sfCalendar.SelectedDateRange.StartDate;
+                StartRental = (DateTime)sfCalendar.SelectedDateRange.StartDate;
                 if (sfCalendar.SelectedDateRange.EndDate != null)
                 {
-                    Rental.RentalEnd = (DateTime)sfCalendar.SelectedDateRange.EndDate;
+                    EndRental = (DateTime)sfCalendar.SelectedDateRange.EndDate;
+                    IsDateRange = true;
                 }
                 else
                 {
-                    Rental.RentalEnd = (DateTime)sfCalendar.SelectedDateRange.StartDate;
+                    EndRental = (DateTime)sfCalendar.SelectedDateRange.StartDate;
                 }
 
-                App.Current.MainPage.DisplayAlert($"StartDate: {Rental.RentalStart:dd/MM/yyyy}", 
-                    $"EndDate: {Rental.RentalEnd:dd/MM/yyyy}", "OK");
+                // Access the RentalCheckOutViewModel from the BindingContext of the SfCalendar
+                var rentalCheckoutViewModel = sfCalendar.BindingContext as RentalCheckOutViewModel;
+
+                if (rentalCheckoutViewModel != null && IsDateRange)
+                {
+                    // Set the StartRental and EndRental properties in the ViewModel
+                    rentalCheckoutViewModel.StartRental = StartRental;
+                    rentalCheckoutViewModel.EndRental = EndRental;
+                }
             }
         }
 
@@ -50,8 +67,6 @@ namespace ShowcaseRVHub.MAUI.Helpers
             {
                 sfCalendar.SelectionChanged -= SfCalendar_SelectionChanged;
             }
-
-            sfCalendar = null;
         }
     }
 }

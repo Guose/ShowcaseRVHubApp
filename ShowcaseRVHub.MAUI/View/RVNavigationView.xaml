@@ -30,7 +30,7 @@
                             <Frame HeightRequest="125" Style="{StaticResource CardView}">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RVNavigationViewModel}}, Path=GoToRVChecklistCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RVNavigationViewModel}}, Path=GoToRVCheckInOrOutCommand}"
                                         CommandParameter="{Binding .}"/>
                                 </Frame.GestureRecognizers>
                                 <Grid Padding="0" ColumnDefinitions="125, *">
@@ -47,15 +47,14 @@
                                                 Grid.Column="0"
                                                 Grid.Row="0"
                                                 Style="{StaticResource LargeLabel}" 
-                                                Text="{Binding Year}"/>
+                                                Text="{Binding Year}" />
                                             <Label 
                                                 Grid.Column="1"
                                                 Grid.Row="0"
                                                 Style="{StaticResource LargeLabel}" 
                                                 Text="{Binding Make}" />
                                         </Grid>                                        
-                                        <Label Style="{StaticResource MediumLabel}" Text="{Binding Model}"/>
-                                        
+                                        <Label Style="{StaticResource MediumLabel}" Text="{Binding Model}"/>                                        
                                     </VerticalStackLayout>
                                 </Grid>
                             </Frame>

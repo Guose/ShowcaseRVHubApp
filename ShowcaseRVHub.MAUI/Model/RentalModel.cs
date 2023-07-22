@@ -20,5 +20,10 @@
         public UserModel User { get; set; }
         public int RVId { get; set; }
         public RVModel RVModel { get; set; }
+
+        public RentalModel()
+        {
+            
+        }
     }
 }

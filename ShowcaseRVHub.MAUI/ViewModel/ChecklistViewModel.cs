@@ -6,8 +6,10 @@
     [QueryProperty(nameof(User), "User")]
     [QueryProperty(nameof(HeaderText), "HeaderText")]
     [QueryProperty(nameof(IsCheckout), "IsCheckout")]
-    public partial class ChecklistViewModel : ViewModelBase
+    public partial class ChecklistViewModel : RentalViewModelBase
     {
+        public ChecklistViewModel() : base() { }
+
         [ObservableProperty]
         string headerText;
 

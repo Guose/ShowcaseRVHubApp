@@ -3,15 +3,8 @@
     [QueryProperty(nameof(RvModel), "RvModel")]
     [QueryProperty(nameof(User), "User")]
     [QueryProperty(nameof(ButtonText), nameof(ButtonText))]
-    public partial class RentalCheckOutViewModel : ViewModelBase
+    public partial class RentalCheckOutViewModel : RentalViewModelBase
     {
-        public RentalCheckOutViewModel() : base()
-        {
-            CalendarBehaviorHelper = new CalendarBehaviorHelper(new RentalModel());
-        }
-
-        public CalendarBehaviorHelper CalendarBehaviorHelper { get; set; }
-
         [ObservableProperty]
         RVModel rvModel;
 
@@ -26,6 +19,18 @@
 
         [ObservableProperty]
         string buttonText;
+
+        public RentalCheckOutViewModel()
+        {
+            Rental = new RentalModel();
+        }
+
+        public RentalCheckOutViewModel(DateTime startRental, DateTime endRental)
+        {
+            StartRental = startRental;
+            EndRental = endRental;
+            Rental = new RentalModel();
+        }
 
         public Dictionary<string, object> Parameters { get; set; } = new Dictionary<string, object>();
         public Range SelectedRange { get; set; }
@@ -56,7 +61,11 @@
                     Phone = AddPhoneNumber
                 };
 
-                Rental = CalendarBehaviorHelper.Rental;
+                Rental = new RentalModel
+                {
+                    RentalStart = StartRental,
+                    RentalEnd = EndRental,
+                };
 
                 Parameters.Add("RvModel", RvModel);
                 Parameters.Add("Renter", Renter);
@@ -74,6 +83,12 @@
                 Debug.WriteLine($"---> Unable to navigate to the next page. EXCEPTION: {ex.Message}");
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
+        }
+
+        internal void SetRentalCalendar(DateTime startRental, DateTime endRental)
+        {
+            StartRental = startRental;
+            EndRental = endRental;
         }
     }
 }
