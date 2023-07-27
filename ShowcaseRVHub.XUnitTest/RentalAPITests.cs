@@ -5,7 +5,7 @@ namespace ShowcaseRVHub.XUnitTest
 {
     public class RentalAPITests
     {
-        //private readonly RentalRepo rentalAPIs = new(ShowcaseDbContextHelper.GetMockDb(nameof(RentalAPITests)));
+        private readonly RentalRepo rentalAPIs = new(ShowcaseDbContextHelper.GetMockDb(nameof(RentalAPITests)));
 
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
@@ -45,8 +45,8 @@ namespace ShowcaseRVHub.XUnitTest
 
             var response = await _httpClient.GetAsync(_url + -1);
             string content = await response.Content.ReadAsStringAsync();
-            rental = response.IsSuccessStatusCode 
-                ? JsonSerializer.Deserialize<Rental> (content, _jsonSerializerOptions) 
+            rental = response.IsSuccessStatusCode
+                ? JsonSerializer.Deserialize<Rental>(content, _jsonSerializerOptions)
                 : null;
 
             Assert.NotNull(rental);
@@ -59,8 +59,8 @@ namespace ShowcaseRVHub.XUnitTest
 
             var response = await _httpClient.GetAsync(_url + 1);
             string content = await response.Content.ReadAsStringAsync();
-            rental = response.IsSuccessStatusCode 
-                ? JsonSerializer.Deserialize<Rental>(content, _jsonSerializerOptions) 
+            rental = response.IsSuccessStatusCode
+                ? JsonSerializer.Deserialize<Rental>(content, _jsonSerializerOptions)
                 : null;
 
             Assert.Null(rental);

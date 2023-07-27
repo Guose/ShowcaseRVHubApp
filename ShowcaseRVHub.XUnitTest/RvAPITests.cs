@@ -1,5 +1,4 @@
 ﻿using ShowcaseRVHub.WebApi.Models;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
 namespace ShowcaseRVHub.XUnitTest
@@ -7,12 +6,12 @@ namespace ShowcaseRVHub.XUnitTest
     public class RvAPITests
     {
         private readonly RVRepo rvAPIs = new(
-            ShowcaseDbContextHelper.GetMockDb(nameof(RvAPITests)));
+            ShowcaseDbContextHelper.GetMockDb(nameof(RvAPITests_FE)));
 
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
         private readonly string _url;
-        private readonly JsonSerializerOptions _jsonSerializerOptions;        
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
 
         public RvAPITests()
         {
@@ -32,7 +31,7 @@ namespace ShowcaseRVHub.XUnitTest
         {
             var response = await _httpClient.GetAsync(_url);
             string content = await response.Content.ReadAsStringAsync();
-            List<VehicleRv>? rvs = response.IsSuccessStatusCode 
+            List<VehicleRv>? rvs = response.IsSuccessStatusCode
                 ? JsonSerializer.Deserialize<List<VehicleRv>>(content, _jsonSerializerOptions)
                 : null;
 
@@ -44,7 +43,7 @@ namespace ShowcaseRVHub.XUnitTest
         {
             var response = await _httpClient.GetAsync(_url + -2);
             string content = await response.Content.ReadAsStringAsync();
-            VehicleRv? rv = response.IsSuccessStatusCode 
+            VehicleRv? rv = response.IsSuccessStatusCode
                 ? JsonSerializer.Deserialize<VehicleRv>(content, _jsonSerializerOptions)
                 : null;
 
@@ -56,7 +55,7 @@ namespace ShowcaseRVHub.XUnitTest
         {
             var response = await _httpClient.GetAsync(_url + 1);
             string content = await response.Content.ReadAsStringAsync();
-            VehicleRv? rv = response.IsSuccessStatusCode 
+            VehicleRv? rv = response.IsSuccessStatusCode
                 ? JsonSerializer.Deserialize<VehicleRv>(content, _jsonSerializerOptions)
                 : null;
 

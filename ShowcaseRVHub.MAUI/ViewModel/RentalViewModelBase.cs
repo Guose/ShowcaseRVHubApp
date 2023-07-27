@@ -2,6 +2,11 @@
 {
     public partial class RentalViewModelBase : ViewModelBase
     {
+        public RentalViewModelBase() : base()
+        {
+            
+        }
+
         [ObservableProperty]
         bool isExteriorCleaned;
 

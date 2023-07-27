@@ -1,7 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
-
-namespace ShowcaseRVHub.MAUI.ViewModel
+﻿namespace ShowcaseRVHub.MAUI.ViewModel
 {
     public partial class ShowcaseUserFormViewModel : ViewModelBase
     {
@@ -13,12 +10,8 @@ namespace ShowcaseRVHub.MAUI.ViewModel
             UpdateButtonEnabledState();
         }
 
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsButtonNotEnabled))]
-        bool isButtonEnabled;
-
         public bool IsMatch => Password == ConfirmPassword && !string.IsNullOrEmpty(Password) || !string.IsNullOrEmpty(ConfirmPassword);
-        public bool IsButtonNotEnabled => !IsButtonEnabled;
+        
 
         public string ErrorMessage { get; set; }
         public bool HasErrorMessage => !string.IsNullOrEmpty(ErrorMessage);
@@ -82,11 +75,6 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                 MainViewModel mvm = new(_dataService);
                 IsBusy = false; 
             }
-        }
-
-        public static explicit operator ShowcaseUserFormViewModel(Entry v)
-        {
-            throw new NotImplementedException();
         }
     }
 }

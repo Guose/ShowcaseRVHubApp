@@ -9,9 +9,9 @@
              Title="{Binding RvModel.Model}"
              x:DataType="viewmodel:RentalCheckOutViewModel">
 
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <viewmodel:RentalCheckOutViewModel/>
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
     
     <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}">
         <VerticalStackLayout>

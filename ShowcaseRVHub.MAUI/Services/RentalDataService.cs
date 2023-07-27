@@ -7,9 +7,6 @@
         private readonly string _url;
         private readonly JsonSerializerOptions _jsonSerializerOptions;
 
-        public event Action ShowcaseRentalsLoaded;
-        public event Action<RentalModel> ShowcaseRentalAdded;
-
         public RentalDataService()
         {
             _httpClient = new HttpClient();

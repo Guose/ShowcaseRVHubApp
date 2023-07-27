@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShowcaseRVHub.MAUI.View.ConsentAgreementView"
+             xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
+             xmlns:model="clr-namespace:ShowcaseRVHub.MAUI.Model"
+             x:DataType="viewmodel:ChecklistViewModel"
+             Title="Content Agreement">
+    <Grid>
+        <VerticalStackLayout>
+            <Label Text="Consent content goes here..." />
+            <HorizontalStackLayout>
+                <Label Text="Showcase Rep. Signature" />
+                <CheckBox/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Renter Signature" />
+                <CheckBox/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

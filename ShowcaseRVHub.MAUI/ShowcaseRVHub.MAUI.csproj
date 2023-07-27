@@ -47,9 +47,18 @@
 	</ItemGroup>	
 
 	<ItemGroup>
+	  <Compile Update="View\ConsentAgreementView.xaml.cs">
+	    <DependentUpon>ConsentAgreementView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="View\RentalCheckOutView.xaml.cs">
 	    <DependentUpon>RentalCheckOutView.xaml</DependentUpon>
 	  </Compile>
+	</ItemGroup>	
+
+	<ItemGroup>
+	  <MauiXaml Update="View\ConsentAgreementView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>	
 
 </Project>

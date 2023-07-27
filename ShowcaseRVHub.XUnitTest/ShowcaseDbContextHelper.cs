@@ -12,12 +12,12 @@ namespace ShowcaseRVHub.XUnitTest
         /// <param name="name"></param>
         /// <returns>In-Memory DbContext</returns>
         public static ShowcaseDbContext GetMockDb(string name)
-        {            
+        {
             var options = new DbContextOptionsBuilder<ShowcaseDbContext>()
                 .UseInMemoryDatabase(name)
                 .Options;
 
-            var db = new ShowcaseDbContext(options);            
+            var db = new ShowcaseDbContext(options);
 
             // Seed In-Memory database
             if (!db.ShowcaseUsers.Any())

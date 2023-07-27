@@ -5,7 +5,7 @@ import axios from 'axios'
 import './form.css'
 
 function Form() {
-    let isSuccess = false;
+    let isSuccess = false
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPass, setConfirmPass] = useState('')
@@ -60,7 +60,6 @@ function Form() {
                 isSuccess = false
             }
             
-
         } catch (error) {
             alert(error)
             console.error(error)

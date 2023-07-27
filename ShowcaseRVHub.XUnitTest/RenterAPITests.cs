@@ -29,8 +29,8 @@ namespace ShowcaseRVHub.XUnitTest
         {
             var response = await _httpClient.GetAsync(_url);
             string content = await response.Content.ReadAsStringAsync();
-            List<ShowcaseRenter>? renters = response.IsSuccessStatusCode 
-                ? JsonSerializer.Deserialize<List<ShowcaseRenter>>(content, _jsonSerializerOptions) 
+            List<ShowcaseRenter>? renters = response.IsSuccessStatusCode
+                ? JsonSerializer.Deserialize<List<ShowcaseRenter>>(content, _jsonSerializerOptions)
                 : null;
 
             Assert.NotNull(renters);

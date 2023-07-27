@@ -12,5 +12,11 @@ namespace ShowcaseRVHub.MAUI.Model
 
         public List<RentalModel> Rentals { get; set; }
         public List<RVModel> Vehicles { get; set; }
+
+        public RenterModel()
+        {
+            Rentals = new List<RentalModel>();
+            Vehicles = new List<RVModel>();
+        }
     }
 }

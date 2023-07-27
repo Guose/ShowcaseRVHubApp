@@ -7,6 +7,11 @@
              xmlns:view="clr-namespace:ShowcaseRVHub.MAUI.View"
              x:DataType="viewmodel:ChecklistViewModel"
              Title="{Binding HeaderText}">
+    
+    <!--<ContentPage.BindingContext>
+        <viewmodel:ChecklistViewModel/>
+    </ContentPage.BindingContext>-->
+    
     <ScrollView >
         <VerticalStackLayout>
 
@@ -14,125 +19,192 @@
                 <Label 
                     Text="Exterior Cleaning"
                     FontSize="Large"/>
-                <FlexLayout Margin="10,0">
-                    <CheckBox/>
-                    <Label
-                        Padding="20"
-                        Text="Make sure that the exterior of your RV has been thoroughly cleaned before the arrival of your travelers"
-                        LineBreakMode="CharacterWrap"/>
-                </FlexLayout>
+                <Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
+                    <CheckBox 
+                        x:Name="Exterior" 
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        CheckedChanged="RenterTrained_CheckedChanged"
+                        IsChecked="{Binding IsExteriorCleaned}"/>
+                    <FlexLayout Margin="10,0" Grid.Column="1">
+
+                        <Label
+                            Padding="20"
+                            Text="Make sure that the exterior of your RV has been thoroughly cleaned before the arrival of your travelers"
+                            LineBreakMode="WordWrap"/>
+                    </FlexLayout>
+                </Grid>                
             </StackLayout>
 
-            <StackLayout Orientation="Vertical" Padding="20">
+            <StackLayout Orientation="Vertical" Padding="20" IsVisible="{Binding IsExteriorCleaned}">
                 <Label 
                     Text="Interior Cleaning"
                     FontSize="Large"/>
-                <FlexLayout Margin="10,0">
-                    <CheckBox />
-                    <Label
-                        Padding="20"
-                        Text="Make sure that the interior of your RV has been meticulously cleaned before the arrival of your guests"
-                        LineBreakMode="WordWrap"/>
-                </FlexLayout>
+                <Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
+                    <CheckBox 
+                        x:Name="Interior"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        CheckedChanged="RenterTrained_CheckedChanged"
+                        IsChecked="{Binding IsInteriorCleaned}"/>
+                    <FlexLayout Margin="10,0" Grid.Column="1" >
+
+                        <Label
+                            Padding="20"
+                            Text="Make sure that the interior of your RV has been meticulously cleaned before the arrival of your guests"
+                            LineBreakMode="WordWrap"/>
+                    </FlexLayout>
+                </Grid>                
             </StackLayout>
 
-            <StackLayout Orientation="Vertical" Padding="20">
+            <StackLayout Orientation="Vertical" Padding="20" IsVisible="{Binding IsInteriorCleaned}">
                 <Label 
                     Text="Tire Inspection"
                     FontSize="Large"/>
+                <Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
+                    <CheckBox 
+                        x:Name="TireInspection"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        CheckedChanged="RenterTrained_CheckedChanged"
+                        IsChecked="{Binding IsTiresInspected}"/>
+                    <FlexLayout Margin="10,0" Grid.Column="1" >
 
-                <FlexLayout Margin="10,0">
-                    <CheckBox />
-                    <Label
-                        Padding="20"
-                        Text="Give every single tire a thorough inspection. This includes (especially) the interior tires on dual wheel units. Keep in mind that tires rot from the inside-out. Whatever damage you see on the outside is far worse on the inside."
-                        LineBreakMode="WordWrap"/>
-                </FlexLayout>
+                        <Label
+                            Padding="20"
+                            Text="Give every single tire a thorough inspection. This includes (especially) the interior tires on dual wheel units. Keep in mind that tires rot from the inside-out. Whatever damage you see on the outside is far worse on the inside."
+                            LineBreakMode="WordWrap"/>
+                    </FlexLayout>
+                </Grid>
             </StackLayout>
 
-            <StackLayout Orientation="Vertical" Padding="20">
+            <StackLayout Orientation="Vertical" Padding="20" IsVisible="{Binding IsTiresInspected}">
                 <Label 
                     Text="Routine Maintenance"
                     FontSize="Large"/>
-                <FlexLayout Margin="10,0">
-                    <CheckBox />
-                    <Label
-                        Padding="20"
-                        Text="Oil changes, generator tune-ups, tire rotation, brakes appliances, etc."
-                        LineBreakMode="WordWrap"/>
-                </FlexLayout>
+                <Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
+                    <CheckBox 
+                        x:Name="Maintenance"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        CheckedChanged="RenterTrained_CheckedChanged"
+                        IsChecked="{Binding IsMaintenance}"/>
+                    <FlexLayout Margin="10,0" Grid.Column="1" >
+
+                        <Label
+                            Padding="20"
+                            Text="Oil changes, generator tune-ups, tire rotation, brakes appliances, etc."
+                            LineBreakMode="WordWrap"/>
+                    </FlexLayout>
+                </Grid>
             </StackLayout>
 
-            <StackLayout Orientation="Vertical" Padding="20">
+            <StackLayout Orientation="Vertical" Padding="20" IsVisible="{Binding IsMaintenance}">
                 <Label 
                     Text="Fluid Check"
                     FontSize="Large"/>
-                <FlexLayout  
-                        Margin="10,0">
-                    <CheckBox />
-                    <Label
-                        Padding="20"
-                        Text="Generator oil, transmission fluid, brake fluid, windshield washer fluid, propane levels, fuel level, and waste tank level."
-                        LineBreakMode="WordWrap"/>
-                </FlexLayout>
+                <Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
+                    <CheckBox 
+                        x:Name="FluidCheck"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        CheckedChanged="RenterTrained_CheckedChanged"
+                        IsChecked="{Binding IsFluidChecked}"/>
+                    <FlexLayout Margin="10,0" Grid.Column="1" >
+
+                        <Label
+                            Padding="20"
+                            Text="Generator oil, transmission fluid, brake fluid, windshield washer fluid, propane levels, fuel level, and waste tank level."
+                            LineBreakMode="WordWrap"/>
+                    </FlexLayout>
+                </Grid>
             </StackLayout>
 
-            <StackLayout Orientation="Vertical" Padding="20">
+            <StackLayout Orientation="Vertical" Padding="20" IsVisible="{Binding IsFluidChecked}">
                 <Label 
                     Text="Signals Check"
                     FontSize="Large"/>
-                <FlexLayout Margin="10,0">
-                    <CheckBox />
-                    <Label
-                        Padding="20"
-                        Text="Driving lights, head lights high beam lights, rear driving lights, brake lights, front turn signals, and rear turn signals."
-                        LineBreakMode="WordWrap"/>
-                </FlexLayout>
+                
+                <Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
+                    <CheckBox 
+                        x:Name="SignalsCheck"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        CheckedChanged="RenterTrained_CheckedChanged"
+                        IsChecked="{Binding IsSignalsChecked}"/>
+                    <FlexLayout Margin="10,0" Grid.Column="1" >
+
+                        <Label
+                            Padding="20"
+                            Text="Driving lights, head lights high beam lights, rear driving lights, brake lights, front turn signals, and rear turn signals."
+                            LineBreakMode="WordWrap"/>
+                    </FlexLayout>
+                </Grid>
             </StackLayout>
 
-            <StackLayout Orientation="Vertical" Padding="20">
+            <StackLayout Orientation="Vertical" Padding="20" IsVisible="{Binding IsSignalsChecked}">
                 <Label 
                     Text="Systems Check"
                     FontSize="Large"/>
-                <FlexLayout Margin="10,0">
-                    <CheckBox />
-                    <Label
-                        Padding="20"
-                        Text="Generator, awning, slide-out(s), furnace, refrigerator, stove and water heater."
-                        LineBreakMode="WordWrap"/>
-                </FlexLayout>
+
+                <Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
+                    <CheckBox 
+                        x:Name="SystemsCheck"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        CheckedChanged="RenterTrained_CheckedChanged"
+                        IsChecked="{Binding IsSystemsChecked}"/>
+                    <FlexLayout Margin="10,0" Grid.Column="1" >
+
+                        <Label
+                            Padding="20"
+                            Text="Generator, awning, slide-out(s), furnace, refrigerator, stove and water heater."
+                            LineBreakMode="WordWrap"/>
+                    </FlexLayout>
+                </Grid>
             </StackLayout>
 
-            <StackLayout Orientation="Vertical" Padding="20">
+            <StackLayout Orientation="Vertical" Padding="20" IsVisible="{Binding IsSystemsChecked}">
                 <Label 
                     Text="Paperwork and Renter Training"
                     FontSize="Large"/>
-                <FlexLayout Margin="10,0">
-                    <CheckBox />
-                    <Label
-                        Padding="20"
-                        Text="Have platform departure and return forms in RV. Train renter on all systems, driving instruction, etc."
-                        LineBreakMode="WordWrap"/>
-                </FlexLayout>
+
+                <Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
+                    <CheckBox 
+                        x:Name="RenterTrained"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        CheckedChanged="RenterTrained_CheckedChanged"
+                        IsChecked="{Binding IsRenterTrained}"/>
+                    <FlexLayout Margin="10,0" Grid.Column="1" >
+
+                        <Label
+                            Padding="20"
+                            Text="Have platform departure and return forms in RV. Train renter on all systems, driving instruction, etc."
+                            LineBreakMode="WordWrap"/>
+                    </FlexLayout>
+                </Grid>
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal" Padding="25">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="25" IsVisible="{Binding IsButtonEnabled}">
                 <Button
                     Text="Cancel"
                     FontSize="20"
                     HorizontalOptions="Center"
-                    WidthRequest="200"
+                    WidthRequest="150"
                     Margin="8"
-                    Style="{StaticResource CancelButtonOutline}"/>
+                    Style="{StaticResource CancelButtonOutline}"
+                    Command="{Binding CancelCommand}"/>
             
                 <Button
                     Text="Complete"
                     IsEnabled="True"
                     FontSize="20"
                     HorizontalOptions="Center"
-                    WidthRequest="200"
+                    WidthRequest="150"
                     Margin="8"
-                    Style="{StaticResource ButtonOutline}"/>
+                    Style="{StaticResource ButtonOutline}"
+                    Command="{Binding CompleteRentalCommand}"/>
             </StackLayout>
 
         </VerticalStackLayout>

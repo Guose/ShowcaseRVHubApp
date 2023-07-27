@@ -3,6 +3,19 @@
     public partial class ViewModelBase : ObservableObject
     {
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsButtonNotEnabled))]
+        bool isButtonEnabled;
+
+        public bool IsButtonNotEnabled 
+        { 
+            get => !IsButtonEnabled; 
+            set
+            {
+                IsButtonEnabled = !value;
+            }
+        }
+
+        [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsNotBusy))]
         bool isBusy;
 

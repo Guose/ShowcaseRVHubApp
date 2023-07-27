@@ -5,6 +5,14 @@
     [QueryProperty(nameof(ButtonText), nameof(ButtonText))]
     public partial class RentalCheckOutViewModel : RentalViewModelBase
     {
+        private IRenterDataService _renterDataService;
+
+        public RentalCheckOutViewModel()
+        {
+            Rental = new RentalModel();
+            _renterDataService = new RenterDataService();
+        }
+
         [ObservableProperty]
         RVModel rvModel;
 
@@ -19,18 +27,6 @@
 
         [ObservableProperty]
         string buttonText;
-
-        public RentalCheckOutViewModel()
-        {
-            Rental = new RentalModel();
-        }
-
-        public RentalCheckOutViewModel(DateTime startRental, DateTime endRental)
-        {
-            StartRental = startRental;
-            EndRental = endRental;
-            Rental = new RentalModel();
-        }
 
         public Dictionary<string, object> Parameters { get; set; } = new Dictionary<string, object>();
         public Range SelectedRange { get; set; }
@@ -51,21 +47,32 @@
                     return;
                 }
 
-                if (RvModel == null) return;
+                if (RvModel == null) 
+                    return;
 
-                Renter = new RenterModel
+                if (Rental == null || Renter == null)
                 {
-                    Firstname = AddFirstName,
-                    Lastname = AddLastName,
-                    Email = AddEmail,
-                    Phone = AddPhoneNumber
-                };
+                    Renter = new RenterModel
+                    {
+                        Firstname = AddFirstName,
+                        Lastname = AddLastName,
+                        Email = AddEmail,
+                        Phone = AddPhoneNumber,
+                    };
 
-                Rental = new RentalModel
-                {
-                    RentalStart = StartRental,
-                    RentalEnd = EndRental,
-                };
+                    if (!await _renterDataService.CreateRenterAsync(Renter))
+                    {
+                        Debug.WriteLine($"---> Unable to Create Renter to the database.");
+                        await Shell.Current.DisplayAlert("Error!", "Please enter Renter and try again.", "OK");
+                        return;
+                    }
+
+                    Rental = new RentalModel
+                    {
+                        RentalStart = StartRental,
+                        RentalEnd = EndRental,                        
+                    };
+                }
 
                 Parameters.Add("RvModel", RvModel);
                 Parameters.Add("Renter", Renter);
@@ -83,12 +90,6 @@
                 Debug.WriteLine($"---> Unable to navigate to the next page. EXCEPTION: {ex.Message}");
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
-        }
-
-        internal void SetRentalCalendar(DateTime startRental, DateTime endRental)
-        {
-            StartRental = startRental;
-            EndRental = endRental;
         }
     }
 }
