@@ -1,8 +1,8 @@
 namespace ShowcaseRVHub.MAUI.View;
 
-public partial class ContentAgreement : ContentPage
+public partial class ConsentAgreementView : ContentPage
 {
-	public ContentAgreement()
+	public ConsentAgreementView()
 	{
 		InitializeComponent();
 	}

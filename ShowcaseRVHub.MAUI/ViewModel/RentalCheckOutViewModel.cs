@@ -74,6 +74,7 @@
                     };
                 }
 
+                Parameters.Add(nameof(ButtonText), ButtonText);
                 Parameters.Add("RvModel", RvModel);
                 Parameters.Add("Renter", Renter);
                 Parameters.Add("Rental", Rental);

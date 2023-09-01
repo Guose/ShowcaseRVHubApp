@@ -10,12 +10,13 @@
         public RentalDataService()
         {
             _httpClient = new HttpClient();
-            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5012" : "http://192.168.1.10:5012";
+            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5012" : "http://localhost:5012";
             _url = $"{_baseAddress}/api/rentals";
 
             _jsonSerializerOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
             };
         }
         public async Task<bool> CreateRentalAsync(RentalModel rental)
@@ -28,9 +29,9 @@
 
             try
             {
-                string jsonUser = JsonSerializer.Serialize(rental, _jsonSerializerOptions);
+                string jsonRental = JsonSerializer.Serialize(rental, _jsonSerializerOptions);
 
-                StringContent content = new(jsonUser, Encoding.UTF8, "application/json");
+                StringContent content = new(jsonRental, Encoding.UTF8, "application/json");
 
                 var response = await _httpClient.PostAsync(_url, content);
 

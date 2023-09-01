@@ -4,8 +4,9 @@
              x:Class="ShowcaseRVHub.MAUI.View.ConsentAgreementView"
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
              xmlns:model="clr-namespace:ShowcaseRVHub.MAUI.Model"
-             x:DataType="viewmodel:ChecklistViewModel"
+             x:DataType="viewmodel:ConsentAgreementViewModel"
              Title="Content Agreement">
+
     <Grid>
         <VerticalStackLayout>
             <Label Text="Consent content goes here..." />

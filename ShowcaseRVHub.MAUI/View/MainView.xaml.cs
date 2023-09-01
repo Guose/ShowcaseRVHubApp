@@ -46,18 +46,22 @@ namespace ShowcaseRVHub.MAUI.View
             // Load the saved credentials if the user previously opted to remember them
             if (BindingContext is MainViewModel viewModel)
             {
-                List<UserModel> users = await _dataService.GetAllUsersAsync();
+                IEnumerable<UserModel> users = await _dataService.GetAllUsersAsync();
 
-                if (users.Count <= 0 || users == null)
+                if (users == null || !users.Any())
                 {
                     Debug.WriteLine($"---> Unable to retrieve users. Database is NOT connected");
                     bool userResponse = await Shell.Current.DisplayAlert("Error! Database is NOT connected", "Server is not running...\nPlease contact tech support", "OK", "Cancel");
 
                     if (userResponse)
                     {
-                        await Shell.Current.DisplayAlert("GOOD-BYE...", "Sorry for the inconvenience","OK");
-                        // Close the app
-                        Application.Current.Quit();
+                        bool isOk = await Shell.Current.DisplayAlert("GOOD-BYE...", "Sorry for the inconvenience","OK", "Cancel");
+                        
+                        if (isOk)
+                        {
+                            // Close the app
+                            Application.Current.Quit();
+                        }
                     }
                 }
 

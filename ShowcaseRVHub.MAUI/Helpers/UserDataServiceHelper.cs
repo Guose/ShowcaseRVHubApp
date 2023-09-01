@@ -3,7 +3,7 @@
     public class UserDataServiceHelper : IUserDataServiceHelper
     {
         private readonly IShowcaseUserDataService _showcaseUserDataService;
-        private List<UserModel> _users;
+        private IEnumerable<UserModel> _users;
 
         public UserDataServiceHelper(IShowcaseUserDataService showcaseUserDataService)
         {

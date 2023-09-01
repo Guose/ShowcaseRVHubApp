@@ -22,6 +22,9 @@
         string headerText;
 
         [ObservableProperty]
+        bool isCheckout;
+
+        [ObservableProperty]
         RVModel rvModel;
 
         [ObservableProperty]
@@ -32,9 +35,6 @@
 
         [ObservableProperty]
         UserModel user;
-
-
-        public bool IsCheckout { get; set; }
 
         [RelayCommand]
         public async Task CompleteRental()
@@ -72,8 +72,11 @@
                         RentalStart = Rental.RentalStart,
                         RentalEnd = Rental.RentalEnd,
                         RenterId = Renter.Id,
+                        Renter = Renter,
                         UserId = User.Id,
-                        RVId = RvModel.Id
+                        User = User,
+                        RVId = RvModel.Id,
+                        RVModel = RvModel
                     };
                     await _rentalDataService.CreateRentalAsync(rental);
                 }
@@ -89,6 +92,14 @@
                 Debug.WriteLine($"[ERROR] ---> Unable to complete Rental: {ex.Message}");
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
+        }
+
+        protected async override Task CancelAsync()
+        {
+            await base.CancelAsync().ContinueWith(t =>
+            {
+
+            });
         }
 
         public bool SetbuttonVisibility()

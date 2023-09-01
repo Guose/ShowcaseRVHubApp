@@ -10,12 +10,13 @@
         public ShowcaseUserDataService()
         {
             _httpClient = new HttpClient();
-            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5012" : "http://192.168.1.10:5012";
+            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5012" : "http://localhost:5012"; ;
             _url = $"{_baseAddress}/api";
 
             _jsonSerializerOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
             };
         }
 
@@ -101,7 +102,7 @@
             return user;
         }
 
-        public async Task<List<UserModel>> GetAllUsersAsync()
+        public async Task<IEnumerable<UserModel>> GetAllUsersAsync()
         {
             List<UserModel> users = new List<UserModel>();
 

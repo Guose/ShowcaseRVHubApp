@@ -5,7 +5,7 @@ namespace ShowcaseRVHub.XUnitTest
 {
     public class RenterAPITests
     {
-        //private readonly RenterRepo renterAPIs = new(ShowcaseDbContextHelper.GetMockDb(nameof(RenterAPITests)));
+        private readonly RenterRepo renterAPIs = new(ShowcaseDbContextHelper.GetMockDb(nameof(RenterAPITests)));
 
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;

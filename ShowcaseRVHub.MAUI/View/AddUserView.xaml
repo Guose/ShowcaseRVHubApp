@@ -47,28 +47,6 @@
                     Command="{Binding CreateUserCommand}"
                     Style="{StaticResource ButtonOutline}"/>
 
-                <!--<Button 
-                    Text="Create"  
-                    HorizontalOptions="StartAndExpand"
-                    WidthRequest="175"
-                    Margin="10"
-                    FontAttributes="Bold" 
-                    FontSize="22"
-                    IsVisible="{Binding IsButtonNotEnabled}"
-                    Style="{StaticResource DisabledButton}"/>-->
-
-                <!--<VisualStateManager.VisualStateGroups>
-                        <VisualStateGroup x:Name="UserVisual">
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BorderColor" Value="LightGray"/>
-                                    <Setter Property="TextColor" Value="LightGray"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateManager.VisualStateGroups>
-                </Button>-->
-
                 <Button 
                     Text="Cancel" 
                     HorizontalOptions="StartAndExpand"
@@ -79,102 +57,15 @@
                     Command="{Binding CancelCommand}"
                     Style="{StaticResource CancelButtonOutline}"/>
             </HorizontalStackLayout>
-
         </VerticalStackLayout>
+
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="FillAndExpand"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand"/>
+
     </Grid>
 </ContentPage>
-
-<!--<Grid Grid.Row="1" RowDefinitions="auto" ColumnDefinitions="200,auto">
-
-                <Label 
-                    Grid.Column="0"
-                    Text="Email:" 
-                    TextColor="{StaticResource LabelTextDark}" 
-                    Style="{StaticResource FormLabel}"/>
-
-                <Entry 
-                    Grid.Column="1" 
-                    Placeholder="Enter email"
-                    Text="{Binding AddEmail}" />
-            </Grid>
-
-            <Grid Grid.Row="2" RowDefinitions="auto" ColumnDefinitions="200,auto">
-                <Label 
-                    Grid.Column="0"
-                    Text="First Name:"
-                    TextColor="{StaticResource LabelTextDark}"
-                    Style="{StaticResource FormLabel}"/>
-
-                <Entry 
-                    Grid.Column="1"
-                    Placeholder="Enter first name" 
-                    Text="{Binding AddFirstName}" />
-                
-            </Grid>
-
-            <Grid Grid.Row="3" RowDefinitions="auto" ColumnDefinitions="200,auto">
-                <Label 
-                    Grid.Column="0"
-                    Text="Last Name:"
-                    TextColor="{StaticResource LabelTextDark}"
-                    Style="{StaticResource FormLabel}"/>
-
-                <Entry 
-                    Grid.Column="1"
-                    Placeholder="Enter last name" 
-                    Text="{Binding AddLastName}"/>
-            </Grid>
-
-            <Grid Grid.Row="4" RowDefinitions="auto" ColumnDefinitions="200,auto">
-                <Label 
-                    Grid.Column="0"
-                    Text="Phone Number:"
-                    TextColor="{StaticResource LabelTextDark}"
-                    Style="{StaticResource FormLabel}"/>
-
-                <Entry 
-                    Grid.Column="1"
-                    Placeholder="Enter your phone number" 
-                    Text="{Binding AddPhoneNumber}"/>
-            </Grid>
-
-            <Grid Grid.Row="5" RowDefinitions="auto" ColumnDefinitions="200,auto">
-                <Label 
-                    Grid.Column="0"
-                    Text="Username:"
-                    TextColor="{StaticResource LabelTextDark}"
-                    Style="{StaticResource FormLabel}"/>
-
-                <Entry 
-                    Grid.Column="1"
-                    Placeholder="Create your username" 
-                    Text="{Binding Username}"/>
-            </Grid>
-
-            <Grid Grid.Row="6" RowDefinitions="auto" ColumnDefinitions="200,auto">
-                <Label 
-                    Grid.Column="0"
-                    Text="Password:" 
-                    TextColor="{StaticResource LabelTextDark}" 
-                    Style="{StaticResource FormLabel}"/>
-
-                <Entry 
-                    Grid.Column="1" 
-                    Placeholder="Create password"
-                    Text="{Binding Password, Mode=TwoWay}"
-                    IsPassword="True"/>
-            </Grid>
-
-            <Grid Grid.Row="7" RowDefinitions="auto" ColumnDefinitions="200,auto">
-                <Label 
-                    Grid.Column="0"
-                    Text="Confirm Password:"
-                    TextColor="{StaticResource LabelTextDark}"
-                    Style="{StaticResource FormLabel}"/>
-
-                <Entry 
-                    Grid.Column="1"
-                    Placeholder="Re-enter password"
-                    Text="{Binding ConfirmPassword, Mode=TwoWay}"
-                    IsPassword="True"/>
-            </Grid>-->

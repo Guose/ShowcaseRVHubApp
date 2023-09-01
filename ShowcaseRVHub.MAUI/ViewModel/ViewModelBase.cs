@@ -48,7 +48,7 @@
         public bool IsNotBusy => !IsBusy;        
 
         [RelayCommand]
-        public async Task CancelAsync()
+        protected virtual async Task CancelAsync()
         {
             await Shell.Current.Navigation.PopModalAsync();
         }

@@ -11,7 +11,7 @@
             _user = new UserModel();
         }
 
-        List<UserModel> Users { get; set; }
+        IEnumerable<UserModel> Users { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsNotRemembered))]

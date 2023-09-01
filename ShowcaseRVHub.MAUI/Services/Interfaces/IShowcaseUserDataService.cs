@@ -4,7 +4,7 @@ namespace ShowcaseRVHub.MAUI.Services.Interfaces
 {
     public interface IShowcaseUserDataService
     {
-        Task<List<UserModel>> GetAllUsersAsync();
+        Task<IEnumerable<UserModel>> GetAllUsersAsync();
         Task<UserModel> GetUserByIdAsync(Guid id);
         Task CreateUserAsync(UserModel user);
         Task UpdateUserAsync(UserModel user);

@@ -9,10 +9,6 @@
              Title="{Binding RvModel.Model}"
              x:DataType="viewmodel:RentalCheckOutViewModel">
 
-    <!--<ContentPage.BindingContext>
-        <viewmodel:RentalCheckOutViewModel/>
-    </ContentPage.BindingContext>-->
-    
     <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}">
         <VerticalStackLayout>
             <Grid ColumnDefinitions="*,Auto,*" RowDefinitions="165,auto">
@@ -26,32 +22,26 @@
                 <VerticalStackLayout Padding="10">
                     <HorizontalStackLayout>
                         <Label
-                            Style="{StaticResource LargeLabel}" 
-                            TextColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}"
+                            Style="{StaticResource DarkLargeLabel}"
                             FontAttributes="Bold"
                             Text="{Binding RvModel.Year}"
                             Margin="0,0,8,0"/>
                         <Label
-                            Style="{StaticResource LargeLabel}" 
-                            TextColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}"
+                            Style="{StaticResource DarkLargeLabel}"
                             FontAttributes="Bold"
                             Text="{Binding RvModel.Model}"/>
                     </HorizontalStackLayout>
                     <Label
-                        Style="{StaticResource LargeLabel}" 
-                        TextColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}"
+                        Style="{StaticResource DarkLargeLabel}" 
                         Text="{Binding RvModel.Class, StringFormat='Class: {0}'}"/>
                     <Label
-                        Style="{StaticResource LargeLabel}" 
-                        TextColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}"
+                        Style="{StaticResource DarkLargeLabel}" 
                         Text="{Binding RvModel.Length, StringFormat='Length: {0}`'}"/>
                     <Label
-                        Style="{StaticResource LargeLabel}" 
-                        TextColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}"
+                        Style="{StaticResource DarkLargeLabel}" 
                         Text="{Binding RvModel.Sleeps, StringFormat='Sleeps: {0}'}"/>
                     <Label
-                        Style="{StaticResource LargeLabel}" 
-                        TextColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}"
+                        Style="{StaticResource DarkLargeLabel}" 
                         Text="{Binding RvModel.MasterBedType, StringFormat='Master Bed: {0}'}"/>
                 </VerticalStackLayout>
 
@@ -75,35 +65,38 @@
                 </Frame>
             </Grid>
             <VerticalStackLayout Padding="10" Spacing="10">
-                
-                <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
 
-                    <VerticalStackLayout Padding="50" Spacing="17" HorizontalOptions="CenterAndExpand">
-                        <Label Text="Renter's contact information" FontSize="Medium" HorizontalTextAlignment="Center"/>
-                        <Entry Placeholder="Renters first name" Text="{Binding AddFirstName}"/>
-                        <Entry Placeholder="Renters last name" Text="{Binding AddLastName}"/>
-                        <Entry Placeholder="Renters email" Text="{Binding AddEmail}"/>
-                        <Entry Placeholder="Renters phone number" Text="{Binding AddPhoneNumber}"/>
-                    </VerticalStackLayout>
+                <VerticalStackLayout Padding="50" Spacing="17" HorizontalOptions="CenterAndExpand">
+                    <Label 
+                        Text="Renter's contact information" 
+                        Style="{StaticResource LargeLabel}" 
+                        HorizontalTextAlignment="Center"/>
+                    
+                    <Entry Placeholder="Renters first name" Text="{Binding AddFirstName}"/>
+                    <Entry Placeholder="Renters last name" Text="{Binding AddLastName}"/>
+                    <Entry Placeholder="Renters email" Text="{Binding AddEmail}"/>
+                    <Entry Placeholder="Renters phone number" Text="{Binding AddPhoneNumber}"/>
+                    
+                </VerticalStackLayout>
 
-                    <VerticalStackLayout Padding="50" HorizontalOptions="CenterAndExpand">
-                        <Label
-                            Text="Select rental dates"
-                            FontSize="Medium"
-                            HorizontalTextAlignment="Center"
-                            Margin="0,0,0,17"/>
-                        
-                        <Frame
-                            x:Name="frame"
-                            CornerRadius="10"
-                            VerticalOptions="Center"
-                            Margin="0"
-                            Padding="5"
-                            BackgroundColor="LightGrey">
-                            
-                            <calendar:SfCalendar 
+                <VerticalStackLayout Padding="50" HorizontalOptions="CenterAndExpand">
+                    <Label
+                        Text="Select rental dates"
+                        Style="{StaticResource LargeLabel}" 
+                        HorizontalTextAlignment="Center"
+                        Margin="0,0,0,17"/>
+
+                    <Frame
+                        x:Name="frame"
+                        CornerRadius="10"
+                        VerticalOptions="Center"
+                        Margin="0"
+                        Padding="5"
+                        BackgroundColor="LightGrey">
+
+                        <calendar:SfCalendar 
                                 x:Name="MyCalendar"
-                                Background="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}"
+                                Background="{StaticResource DarkBackgroundLabel}"
                                 ShowTrailingAndLeadingDates="False"
                                 EnablePastDates="False"
                                 SelectionMode="Range"
@@ -115,37 +108,36 @@
                                 WidthRequest="300"
                                 HeightRequest="225">
 
-                                <calendar:SfCalendar.Behaviors>
-                                    <calendarhelper:CalendarBehaviorHelper BindingContext="DataType" />
-                                </calendar:SfCalendar.Behaviors>
+                            <calendar:SfCalendar.Behaviors>
+                                <calendarhelper:CalendarBehaviorHelper BindingContext="DataType" />
+                            </calendar:SfCalendar.Behaviors>
 
-                                <calendar:SfCalendar.YearView>
-                                    <calendar:CalendarYearView TextStyle="{calendar:CalendarTextStyle TextColor=White}"/>
-                                </calendar:SfCalendar.YearView>
-                                
-                                <calendar:SfCalendar.MonthView>
-                                    <calendar:CalendarMonthView TextStyle="{calendar:CalendarTextStyle TextColor=White}">
-                                        <calendar:CalendarMonthView.HeaderView>
-                                            <calendar:CalendarMonthHeaderView>
-                                                <calendar:CalendarMonthHeaderView.TextStyle>
-                                                    <calendar:CalendarTextStyle TextColor="{AppThemeBinding Dark={StaticResource LightBackground}, Light={StaticResource DarkBackground}}" FontSize="12"/>
-                                                </calendar:CalendarMonthHeaderView.TextStyle>
-                                            </calendar:CalendarMonthHeaderView>
-                                        </calendar:CalendarMonthView.HeaderView>
-                                    </calendar:CalendarMonthView>
-                                </calendar:SfCalendar.MonthView>
+                            <calendar:SfCalendar.YearView>
+                                <calendar:CalendarYearView TextStyle="{StaticResource CalendarTextColor}"/>
+                            </calendar:SfCalendar.YearView>
 
-                                <calendar:SfCalendar.HeaderView>
-                                    <calendar:CalendarHeaderView>
-                                        <calendar:CalendarHeaderView.TextStyle>
-                                            <calendar:CalendarTextStyle FontSize="14" TextColor="{AppThemeBinding Dark={StaticResource LightBackground}, Light={StaticResource DarkBackground}}" />
-                                        </calendar:CalendarHeaderView.TextStyle>
-                                    </calendar:CalendarHeaderView>
-                                </calendar:SfCalendar.HeaderView>
-                            </calendar:SfCalendar>
-                        </Frame>
-                    </VerticalStackLayout>                    
-                </HorizontalStackLayout>
+                            <calendar:SfCalendar.MonthView>
+                                <calendar:CalendarMonthView TextStyle="{StaticResource CalendarTextColor}">
+                                    <calendar:CalendarMonthView.HeaderView>
+                                        <calendar:CalendarMonthHeaderView>
+                                            <calendar:CalendarMonthHeaderView.TextStyle>
+                                                <calendar:CalendarTextStyle TextColor="{StaticResource CalendarTextColor}" FontSize="12"/>
+                                            </calendar:CalendarMonthHeaderView.TextStyle>
+                                        </calendar:CalendarMonthHeaderView>
+                                    </calendar:CalendarMonthView.HeaderView>
+                                </calendar:CalendarMonthView>
+                            </calendar:SfCalendar.MonthView>
+
+                            <calendar:SfCalendar.HeaderView>
+                                <calendar:CalendarHeaderView>
+                                    <calendar:CalendarHeaderView.TextStyle>
+                                        <calendar:CalendarTextStyle TextColor="{StaticResource CalendarTextColor}" FontSize="14" />
+                                    </calendar:CalendarHeaderView.TextStyle>
+                                </calendar:CalendarHeaderView>
+                            </calendar:SfCalendar.HeaderView>
+                        </calendar:SfCalendar>
+                    </Frame>
+                </VerticalStackLayout>
 
                 <Button
                     Text="{Binding ButtonText}"

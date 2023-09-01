@@ -7,7 +7,6 @@
              xmlns:view="clr-namespace:ShowcaseRVHub.MAUI.View"
              Title="{Binding User.Username}"
              x:DataType="viewmodel:RVNavigationViewModel">
-    
     <Grid 
         ColumnDefinitions="*,*"
         ColumnSpacing="5"

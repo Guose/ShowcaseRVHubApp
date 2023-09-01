@@ -7,11 +7,7 @@
              xmlns:view="clr-namespace:ShowcaseRVHub.MAUI.View"
              x:DataType="viewmodel:ChecklistViewModel"
              Title="{Binding HeaderText}">
-    
-    <!--<ContentPage.BindingContext>
-        <viewmodel:ChecklistViewModel/>
-    </ContentPage.BindingContext>-->
-    
+
     <ScrollView >
         <VerticalStackLayout>
 
@@ -197,7 +193,7 @@
                     Command="{Binding CancelCommand}"/>
             
                 <Button
-                    Text="Complete"
+                    Text="Continue"
                     IsEnabled="True"
                     FontSize="20"
                     HorizontalOptions="Center"

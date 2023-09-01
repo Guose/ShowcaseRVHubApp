@@ -1,8 +1,13 @@
 ﻿<?xml version = "1.0" encoding = "UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:local="clr-namespace:ShowcaseRVHub.MAUI"
+             xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
              x:Class="ShowcaseRVHub.MAUI.App">
+
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,7 +28,15 @@
             <Color x:Key="LabelText">#1F1F1F</Color>
             <Color x:Key="LabelTextDark">White</Color>
 
+            <Style ApplyToDerivedTypes="True" x:Key="CalendarTextColor" TargetType="calendar:CalendarTextStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />
+            </Style>
+
             <Style ApplyToDerivedTypes="True" TargetType="Page">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />
+            </Style>
+
+            <Style TargetType="Frame" x:Key="FrameBackgroundColor">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />
             </Style>
 
@@ -51,6 +64,27 @@
             </Style>
 
             <Style x:Key="LargeLabel" BasedOn="{StaticResource BaseLabel}" TargetType="Label">
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+
+            <Style TargetType="Label" x:Key="DarkBackgroundLabel">
+                <Setter Property="FontFamily" Value="OpenSansRegular"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LabelTextDark}, Dark={StaticResource LabelText}}" />
+            </Style>
+
+            <Style x:Key="DarkMicroLabel" BasedOn="{StaticResource DarkBackgroundLabel}" TargetType="Label">
+                <Setter Property="FontSize" Value="10"/>
+            </Style>
+
+            <Style x:Key="DarkSmallLabel" BasedOn="{StaticResource DarkBackgroundLabel}" TargetType="Label">
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+
+            <Style x:Key="DarkMediumLabel" BasedOn="{StaticResource DarkBackgroundLabel}" TargetType="Label">
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+
+            <Style x:Key="DarkLargeLabel" BasedOn="{StaticResource DarkBackgroundLabel}" TargetType="Label">
                 <Setter Property="FontSize" Value="20"/>
             </Style>
 

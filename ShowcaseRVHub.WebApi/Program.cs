@@ -29,8 +29,8 @@ internal class Program
         builder.Services.AddControllers().AddNewtonsoftJson(s =>
         {
             s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            //s.SerializerSettings.ContractResolver = new ContractResolverExtension();
-        });
+            s.SerializerSettings.ContractResolver = new ContractResolverExtension();
+        }).AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
                 
         builder.Services.AddEndpointsApiExplorer();
         var app = builder.Build();
