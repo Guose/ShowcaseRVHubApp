@@ -126,6 +126,9 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                 updateRv.Odometer = newRv.Odometer < 1 ? updateRv.Odometer : newRv.Odometer;
                 updateRv.GeneratorHours = newRv.GeneratorHours < 1 ? updateRv.GeneratorHours : newRv.GeneratorHours;
                 updateRv.FuelLevel = newRv == null ? updateRv.FuelLevel : newRv.FuelLevel;
+                updateRv.BlackWater = newRv == null ? updateRv.BlackWater : newRv.BlackWater;
+                updateRv.GrayWater = newRv == null ? updateRv.GrayWater : newRv.GrayWater;
+                updateRv.Propane = newRv == null ? updateRv.Propane : newRv.Propane;
                 updateRv.IsBooked = newRv == null ? updateRv.IsBooked : newRv.IsBooked;
                 updateRv.ModifiedOn = DateTime.Now;
 

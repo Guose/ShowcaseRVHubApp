@@ -11,8 +11,8 @@
         public bool IsSignalChecked { get; set; }
         public bool IsSystemsChecked { get; set; }
         public bool IsRenterTrained { get; set; }
-        public DateTime RentalStart { get; set; }
-        public DateTime RentalEnd { get; set; }
+        public DateTime? RentalStart { get; set; }
+        public DateTime? RentalEnd { get; set; }
 
         public int RenterId { get; set; }
         public RenterModel Renter { get; set; }

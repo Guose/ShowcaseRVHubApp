@@ -16,8 +16,8 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public bool IsRenterTrained { get; set; }
         [Required] public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
-        [Required] public DateTime RentalStart { get; set; }
-        [Required] public DateTime RentalEnd { get; set; }
+        public DateTime? RentalStart { get; set; }
+        public DateTime? RentalEnd { get; set; }
 
         [Required] public int RenterId { get; set; }
         public ShowcaseRenter? Renter { get; set; }

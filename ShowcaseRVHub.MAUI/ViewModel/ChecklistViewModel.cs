@@ -6,20 +6,14 @@
     [QueryProperty(nameof(User), "User")]
     [QueryProperty(nameof(HeaderText), "HeaderText")]
     [QueryProperty(nameof(IsCheckout), "IsCheckout")]
+    [QueryProperty(nameof(ButtonText), "ButtonText")]
     public partial class ChecklistViewModel : RentalViewModelBase
     {
-        List<RenterModel> _renters;
-        readonly IRentalDataService _rentalDataService;
-        readonly IRenterDataService _renterDataService;
-        public ChecklistViewModel(IRentalDataService rentalDataService) : base()
-        {
-            _rentalDataService = rentalDataService;
-            _renterDataService = new RenterDataService();
-            _renters = new List<RenterModel>();
-        }
-
         [ObservableProperty]
         string headerText;
+
+        [ObservableProperty]
+        string buttonText;
 
         [ObservableProperty]
         bool isCheckout;
@@ -53,9 +47,6 @@
 
                 IsBusy = true;
 
-                _renters = await _renterDataService.GetAllRentersAsync() as List<RenterModel>;
-                Renter = _renters.FirstOrDefault(r => r.Firstname == Renter.Firstname && r.Lastname == Renter.Lastname);
-
                 if (Renter != null)
                 {
                     // use create rental api
@@ -78,27 +69,33 @@
                         RVId = RvModel.Id,
                         RVModel = RvModel
                     };
-                    await _rentalDataService.CreateRentalAsync(rental);
                 }
 
-                await Shell.Current.GoToAsync($"{nameof(ConsentAgreementView)}?HeaderText={HeaderText}&IsCheckout={IsCheckout}", true, 
-                    new Dictionary<string, object>
-                    {
-                        { "RvModel", RvModel }
-                    });
+                Parameters = new Dictionary<string, object>
+                {
+                    { "RvModel", RvModel },
+                    { "Renter", Renter },
+                    { "Rental", Rental },
+                    { "User", User }
+                };
+
+                await Shell.Current.GoToAsync(
+                    $"{nameof(ConsentAgreementView)}?HeaderText={HeaderText}&IsCheckout={IsCheckout}", 
+                    true, Parameters);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"[ERROR] ---> Unable to complete Rental: {ex.Message}");
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
+            finally { IsBusy = false; }
         }
 
         protected async override Task CancelAsync()
         {
             await base.CancelAsync().ContinueWith(t =>
             {
-
+                
             });
         }
 

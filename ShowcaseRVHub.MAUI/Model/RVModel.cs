@@ -18,6 +18,9 @@ namespace ShowcaseRVHub.MAUI.Model
         public string Description { get; set; }
         public BedType MasterBedType { get; set; }
         public LevelType FuelLevel { get; set; }
+        public LevelType BlackWater { get; set; }
+        public LevelType GrayWater { get; set; }
+        public LevelType Propane { get; set; }
         public double Odometer { get; set; }
         public int GeneratorHours { get; set; }
         public bool IsBooked { get; set; }

@@ -22,6 +22,9 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public double Odometer { get; set; }
         [Required] public int GeneratorHours { get; set; }
         [Required] public LevelType FuelLevel { get; set; }
+        [Required] public LevelType BlackWater { get; set; }
+        [Required] public LevelType GrayWater { get; set; }
+        [Required] public LevelType Propane { get; set; }
         [Required] public BedType MasterBedType { get; set; }
         public bool IsBooked { get; set; } = false;
         public bool HasSlideout { get; set; } = false;

@@ -114,6 +114,16 @@
                             LineBreakMode="WordWrap"/>
                     </FlexLayout>
                 </Grid>
+                <StackLayout>
+                    <Label Text="Fuel Level"/>
+                    <HorizontalStackLayout>
+                        <RadioButton Content="Empty"/>
+                        <RadioButton Content="1/4"/>
+                        <RadioButton Content="1/2"/>
+                        <RadioButton Content="3/4"/>
+                        <RadioButton Content="Full"/>
+                    </HorizontalStackLayout>
+                </StackLayout>
             </StackLayout>
 
             <StackLayout Orientation="Vertical" Padding="20" IsVisible="{Binding IsFluidChecked}">
@@ -182,7 +192,7 @@
                 </Grid>
             </StackLayout>
 
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="25" IsVisible="{Binding IsButtonEnabled}">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="25">
                 <Button
                     Text="Cancel"
                     FontSize="20"
@@ -194,7 +204,6 @@
             
                 <Button
                     Text="Continue"
-                    IsEnabled="True"
                     FontSize="20"
                     HorizontalOptions="Center"
                     WidthRequest="150"

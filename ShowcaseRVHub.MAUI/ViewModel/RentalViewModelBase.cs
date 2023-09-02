@@ -7,6 +7,8 @@
             
         }
 
+        public Dictionary<string, object> Parameters { get; set; }
+
         [ObservableProperty]
         bool isExteriorCleaned;
 

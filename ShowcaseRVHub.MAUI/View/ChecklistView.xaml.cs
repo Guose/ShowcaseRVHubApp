@@ -3,12 +3,10 @@ namespace ShowcaseRVHub.MAUI.View;
 public partial class ChecklistView : ContentPage
 {
 	private readonly ChecklistViewModel _checklistViewModel;
-	private IRentalDataService _rentalDataService;
-	public ChecklistView(IRentalDataService rentalDataService)
+	public ChecklistView()
 	{
-		_rentalDataService = rentalDataService;
 		InitializeComponent();
-		_checklistViewModel = new ChecklistViewModel(_rentalDataService);
+		_checklistViewModel = new ChecklistViewModel();
 		BindingContext = _checklistViewModel;
 	}
 

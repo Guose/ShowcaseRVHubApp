@@ -9,6 +9,7 @@
 
     <Grid>
         <VerticalStackLayout>
+            <Label Text="{Binding HeaderText}"/>
             <Label Text="Consent content goes here..." />
             <HorizontalStackLayout>
                 <Label Text="Showcase Rep. Signature" />
@@ -18,6 +19,14 @@
                 <Label Text="Renter Signature" />
                 <CheckBox/>
             </HorizontalStackLayout>
+            <Button 
+                Text="Submit"
+                FontSize="20"
+                HorizontalOptions="Center"
+                WidthRequest="150"
+                Margin="8"
+                Style="{StaticResource ButtonOutline}"
+                Command="{Binding SubmitRentalCommand}"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

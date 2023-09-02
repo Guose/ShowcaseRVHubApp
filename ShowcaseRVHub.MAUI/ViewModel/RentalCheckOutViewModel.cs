@@ -2,17 +2,9 @@
 {
     [QueryProperty(nameof(RvModel), "RvModel")]
     [QueryProperty(nameof(User), "User")]
-    [QueryProperty(nameof(ButtonText), nameof(ButtonText))]
+    [QueryProperty(nameof(ButtonText), "ButtonText")]
     public partial class RentalCheckOutViewModel : RentalViewModelBase
     {
-        private IRenterDataService _renterDataService;
-
-        public RentalCheckOutViewModel()
-        {
-            Rental = new RentalModel();
-            _renterDataService = new RenterDataService();
-        }
-
         [ObservableProperty]
         RVModel rvModel;
 
@@ -28,7 +20,7 @@
         [ObservableProperty]
         string buttonText;
 
-        public Dictionary<string, object> Parameters { get; set; } = new Dictionary<string, object>();
+        
         public Range SelectedRange { get; set; }
         public string HeaderText => $"{RvModel.Model} - {ButtonText}";
         public bool IsCheckout { get; set; }
@@ -47,10 +39,12 @@
                     return;
                 }
 
+                IsBusy = true;
+
                 if (RvModel == null) 
                     return;
 
-                if (Rental == null || Renter == null)
+                if (Renter == null)
                 {
                     Renter = new RenterModel
                     {
@@ -58,32 +52,32 @@
                         Lastname = AddLastName,
                         Email = AddEmail,
                         Phone = AddPhoneNumber,
-                    };
+                    };                   
+                }
 
-                    if (!await _renterDataService.CreateRenterAsync(Renter))
-                    {
-                        Debug.WriteLine($"---> Unable to Create Renter to the database.");
-                        await Shell.Current.DisplayAlert("Error!", "Please enter Renter and try again.", "OK");
-                        return;
-                    }
-
+                if (Rental == null || Rental.RentalStart != StartRental || Rental.RentalEnd != EndRental)
+                {
                     Rental = new RentalModel
                     {
                         RentalStart = StartRental,
-                        RentalEnd = EndRental,                        
+                        RentalEnd = EndRental,
                     };
                 }
 
-                Parameters.Add(nameof(ButtonText), ButtonText);
-                Parameters.Add("RvModel", RvModel);
-                Parameters.Add("Renter", Renter);
-                Parameters.Add("Rental", Rental);
-                Parameters.Add("User", User);
+                Parameters = new Dictionary<string, object>
+                {
+                    { "RvModel", RvModel },
+                    { "Renter", Renter },
+                    { "Rental", Rental },
+                    { "User", User }
+                };
 
                 if (ButtonText == "Check Out")
                     IsCheckout = true;
 
-                await Shell.Current.GoToAsync($"{nameof(ChecklistView)}?HeaderText={HeaderText}&IsCheckout={IsCheckout}", true, Parameters);
+                await Shell.Current.GoToAsync(
+                    $"{nameof(ChecklistView)}?HeaderText={HeaderText}&IsCheckout={IsCheckout}&ButtonText={ButtonText}", 
+                    true, Parameters);
 
             }
             catch (Exception ex)
@@ -91,6 +85,7 @@
                 Debug.WriteLine($"---> Unable to navigate to the next page. EXCEPTION: {ex.Message}");
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
+            finally { IsBusy = false; }
         }
     }
 }
