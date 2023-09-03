@@ -113,6 +113,10 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                 updateRental.IsRenterTrained = newRental.IsRenterTrained;
                 updateRental.RentalStart = newRental.RentalStart;
                 updateRental.RentalEnd = newRental.RentalEnd;
+                updateRental.FuelLevel = newRental == null ? updateRental.FuelLevel : newRental.FuelLevel;
+                updateRental.Propane = newRental == null ? updateRental.Propane : newRental.Propane;
+                updateRental.GrayWater = newRental == null ? updateRental.GrayWater : newRental.GrayWater;
+                updateRental.BlackWater = newRental == null ? updateRental.BlackWater : newRental.BlackWater;
                 updateRental.ModifiedOn = DateTime.Now;
 
                 _context.Rentals.Update(updateRental);

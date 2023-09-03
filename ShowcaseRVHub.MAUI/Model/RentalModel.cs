@@ -1,4 +1,6 @@
-﻿namespace ShowcaseRVHub.MAUI.Model
+﻿using ShowcaseRVHub.MAUI.Model.Enums;
+
+namespace ShowcaseRVHub.MAUI.Model
 {
     public class RentalModel
     {
@@ -11,9 +13,12 @@
         public bool IsSignalChecked { get; set; }
         public bool IsSystemsChecked { get; set; }
         public bool IsRenterTrained { get; set; }
-        public DateTime? RentalStart { get; set; }
-        public DateTime? RentalEnd { get; set; }
-
+        public DateTime RentalStart { get; set; }
+        public DateTime RentalEnd { get; set; }
+        public LevelType FuelLevel { get; set; }
+        public LevelType BlackWater { get; set; }
+        public LevelType GrayWater { get; set; }
+        public LevelType Propane { get; set; }
         public int RenterId { get; set; }
         public RenterModel Renter { get; set; }
         public Guid UserId { get; set; }

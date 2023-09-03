@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ShowcaseRVHub.WebApi.Models.EnumTypes;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShowcaseRVHub.WebApi.Models
@@ -15,9 +16,13 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public bool IsSystemsChecked { get; set; }
         [Required] public bool IsRenterTrained { get; set; }
         [Required] public DateTime CreatedOn { get; set; }
+        [Required] public LevelType FuelLevel { get; set; }
+        [Required] public LevelType BlackWater { get; set; }
+        [Required] public LevelType GrayWater { get; set; }
+        [Required] public LevelType Propane { get; set; }
         public DateTime? ModifiedOn { get; set; }
-        public DateTime? RentalStart { get; set; }
-        public DateTime? RentalEnd { get; set; }
+        [Required] public DateTime RentalStart { get; set; }
+        [Required] public DateTime RentalEnd { get; set; }
 
         [Required] public int RenterId { get; set; }
         public ShowcaseRenter? Renter { get; set; }
