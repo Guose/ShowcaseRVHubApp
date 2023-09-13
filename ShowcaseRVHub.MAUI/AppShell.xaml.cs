@@ -9,6 +9,7 @@
             Routing.RegisterRoute(nameof(RVNavigationView), typeof(RVNavigationView));
             Routing.RegisterRoute(nameof(RentalCheckOutView), typeof(RentalCheckOutView));
             Routing.RegisterRoute(nameof(ChecklistView), typeof(ChecklistView));
+            Routing.RegisterRoute(nameof(ConsentAgreementView), typeof(ConsentAgreementView));
         }
     }
 }

@@ -14,14 +14,14 @@ namespace ShowcaseRVHub.WebApi.Models
         public DateTime? ModifiedOn { get; set; }
 
         [JsonIgnore] public List<Rental> Rentals { get; set; }
-        [JsonIgnore] public List<VehicleRv> Vehicles { get; set; }
+        //[JsonIgnore] public List<VehicleRv> Vehicles { get; set; }
 
         public ShowcaseRenter()
         {
             CreatedOn = DateTime.Now;
             ModifiedOn = null;
             Rentals = new List<Rental>();
-            Vehicles = new List<VehicleRv>();
+            //Vehicles = new List<VehicleRv>();
         }
     }
 }

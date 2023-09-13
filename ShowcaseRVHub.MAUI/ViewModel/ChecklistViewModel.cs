@@ -1,4 +1,6 @@
-﻿namespace ShowcaseRVHub.MAUI.ViewModel
+﻿using ShowcaseRVHub.MAUI.Model.Enums;
+
+namespace ShowcaseRVHub.MAUI.ViewModel
 {
     [QueryProperty(nameof(RvModel), "RvModel")]
     [QueryProperty(nameof(Renter), "Renter")]
@@ -29,6 +31,20 @@
 
         [ObservableProperty]
         UserModel user;
+
+        [ObservableProperty]
+        LevelType fuelLevel;
+
+        [ObservableProperty]
+        LevelType propaneLevel;
+
+        [ObservableProperty]
+        LevelType graywaterLevel;
+
+        [ObservableProperty]
+        LevelType blackwaterLevel;
+
+        
 
         [RelayCommand]
         public async Task CompleteRental()
@@ -62,6 +78,10 @@
                         IsRenterTrained = IsRenterTrained,
                         RentalStart = Rental.RentalStart,
                         RentalEnd = Rental.RentalEnd,
+                        FuelLevel = FuelLevel,
+                        Propane = PropaneLevel,
+                        GrayWater = GraywaterLevel,
+                        BlackWater = BlackwaterLevel,
                         RenterId = Renter.Id,
                         Renter = Renter,
                         UserId = User.Id,

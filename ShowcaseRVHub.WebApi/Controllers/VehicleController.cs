@@ -46,7 +46,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet("{id}/{userId}")]
         public async Task<ActionResult> GetVehicleWithRenterUserAndRentals(int id, Guid userId)
         {
-            VehicleRv? rvWithRentalsAndUser = await _rvRepo.GetVehicleWithRenterUserAndRentalsAsync(id, userId);
+            VehicleRv? rvWithRentalsAndUser = await _rvRepo.GetVehicleWithRentalUserAndRenterAsync(id, userId);
 
             return rvWithRentalsAndUser == null
                 ? NotFound(new { Message = $"RV with id {id} does not exist." })

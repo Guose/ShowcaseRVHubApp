@@ -15,7 +15,7 @@ namespace ShowcaseRVHub.XUnitTest
         public RentalAPITests()
         {
             _httpClient = new HttpClient();
-            _baseAddress = "http://192.168.1.10:5012";
+            _baseAddress = "http://localhost:80";
             _url = $"{_baseAddress}/api/rentals/";
 
             _jsonSerializerOptions = new JsonSerializerOptions

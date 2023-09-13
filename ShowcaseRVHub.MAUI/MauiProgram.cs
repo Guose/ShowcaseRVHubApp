@@ -39,6 +39,8 @@ namespace ShowcaseRVHub.MAUI
             builder.Services.AddTransient<RentalCheckOutView>();
             builder.Services.AddTransient<ChecklistViewModel>();
             builder.Services.AddTransient<ChecklistView>();
+            builder.Services.AddTransient<ConsentAgreementViewModel>();
+            builder.Services.AddTransient<ConsentAgreementView>();
 
             return builder.Build();
         }        

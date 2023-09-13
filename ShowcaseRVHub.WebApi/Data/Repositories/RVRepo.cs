@@ -68,7 +68,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<VehicleRv?> GetVehicleWithRenterUserAndRentalsAsync(int id, Guid userId)
+        public async Task<VehicleRv?> GetVehicleWithRentalUserAndRenterAsync(int id, Guid userId)
         {
             try
             {
@@ -81,6 +81,8 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
 
                 if (vehicle == null)
                     return null;
+                else
+                    vehicle.Rentals = vehicle.Rentals.Where(u => u.UserId == userId).ToList();
 
                 return vehicle;
             }

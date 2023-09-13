@@ -5,20 +5,34 @@
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
              xmlns:model="clr-namespace:ShowcaseRVHub.MAUI.Model"
              x:DataType="viewmodel:ConsentAgreementViewModel"
-             Title="Content Agreement">
+             Title="{Binding HeaderText}">
 
     <Grid>
         <VerticalStackLayout>
-            <Label Text="{Binding HeaderText}"/>
-            <Label Text="Consent content goes here..." />
-            <HorizontalStackLayout>
-                <Label Text="Showcase Rep. Signature" />
-                <CheckBox/>
-            </HorizontalStackLayout>
-            <HorizontalStackLayout>
-                <Label Text="Renter Signature" />
-                <CheckBox/>
-            </HorizontalStackLayout>
+            <Label 
+                Text="Rental Summary"
+                FontSize="Subtitle"/>
+            <Label Text=""/>
+            <Label 
+                Text="Terms and Agreement"
+                FontSize="Small"/>
+            <Label Text="" />
+            <Grid ColumnDefinitions="*,*">
+                <CheckBox
+                    x:Name="ShowcaseRep"
+                    Grid.Column="0"/>
+                <Label 
+                    Text="Showcase Signature"
+                    Grid.Column="0"
+                    Margin="35,12,0,0"/>
+                <CheckBox
+                    x:Name="Renter"
+                    Grid.Column="1"/>
+                <Label 
+                    Text="Renter Signature"
+                    Grid.Column="1"
+                    Margin="35,12,0,0"/>                
+            </Grid>
             <Button 
                 Text="Submit"
                 FontSize="20"

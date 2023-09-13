@@ -3,10 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShowcaseRVHub.MAUI.View.ChecklistView"
              xmlns:model="clr-namespace:ShowcaseRVHub.MAUI.Model"
+             xmlns:enums="clr-namespace:ShowcaseRVHub.MAUI.Model.Enums"
+             xmlns:local="clr-namespace:ShowcaseRVHub.MAUI.Helpers"
              xmlns:viewmodel="clr-namespace:ShowcaseRVHub.MAUI.ViewModel"
              xmlns:view="clr-namespace:ShowcaseRVHub.MAUI.View"
              x:DataType="viewmodel:ChecklistViewModel"
              Title="{Binding HeaderText}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ScrollView >
         <VerticalStackLayout>
@@ -20,7 +28,6 @@
                         x:Name="Exterior" 
                         Grid.Column="0"
                         Grid.Row="0"
-                        CheckedChanged="RenterTrained_CheckedChanged"
                         IsChecked="{Binding IsExteriorCleaned}"/>
                     <FlexLayout Margin="10,0" Grid.Column="1">
 
@@ -41,7 +48,6 @@
                         x:Name="Interior"
                         Grid.Column="0"
                         Grid.Row="0"
-                        CheckedChanged="RenterTrained_CheckedChanged"
                         IsChecked="{Binding IsInteriorCleaned}"/>
                     <FlexLayout Margin="10,0" Grid.Column="1" >
 
@@ -62,7 +68,6 @@
                         x:Name="TireInspection"
                         Grid.Column="0"
                         Grid.Row="0"
-                        CheckedChanged="RenterTrained_CheckedChanged"
                         IsChecked="{Binding IsTiresInspected}"/>
                     <FlexLayout Margin="10,0" Grid.Column="1" >
 
@@ -83,7 +88,6 @@
                         x:Name="Maintenance"
                         Grid.Column="0"
                         Grid.Row="0"
-                        CheckedChanged="RenterTrained_CheckedChanged"
                         IsChecked="{Binding IsMaintenance}"/>
                     <FlexLayout Margin="10,0" Grid.Column="1" >
 
@@ -102,9 +106,9 @@
                 <Grid ColumnDefinitions="auto,*,auto" RowDefinitions="auto,auto">
                     <CheckBox 
                         x:Name="FluidCheck"
+                        IsEnabled="False"
                         Grid.Column="0"
                         Grid.Row="0"
-                        CheckedChanged="RenterTrained_CheckedChanged"
                         IsChecked="{Binding IsFluidChecked}"/>
                     <FlexLayout Margin="10,0" Grid.Column="1" >
 
@@ -114,14 +118,118 @@
                             LineBreakMode="WordWrap"/>
                     </FlexLayout>
                 </Grid>
-                <StackLayout>
+                <StackLayout x:Name="radioButtonStackLayout">
                     <Label Text="Fuel Level"/>
-                    <HorizontalStackLayout>
-                        <RadioButton Content="Empty"/>
-                        <RadioButton Content="1/4"/>
-                        <RadioButton Content="1/2"/>
-                        <RadioButton Content="3/4"/>
-                        <RadioButton Content="Full"/>
+                    <HorizontalStackLayout x:Name="FuelLevelHorizontal">
+                        <RadioButton 
+                            Content="Empty" 
+                            x:Name="FuelEmpty"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding FuelLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Empty}}" />
+                        <RadioButton 
+                            Content="1/4" 
+                            x:Name="FuelQuarter"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding FuelLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Quarter}}" />
+                        <RadioButton 
+                            Content="1/2" 
+                            x:Name="FuelHalf"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding FuelLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Half}}" />
+                        <RadioButton 
+                            Content="3/4" 
+                            x:Name="FuelThreeQuarter"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding FuelLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.ThreeQuarter}}" />
+                        <RadioButton 
+                            Content="Full" 
+                            x:Name="FuelFull"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding FuelLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Full}}" />
+                    </HorizontalStackLayout>
+                    <Label Text="Propane Level"/>
+                    <HorizontalStackLayout x:Name="PropaneLevelHorizontal">
+                        <RadioButton 
+                            Content="Empty" 
+                            x:Name="PropaneEmpty"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding PropaneLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Empty}}" />
+                        <RadioButton 
+                            Content="1/4" 
+                            x:Name="PropaneQuarter"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding PropaneLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Quarter}}" />
+                        <RadioButton 
+                            Content="1/2" 
+                            x:Name="PropaneHalf"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding PropaneLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Half}}" />
+                        <RadioButton 
+                            Content="3/4" 
+                            x:Name="PropaneThreeQuarter"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding PropaneLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.ThreeQuarter}}" />
+                        <RadioButton 
+                            Content="Full" 
+                            x:Name="PropaneFull"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding PropaneLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Full}}" />
+                    </HorizontalStackLayout>
+                    <Label Text="Gray Water"/>
+                    <HorizontalStackLayout x:Name="GrayWaterHorizontal">
+                        <RadioButton 
+                            Content="Empty" 
+                            x:Name="GrayWaterEmpty"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding GraywaterLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Empty}}" />
+                        <RadioButton 
+                            Content="1/4" 
+                            x:Name="GrayWaterQuarter"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding GraywaterLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Quarter}}" />
+                        <RadioButton 
+                            Content="1/2" 
+                            x:Name="GrayWaterHalf"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding GraywaterLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Half}}" />
+                        <RadioButton 
+                            Content="3/4" 
+                            x:Name="GrayWaterThreeQuarter"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding GraywaterLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.ThreeQuarter}}" />
+                        <RadioButton 
+                            Content="Full" 
+                            x:Name="GrayWaterFull"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding GraywaterLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Full}}" />
+                    </HorizontalStackLayout>
+                    <Label Text="Black Water"/>
+                    <HorizontalStackLayout x:Name="BlackWaterHorizontal">
+                        <RadioButton 
+                            Content="Empty" 
+                            x:Name="BlackWaterEmpty"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding BlackwaterLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Empty}}" />
+                        <RadioButton 
+                            Content="1/4" 
+                            x:Name="BlackWaterQuarter"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding BlackwaterLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Quarter}}" />
+                        <RadioButton 
+                            Content="1/2" 
+                            x:Name="BlackWaterHalf"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding BlackwaterLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Half}}" />
+                        <RadioButton 
+                            Content="3/4" 
+                            x:Name="BlackWaterThreeQuarter"
+                            CheckedChanged="RadioButton_CheckedChanged"
+                            IsChecked="{Binding BlackwaterLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.ThreeQuarter}}" />
+                        <RadioButton 
+                            Content="Full" 
+                            x:Name="BlackWaterFull"
+                            CheckedChanged="RadioButton_CheckedChanged" 
+                            IsChecked="{Binding BlackwaterLevel, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static enums:LevelType.Full}}" />
                     </HorizontalStackLayout>
                 </StackLayout>
             </StackLayout>
@@ -136,7 +244,6 @@
                         x:Name="SignalsCheck"
                         Grid.Column="0"
                         Grid.Row="0"
-                        CheckedChanged="RenterTrained_CheckedChanged"
                         IsChecked="{Binding IsSignalsChecked}"/>
                     <FlexLayout Margin="10,0" Grid.Column="1" >
 
@@ -158,7 +265,6 @@
                         x:Name="SystemsCheck"
                         Grid.Column="0"
                         Grid.Row="0"
-                        CheckedChanged="RenterTrained_CheckedChanged"
                         IsChecked="{Binding IsSystemsChecked}"/>
                     <FlexLayout Margin="10,0" Grid.Column="1" >
 
@@ -180,7 +286,6 @@
                         x:Name="RenterTrained"
                         Grid.Column="0"
                         Grid.Row="0"
-                        CheckedChanged="RenterTrained_CheckedChanged"
                         IsChecked="{Binding IsRenterTrained}"/>
                     <FlexLayout Margin="10,0" Grid.Column="1" >
 
@@ -191,6 +296,8 @@
                     </FlexLayout>
                 </Grid>
             </StackLayout>
+
+            
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="25">
                 <Button
@@ -210,6 +317,22 @@
                     Margin="8"
                     Style="{StaticResource ButtonOutline}"
                     Command="{Binding CompleteRentalCommand}"/>
+            </StackLayout>
+
+            <StackLayout 
+                Orientation="Horizontal" 
+                HorizontalOptions="Center" 
+                Margin="165,-121,0,0"
+                Padding="25" 
+                IsVisible="{Binding IsNotVisible}">
+
+                <Button
+                    Text="Continue"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    WidthRequest="150"
+                    Margin="8"
+                    Style="{StaticResource DisabledButton}"/>
             </StackLayout>
 
         </VerticalStackLayout>

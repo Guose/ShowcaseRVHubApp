@@ -6,7 +6,7 @@ namespace ShowcaseRVHub.XUnitTest
     public class RvAPITests
     {
         private readonly RVRepo rvAPIs = new(
-            ShowcaseDbContextHelper.GetMockDb(nameof(RvAPITests_FE)));
+            ShowcaseDbContextHelper.GetMockDb(nameof(RvAPITests)));
 
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
@@ -16,7 +16,7 @@ namespace ShowcaseRVHub.XUnitTest
         public RvAPITests()
         {
             _httpClient = new HttpClient();
-            _baseAddress = "http://192.168.1.10:5012";
+            _baseAddress = "http://localhost:80";
             _url = $"{_baseAddress}/api/vehicles/";
 
             _jsonSerializerOptions = new JsonSerializerOptions

@@ -14,12 +14,13 @@ namespace ShowcaseRVHub.Email.Services
         public ShowcaseUserDataService()
         {
             _httpClient = new HttpClient();
-            _baseAddress = "http://localhost:5012";
+            _baseAddress = "http://localhost:80";
             _url = $"{_baseAddress}/api";
 
             _jsonSerializerOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
             };
         }
 

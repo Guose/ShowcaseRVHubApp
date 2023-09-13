@@ -1,0 +1,31 @@
+version: '3'
+services:
+  webapi:
+    build:
+      context: ./ShowcaseRVHub.WebApi
+    ports:
+      - "5012:5012"
+    # Other configurations for your WebAPI container
+
+  express-server:
+    build:
+      context: ./ShowcaseRVHub.React/server
+    ports:
+      - "3001:3001"
+    # Other configurations for your Express.js server container
+
+  react-client:
+    build:
+      context: ./ShowcaseRVHub.React/rv-email-service
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_BASE_URL=http://webapi:5012 # Use the WebAPI service name as the hostname
+    # Other configurations for your React client container
+
+  email-server:
+    build:
+      context: ./ShowcaseRVHub.Email
+    ports:
+      - "5093:5093"
+    # Other configurations for your Email container

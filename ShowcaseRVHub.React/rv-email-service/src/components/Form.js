@@ -12,11 +12,16 @@ function Form() {
     const [userData, setUserData] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:3001/users')
-        .then(response => {
-            console.log('Users: ', response.data)
-            setUserData(response.data)
-        })
+        try {
+            axios.get('http://localhost:3001/users')
+            .then(response => {
+                console.log('Users: ', response.data)
+                setUserData(response.data)
+            })
+        } catch (error) {
+            console.error('There is an error in the useEffect function: ', error)
+        }
+        
       }, [email])
 
     const handleUpdatePasswordSubmit = async (event) => {

@@ -2,24 +2,22 @@ namespace ShowcaseRVHub.MAUI.View;
 
 public partial class ChecklistView : ContentPage
 {
-	private readonly ChecklistViewModel _checklistViewModel;
-	public ChecklistView()
+	public ChecklistView(ChecklistViewModel checklistViewModel)
 	{
 		InitializeComponent();
-		_checklistViewModel = new ChecklistViewModel();
-		BindingContext = _checklistViewModel;
+
+        BindingContext = checklistViewModel;
 	}
 
-    private void RenterTrained_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    private void RadioButton_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
-		SetStateOfSubmitButton(e.Value);
-    }
+        // Check if at least one RadioButton is selected in each group
+        bool fuelSelected = FuelEmpty.IsChecked || FuelQuarter.IsChecked || FuelHalf.IsChecked || FuelThreeQuarter.IsChecked || FuelFull.IsChecked;
+        bool propaneSelected = PropaneEmpty.IsChecked || PropaneQuarter.IsChecked || PropaneHalf.IsChecked || PropaneThreeQuarter.IsChecked || PropaneFull.IsChecked;
+        bool grayWaterSelected = GrayWaterEmpty.IsChecked || GrayWaterQuarter.IsChecked || GrayWaterHalf.IsChecked || GrayWaterThreeQuarter.IsChecked || GrayWaterFull.IsChecked;
+        bool blackWaterSelected = BlackWaterEmpty.IsChecked || BlackWaterQuarter.IsChecked || BlackWaterHalf.IsChecked || BlackWaterThreeQuarter.IsChecked || BlackWaterFull.IsChecked;
 
-	private void SetStateOfSubmitButton(bool isChecked)
-	{
-		if (isChecked)
-			_checklistViewModel.SetbuttonVisibility();
-		else
-			_checklistViewModel.IsButtonEnabled = false;
-	}
+        // Enable the "FluidCheck" CheckBox when at least one RadioButton from each group is selected
+        FluidCheck.IsEnabled = fuelSelected && propaneSelected && grayWaterSelected && blackWaterSelected;
+    }
 }

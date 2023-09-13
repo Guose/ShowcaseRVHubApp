@@ -36,14 +36,9 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     HasSlideout = true,
                     HasGenerator = true,
                     GeneratorHours = 48,
-                    FuelLevel = LevelType.Half,
-                    Propane = LevelType.ThreeQuarter,
-                    BlackWater = LevelType.Empty,
-                    GrayWater = LevelType.Empty,
                     Odometer = 68912,
                     MasterBedType = BedType.Queen,
                     UserId = _userId,
-                    RenterId = -1
                 },
                 new VehicleRv
                 {
@@ -71,14 +66,9 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     HasSlideout = false,
                     HasGenerator = true,
                     GeneratorHours = 72,
-                    FuelLevel = LevelType.Full,
-                    Propane = LevelType.Full,
-                    BlackWater = LevelType.Empty,
-                    GrayWater = LevelType.Empty,
                     Odometer = 79362,
                     MasterBedType = BedType.Full,
                     UserId = _userId,
-                    RenterId = -1
                 }
             };
 

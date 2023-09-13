@@ -2,8 +2,10 @@ namespace ShowcaseRVHub.MAUI.View;
 
 public partial class ConsentAgreementView : ContentPage
 {
-	public ConsentAgreementView()
+	public ConsentAgreementView(ConsentAgreementViewModel consentAgreementViewModel)
 	{
 		InitializeComponent();
+
+		BindingContext = consentAgreementViewModel;
 	}
 }

@@ -31,7 +31,10 @@
         bool isSystemsChecked;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsNotVisible))]
         bool isRenterTrained;
+
+        public bool IsNotVisible => !IsRenterTrained;
 
         [ObservableProperty]
         DateTime startRental;

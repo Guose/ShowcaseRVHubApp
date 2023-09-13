@@ -22,7 +22,8 @@ internal class Program
         // Add DbContext to the services to the container.
         builder.Services.AddDbContext<ShowcaseDbContext>(options =>
         {
-            options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection"));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection"));
+            //options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection"));
         });
 
 
@@ -58,14 +59,14 @@ internal class Program
         app.MapControllers();
 
         // Start the React client and Express.js server as child processes
-        var clientAppProcess = StartClientAppProcess(clientPath);
-        var serverAppProcess = StartExpressServerProcess(serverPath);
+        //var clientAppProcess = StartClientAppProcess(clientPath);
+        //var serverAppProcess = StartExpressServerProcess(serverPath);
 
         await app.RunAsync();
 
         // Stop the React client and Express.js server processes
-        clientAppProcess.CloseMainWindow();
-        serverAppProcess.CloseMainWindow();
+        //clientAppProcess.CloseMainWindow();
+        //serverAppProcess.CloseMainWindow();
     }
 
     private static Process StartClientAppProcess(string clientAppDirectory)
