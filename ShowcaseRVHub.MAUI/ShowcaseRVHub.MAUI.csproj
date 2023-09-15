@@ -43,6 +43,10 @@
 
 	<ItemGroup>
 	  <MauiImage Remove="Resources\Images\back.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>	
 
 	<ItemGroup>

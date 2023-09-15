@@ -96,21 +96,21 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
         {
             try
             {
-                IEnumerable<VehicleRv>? vehicles = await Context.VehicleRVs
+                IEnumerable<VehicleRv> vehicles = await Context.VehicleRVs
                                         .Include(r => r.Rentals)
                                             .ThenInclude(r => r.Renter)
                                         .Include(r => r.Rentals)
                                             .ThenInclude(u => u.User)
                                         .ToListAsyncEF();
 
-                if (vehicles == null || vehicles.Count() <= 0)
+                if (vehicles == null || !vehicles.Any())
                     return null;
 
                 return vehicles;
             }
             catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new ArgumentNullException(ex.Message);
             }
         }
 

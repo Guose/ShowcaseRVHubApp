@@ -28,6 +28,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShowcaseRVHub.React", "Show
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "61856"
+		SlnRelativePath = "ShowcaseRVHub.React\"
 	EndProjectSection
 EndProject
 Global
@@ -63,7 +64,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {981B1FF0-A8A8-4487-9408-C23EE4CCDF64}
 		        SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}
+		SolutionGuid = {981B1FF0-A8A8-4487-9408-C23EE4CCDF64}
 	EndGlobalSection
 EndGlobal

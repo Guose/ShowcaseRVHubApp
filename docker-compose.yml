@@ -4,17 +4,17 @@ services:
     build:
       context: ./ShowcaseRVHub.WebApi
     ports:
-      - "5012:5012"
+      - "5000:5000"
     # Other configurations for your WebAPI container
 
-  express-server:
+  express:
     build:
       context: ./ShowcaseRVHub.React/server
     ports:
       - "3001:3001"
     # Other configurations for your Express.js server container
 
-  react-client:
+  react:
     build:
       context: ./ShowcaseRVHub.React/rv-email-service
     ports:
@@ -23,9 +23,20 @@ services:
       - REACT_APP_API_BASE_URL=http://webapi:5012 # Use the WebAPI service name as the hostname
     # Other configurations for your React client container
 
-  email-server:
+  email:
     build:
       context: ./ShowcaseRVHub.Email
     ports:
-      - "5093:5093"
+      - "6000:6000"
     # Other configurations for your Email container
+  
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      SA_PASSWORD: "5p3ctrum!"  # Change this to your desired SQL Server SA password
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./sql-scripts:/docker-entrypoint-initdb.d
+    # Other configurations for your SQL Server container

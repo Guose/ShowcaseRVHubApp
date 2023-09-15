@@ -5,6 +5,8 @@ using ShowcaseRVHub.Email.Resources;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseUrls("http://*:6000");
+
 var app = builder.Build();
 
 app.MapPut("/email", async (HttpContext context, ShowcaseEmailUser user) =>
@@ -25,4 +27,4 @@ app.MapPut("/email", async (HttpContext context, ShowcaseEmailUser user) =>
     }
 });
 
-app.Run();
+await app.RunAsync();

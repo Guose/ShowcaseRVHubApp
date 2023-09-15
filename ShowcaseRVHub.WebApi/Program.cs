@@ -3,34 +3,50 @@ using Newtonsoft.Json.Serialization;
 using ShowcaseRVHub.WebApi.Data;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
 using ShowcaseRVHub.WebApi.Data.Repositories;
-using ShowcaseRVHub.WebApi.Extensions;
 using System.Diagnostics;
 
 internal class Program
 {
-    private const string clientPath = @"C:\Users\Guose\source\repos\GitHubRepos\ShowcaseRVHubApp\ShowcaseRVHub.React\rv-email-service";
-    private const string serverPath = @"C:\Users\Guose\source\repos\GitHubRepos\ShowcaseRVHubApp\ShowcaseRVHub.React\server";
     private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(builder.Environment.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
+
+        builder.WebHost.UseUrls("http://*:5000");
         
         builder.Services.AddScoped<IUserRepo, UserRepo>();
         builder.Services.AddScoped<IRVRepo, RVRepo>();
         builder.Services.AddScoped<IRentalRepo, RentalRepo>();
         builder.Services.AddScoped<IRenterRepo,  RenterRepo>();
-        
+
+        //var connectionString = configuration.GetConnectionString("SQLiteConnection");
+        //var connectionString = configuration.GetConnectionString("SQLServerLocalhostConnection");
+        var connectionString = configuration.GetConnectionString("SQLServerConnection");
+
         // Add DbContext to the services to the container.
         builder.Services.AddDbContext<ShowcaseDbContext>(options =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection"));
-            //options.UseSqlite(builder.Configuration.GetConnectionString("SQLiteConnection"));
+            options.UseSqlServer(connectionString);
+            //options.UseSqlite(connectionString);
         });
 
+        // Logging
+        builder.Logging.AddConsole(); // Add console logging
+        var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Program>>();
+
+        // Log the connection string
+        logger.LogInformation($"Using connection string: {connectionString}");
 
         builder.Services.AddControllers().AddNewtonsoftJson(s =>
         {
             s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            s.SerializerSettings.ContractResolver = new ContractResolverExtension();
+            s.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
         }).AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
                 
         builder.Services.AddEndpointsApiExplorer();
@@ -52,21 +68,11 @@ internal class Program
 
         app.UseRouting();
 
-        app.UseHttpsRedirection();
-
         app.UseAuthorization();
 
         app.MapControllers();
 
-        // Start the React client and Express.js server as child processes
-        //var clientAppProcess = StartClientAppProcess(clientPath);
-        //var serverAppProcess = StartExpressServerProcess(serverPath);
-
         await app.RunAsync();
-
-        // Stop the React client and Express.js server processes
-        //clientAppProcess.CloseMainWindow();
-        //serverAppProcess.CloseMainWindow();
     }
 
     private static Process StartClientAppProcess(string clientAppDirectory)
