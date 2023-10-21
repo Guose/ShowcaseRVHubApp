@@ -15,7 +15,6 @@
 
                 <BoxView
                     Grid.ColumnSpan="3"
-                    BackgroundColor="{StaticResource Primary}"
                     HeightRequest="165"
                     HorizontalOptions="FillAndExpand" />
 
@@ -94,47 +93,60 @@
                         Padding="5"
                         BackgroundColor="LightGrey">
 
-                        <calendar:SfCalendar 
-                                x:Name="MyCalendar"
-                                Background="{StaticResource DarkBackgroundLabel}"
-                                ShowTrailingAndLeadingDates="False"
-                                EnablePastDates="False"
-                                SelectionMode="Range"
-                                TodayHighlightBrush="{StaticResource Primary}"
-                                StartRangeSelectionBackground="{StaticResource PrimaryDark}"
-                                EndRangeSelectionBackground="{StaticResource PrimaryDark}"
-                                SelectionBackground="{StaticResource Accent}"
-                                View="Month"
-                                WidthRequest="300"
-                                HeightRequest="225">
+                        <calendar:SfCalendar                             
+                            x:Name="MyCalendar"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}"
+                            ShowTrailingAndLeadingDates="False"
+                            EnablePastDates="False"
+                            SelectionMode="Range"
+                            TodayHighlightBrush="{StaticResource Primary}"
+                            StartRangeSelectionBackground="{StaticResource PrimaryDark}"
+                            EndRangeSelectionBackground="{StaticResource PrimaryDark}"
+                            SelectionBackground="{StaticResource Accent}"                                
+                            View="Month"
+                            WidthRequest="300"
+                            HeightRequest="225">
 
                             <calendar:SfCalendar.Behaviors>
                                 <calendarhelper:CalendarBehaviorHelper BindingContext="DataType" />
                             </calendar:SfCalendar.Behaviors>
 
                             <calendar:SfCalendar.YearView>
-                                <calendar:CalendarYearView TextStyle="{StaticResource CalendarTextColor}"/>
+                                <calendar:CalendarYearView>
+                                    <calendar:CalendarYearView.TextStyle>
+                                        <calendar:CalendarTextStyle 
+                                            TextColor="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource LabelTextDark}}" 
+                                            FontSize="14"/>
+                                    </calendar:CalendarYearView.TextStyle>
+                                </calendar:CalendarYearView>
                             </calendar:SfCalendar.YearView>
 
                             <calendar:SfCalendar.MonthView>
-                                <calendar:CalendarMonthView TextStyle="{StaticResource CalendarTextColor}">
+                                <calendar:CalendarMonthView>
                                     <calendar:CalendarMonthView.HeaderView>
-                                        <calendar:CalendarMonthHeaderView>
-                                            <calendar:CalendarMonthHeaderView.TextStyle>
-                                                <calendar:CalendarTextStyle TextColor="{StaticResource CalendarTextColor}" FontSize="12"/>
-                                            </calendar:CalendarMonthHeaderView.TextStyle>
-                                        </calendar:CalendarMonthHeaderView>
+                                        <calendar:CalendarMonthHeaderView 
+                                            TextStyle="{calendar:CalendarTextStyle 
+                                            TextColor={AppThemeBinding Light={x:StaticResource LabelText}, 
+                                            Dark={x:StaticResource LabelTextDark}}, FontSize=14}"/>
                                     </calendar:CalendarMonthView.HeaderView>
+                                    <calendar:CalendarMonthView.TextStyle>
+                                        <calendar:CalendarTextStyle 
+                                            TextColor="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource LabelTextDark}}" 
+                                            FontSize="14" />
+                                    </calendar:CalendarMonthView.TextStyle>
                                 </calendar:CalendarMonthView>
-                            </calendar:SfCalendar.MonthView>
+                            </calendar:SfCalendar.MonthView>                                
 
                             <calendar:SfCalendar.HeaderView>
                                 <calendar:CalendarHeaderView>
                                     <calendar:CalendarHeaderView.TextStyle>
-                                        <calendar:CalendarTextStyle TextColor="{StaticResource CalendarTextColor}" FontSize="14" />
+                                        <calendar:CalendarTextStyle
+                                            TextColor="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource LabelTextDark}}" 
+                                            FontSize="20" />
                                     </calendar:CalendarHeaderView.TextStyle>
                                 </calendar:CalendarHeaderView>
                             </calendar:SfCalendar.HeaderView>
+                            
                         </calendar:SfCalendar>
                     </Frame>
                 </VerticalStackLayout>

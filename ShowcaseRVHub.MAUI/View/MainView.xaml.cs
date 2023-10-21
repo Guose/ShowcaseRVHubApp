@@ -37,7 +37,7 @@ namespace ShowcaseRVHub.MAUI.View
         {
             var addUserModal = new AddUserView(_dataService);
             await Navigation.PushModalAsync(addUserModal);
-        }
+        }        
 
         protected async override void OnAppearing()
         {

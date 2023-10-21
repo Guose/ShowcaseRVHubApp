@@ -67,7 +67,9 @@
 
             <Label 
                 Text="Don't have an account? Sign up"
-                Margin="0,30,0,0" >
+                FontAttributes="Bold"
+                Margin="0,30,0,0" 
+                x:Name="lblSignUp">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="CreateUser_Tapped" />
                 </Label.GestureRecognizers>
@@ -75,7 +77,9 @@
             
             <Label 
                 Text="Forgot Password?" 
-                Margin="0,20,0,0" >
+                FontAttributes="Bold"
+                Margin="0,20,0,0" 
+                x:Name="lblForgotPwd" >
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="ForgotPassword_Tapped" />
                 </Label.GestureRecognizers>

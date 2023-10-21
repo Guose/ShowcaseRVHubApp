@@ -14,19 +14,24 @@
                 FontSize="Subtitle"/>
             <Label Text=""/>
             <Label 
-                Text="Terms and Agreement"
+                Text="Terms and Conditions"
                 FontSize="Small"/>
-            <Label Text="" />
+            <Label Text="By checking the check box below, the 'Renter' agrees that additional fees may incur if the 'Renter' fails to meet the 
+                   responsibilities of emptying waste tanks, filling fuel, propane, and water levels, and includes mileage overage fees 
+                   agreed during booking. Once all steps on the departure form have been completed both Showcase RV Hub User and the 'Renter' 
+                   must check the check box to complete form." />
             <Grid ColumnDefinitions="*,*">
                 <CheckBox
                     x:Name="ShowcaseRep"
+                    IsChecked="{Binding IsUserSigned}"
                     Grid.Column="0"/>
                 <Label 
-                    Text="Showcase Signature"
+                    Text="Showcase RV Hub User Signature"
                     Grid.Column="0"
                     Margin="35,12,0,0"/>
                 <CheckBox
                     x:Name="Renter"
+                    IsChecked="{Binding IsRenterSigned}"
                     Grid.Column="1"/>
                 <Label 
                     Text="Renter Signature"

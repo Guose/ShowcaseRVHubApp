@@ -10,7 +10,7 @@
         public ShowcaseUserDataService()
         {
             _httpClient = new HttpClient();
-            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5012" : "http://localhost:5012"; ;
+            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000"; ;
             _url = $"{_baseAddress}/api";
 
             _jsonSerializerOptions = new JsonSerializerOptions

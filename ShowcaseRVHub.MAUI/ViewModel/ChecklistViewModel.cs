@@ -84,8 +84,8 @@ namespace ShowcaseRVHub.MAUI.ViewModel
                         BlackWater = BlackwaterLevel,
                         RenterId = Renter.Id,
                         Renter = Renter,
-                        UserId = User.Id,
-                        User = User,
+                        CheckoutUserId = User.Id,
+                        CheckoutUser = User,
                         RVId = RvModel.Id,
                         RVModel = RvModel
                     };

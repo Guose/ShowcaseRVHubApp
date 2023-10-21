@@ -14,7 +14,7 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public string Password { get; set; } = string.Empty;
         [Required] public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
-        public bool IsRemembered { get; set; } = false;
+        [Required] public bool IsRemembered { get; set; } = false;
 
         [JsonIgnore] public List<Rental>? Rentals { get; set; }
         [JsonIgnore] public List<VehicleRv>? Vehicles { get; set; }

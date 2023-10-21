@@ -14,7 +14,7 @@ namespace ShowcaseRVHub.Email.Services
         public ShowcaseUserDataService()
         {
             _httpClient = new HttpClient();
-            _baseAddress = "http://localhost:80";
+            _baseAddress = "http://localhost:6000";
             _url = $"{_baseAddress}/api";
 
             _jsonSerializerOptions = new JsonSerializerOptions

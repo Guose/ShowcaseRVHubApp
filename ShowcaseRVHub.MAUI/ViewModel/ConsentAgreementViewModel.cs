@@ -57,6 +57,9 @@
 
                 IsBusy = true;
 
+                Rental.IsRenterSigned = IsRenterSigned;
+                Rental.IsUserSigned = IsUserSigned;
+
                 if (!await _renterDataService.CreateRenterAsync(Renter))
                 {
                     Debug.WriteLine($"---> Unable to Create Renter to the database.");

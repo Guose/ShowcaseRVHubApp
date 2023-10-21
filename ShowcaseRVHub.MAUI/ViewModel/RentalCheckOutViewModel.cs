@@ -44,25 +44,10 @@
                 if (RvModel == null) 
                     return;
 
-                if (Renter == null)
-                {
-                    Renter = new RenterModel
-                    {
-                        Firstname = AddFirstName,
-                        Lastname = AddLastName,
-                        Email = AddEmail,
-                        Phone = AddPhoneNumber,
-                    };                   
-                }
-
-                if (Rental == null || Rental.RentalStart != StartRental || Rental.RentalEnd != EndRental)
-                {
-                    Rental = new RentalModel
-                    {
-                        RentalStart = StartRental,
-                        RentalEnd = EndRental,
-                    };
-                }
+                if (ButtonText == "Check Out")
+                    PerformCheckout();
+                else
+                    PerformCheckin();
 
                 Parameters = new Dictionary<string, object>
                 {
@@ -71,9 +56,6 @@
                     { "Rental", Rental },
                     { "User", User }
                 };
-
-                if (ButtonText == "Check Out")
-                    IsCheckout = true;
 
                 await Shell.Current.GoToAsync(
                     $"{nameof(ChecklistView)}?HeaderText={HeaderText}&IsCheckout={IsCheckout}&ButtonText={ButtonText}", 
@@ -86,6 +68,33 @@
                 await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
             finally { IsBusy = false; }
+        }
+
+        private void PerformCheckin()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void PerformCheckout()
+        {
+            IsCheckout = true;
+
+            Renter ??= new RenterModel
+            {
+                Firstname = AddFirstName,
+                Lastname = AddLastName,
+                Email = AddEmail,
+                Phone = AddPhoneNumber,
+            };
+
+            if (Rental == null || Rental.RentalStart != StartRental || Rental.RentalEnd != EndRental)
+            {
+                Rental = new RentalModel
+                {
+                    RentalStart = StartRental,
+                    RentalEnd = EndRental,
+                };
+            }
         }
     }
 }

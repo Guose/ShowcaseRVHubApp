@@ -28,10 +28,6 @@
             <Color x:Key="LabelText">#1F1F1F</Color>
             <Color x:Key="LabelTextDark">White</Color>
 
-            <Style ApplyToDerivedTypes="True" x:Key="CalendarTextColor" TargetType="calendar:CalendarTextStyle">
-                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />
-            </Style>
-
             <Style ApplyToDerivedTypes="True" TargetType="Page">
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}" />
             </Style>
