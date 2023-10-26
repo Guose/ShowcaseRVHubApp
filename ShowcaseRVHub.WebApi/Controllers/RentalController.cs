@@ -49,9 +49,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateRental(int id, [FromBody] Rental updateRental)
         {
-            Rental? rentalPatch = await _rentalRepo.GetRentalByIdAsync(id);
+            Rental? rental = await _rentalRepo.GetRentalByIdAsync(id);
 
-            if (rentalPatch == null)
+            if (rental == null)
                 return NotFound(new { Message = $"Rental with id {id} does not exist." });
 
             if (await _rentalRepo.UpdateRentalAsync(updateRental))

@@ -76,13 +76,12 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                                         .Include(r => r.Rentals)
                                             .ThenInclude(r => r.Renter)
                                         .Include(r => r.Rentals)
-                                            .ThenInclude(u => u.User)
                                         .FirstOrDefaultAsyncEF(v => v.Id == id);
 
                 if (vehicle == null)
                     return null;
-                else
-                    vehicle.Rentals = vehicle.Rentals.Where(u => u.UserId == userId).ToList();
+                //else
+                //    vehicle.Rentals = vehicle.Rentals.Where(u => u.UserId == userId).ToList();
 
                 return vehicle;
             }
@@ -100,7 +99,6 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                                         .Include(r => r.Rentals)
                                             .ThenInclude(r => r.Renter)
                                         .Include(r => r.Rentals)
-                                            .ThenInclude(u => u.User)
                                         .ToListAsyncEF();
 
                 if (vehicles == null || !vehicles.Any())

@@ -16,8 +16,10 @@ namespace ShowcaseRVHub.WebApi.Models
         public DateTime? ModifiedOn { get; set; }
         [Required] public bool IsRemembered { get; set; } = false;
 
-        [JsonIgnore] public List<Rental>? Rentals { get; set; }
-        [JsonIgnore] public List<VehicleRv>? Vehicles { get; set; }
+        [JsonIgnore] public ICollection<Arrival>? Arrivals { get; set; }
+        [JsonIgnore] public ICollection<Departure>? Departures { get; set; }
+        [JsonIgnore] public ICollection<VehicleRv>? Vehicles { get; set; }
+        [JsonIgnore] public ICollection<RvMaintenance>? RvMaintenances { get; set; }
 
         public ShowcaseUser()
         {

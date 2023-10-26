@@ -3,25 +3,18 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace ShowcaseRVHub.WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRVSeedData : Migration
+    public partial class SeedUserData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            //migrationBuilder.DeleteData(
-            //    table: "Renters",
-            //    keyColumn: "Id",
-            //    keyValue: -2);
-
-            //migrationBuilder.DeleteData(
-            //    table: "Renters",
-            //    keyColumn: "Id",
-            //    keyValue: -1);
+            migrationBuilder.InsertData(
+                table: "ShowcaseUsers",
+                columns: new[] { "Id", "CreatedOn", "Email", "FirstName", "IsRemembered", "LastName", "ModifiedOn", "Password", "Phone", "Username" },
+                values: new object[] { new Guid("cf3e94b7-4052-4585-86e8-b4ea68ba1bdf"), new DateTime(2023, 10, 25, 18, 31, 7, 949, DateTimeKind.Local).AddTicks(5308), "justin@showcasemi.com", "Justin", true, "Elder", null, "pass", null, "Guose" });
 
             migrationBuilder.InsertData(
                 table: "VehicleRVs",
@@ -37,6 +30,11 @@ namespace ShowcaseRVHub.WebApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DeleteData(
+                table: "ShowcaseUsers",
+                keyColumn: "Id",
+                keyValue: new Guid("cf3e94b7-4052-4585-86e8-b4ea68ba1bdf"));
+
+            migrationBuilder.DeleteData(
                 table: "VehicleRVs",
                 keyColumn: "Id",
                 keyValue: -2);
@@ -45,15 +43,6 @@ namespace ShowcaseRVHub.WebApi.Migrations
                 table: "VehicleRVs",
                 keyColumn: "Id",
                 keyValue: -1);
-
-            //migrationBuilder.InsertData(
-            //    table: "Renters",
-            //    columns: new[] { "Id", "CreatedOn", "Email", "Firstname", "Lastname", "ModifiedOn", "Phone" },
-            //    values: new object[,]
-            //    {
-            //        { -2, new DateTime(2023, 7, 13, 13, 23, 31, 477, DateTimeKind.Local).AddTicks(4213), "jane@gmail.com", "Jane", "Doe", null, "4252939006" },
-            //        { -1, new DateTime(2023, 7, 13, 13, 23, 31, 477, DateTimeKind.Local).AddTicks(4156), "john@gmail.com", "John", "Doe", null, "4257605962" }
-            //    });
         }
     }
 }
