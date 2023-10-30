@@ -2,16 +2,18 @@
 FROM node:18 AS build
 
 # Set the working directory for the Express.js server
-WORKDIR /server
+WORKDIR /app
 
 # Copy the package.json and package-lock.json to the container
-COPY server/package*.json ./
+COPY app/package*.json ./
+
+# Install dependencies for Express.js server
+RUN npm install
 
 # Copy the Express.js server source code
 COPY . .
 
-# Install dependencies and build the Express.js server
-RUN npm install
+# Build the Express.js server
 RUN npm run build
 
 # Stage 2: Create a runtime image

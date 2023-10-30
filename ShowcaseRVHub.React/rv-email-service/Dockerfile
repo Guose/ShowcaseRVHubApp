@@ -2,16 +2,18 @@
 FROM node:18 AS build
 
 # Set the working directory for the React client
-WORKDIR /rv-email-service
+WORKDIR /app
 
 # Copy the package.json and package-lock.json to the container
-COPY rv-email-service/package*.json ./
+COPY app/package*.json ./
+
+# Install dependencies for React client
+RUN npm install
 
 # Copy the React client source code
 COPY . .
 
-# Install dependencies and build the React client
-RUN npm install
+# Build the React client
 RUN npm run build
 
 # Stage 2: Create a runtime image
