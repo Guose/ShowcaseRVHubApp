@@ -19,6 +19,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
+        name: Start Services with docker-compose
+        run: docker-compose up -d
+        working-directory: ../../
+      -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       -
@@ -36,3 +40,7 @@ jobs:
           push: true
           target: final
           tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+      -
+        name: Stop and Remove Services
+        run: docker-compose down
+        working-directory: ../../
