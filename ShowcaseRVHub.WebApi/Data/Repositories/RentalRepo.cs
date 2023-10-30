@@ -57,7 +57,6 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             {
                 var rental = await _context.Rentals
                                                 .Include(r => r.Renter)
-                                                .Include(u => u.User)
                                                 .Include(v => v.Vehicle)
                                                 .FirstOrDefaultAsyncEF(u => u.Id == id);
 
@@ -79,7 +78,6 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             {
                 List<Rental> rentals = await _context.Rentals
                                                     .Include(r => r.Renter)
-                                                    .Include(u => u.User)
                                                     .Include(v => v.Vehicle)
                                                     .ToListAsyncEF();
 
@@ -103,20 +101,8 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                 if (updateRental == null)
                     return false;
 
-                updateRental.IsExteriorCleaned = newRental.IsExteriorCleaned;
-                updateRental.IsInteriorCleaned = newRental.IsInteriorCleaned;
-                updateRental.IsTireInspected = newRental.IsTireInspected;
-                updateRental.IsMaintenance = newRental.IsMaintenance;
-                updateRental.IsFluidChecked = newRental.IsFluidChecked;
-                updateRental.IsSignalsChecked = newRental.IsSignalsChecked;
-                updateRental.IsSystemsChecked = newRental.IsSystemsChecked;
-                updateRental.IsRenterTrained = newRental.IsRenterTrained;
                 updateRental.RentalStart = newRental.RentalStart;
                 updateRental.RentalEnd = newRental.RentalEnd;
-                updateRental.FuelLevel = newRental == null ? updateRental.FuelLevel : newRental.FuelLevel;
-                updateRental.Propane = newRental == null ? updateRental.Propane : newRental.Propane;
-                updateRental.GrayWater = newRental == null ? updateRental.GrayWater : newRental.GrayWater;
-                updateRental.BlackWater = newRental == null ? updateRental.BlackWater : newRental.BlackWater;
                 updateRental.ModifiedOn = DateTime.Now;
 
                 _context.Rentals.Update(updateRental);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShowcaseRVHub.WebApi.Data;
 
@@ -11,9 +12,11 @@ using ShowcaseRVHub.WebApi.Data;
 namespace ShowcaseRVHub.WebApi.Migrations
 {
     [DbContext(typeof(ShowcaseDbContext))]
-    partial class ShowcaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231026012809_InitialCreation")]
+    partial class InitialCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -296,19 +299,6 @@ namespace ShowcaseRVHub.WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ShowcaseUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("cf3e94b7-4052-4585-86e8-b4ea68ba1bdf"),
-                            CreatedOn = new DateTime(2023, 10, 25, 18, 31, 7, 949, DateTimeKind.Local).AddTicks(5308),
-                            Email = "justin@showcasemi.com",
-                            FirstName = "Justin",
-                            IsRemembered = true,
-                            LastName = "Elder",
-                            Password = "pass",
-                            Username = "Guose"
-                        });
                 });
 
             modelBuilder.Entity("ShowcaseRVHub.WebApi.Models.VehicleRv", b =>

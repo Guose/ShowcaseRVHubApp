@@ -24,7 +24,6 @@ internal class Program
         builder.Services.AddScoped<IRentalRepo, RentalRepo>();
         builder.Services.AddScoped<IRenterRepo,  RenterRepo>();
 
-        //var connectionString = configuration.GetConnectionString("SQLiteConnection");
         //var connectionString = configuration.GetConnectionString("SQLServerLocalhostConnection");
         var connectionString = configuration.GetConnectionString("SQLServerConnection");
 
@@ -32,7 +31,7 @@ internal class Program
         builder.Services.AddDbContext<ShowcaseDbContext>(options =>
         {
             options.UseSqlServer(connectionString);
-            //options.UseSqlite(connectionString);
+            //options.EnableSensitiveDataLogging();
         });
 
         // Logging

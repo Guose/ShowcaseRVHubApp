@@ -13,18 +13,6 @@ BEGIN TRY
         (-1, 'Winnebago', 'Minnie Winnie 22R', 2015, 'Ford', 3, 6, 23, 13.2, 'C:/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.MAUI/Resources/Images/minniewinnie.jpg', 'Great for family vacations with all the extras included to make your trip enjoyable, feasible, and easy to use. Features include: RV has master bedroom with queen bed & wardrobe cabinet, queen bed over the cab, dinette converts to bed, full bathroom & shower, stove/oven combo, microwave, refrigerator/freezer, AC unit, electric awning, & plenty of storage. Clean bedding, pots, pans, plates, bowls, coffee maker, cups, & kitchen utensils included in rental. Other add-ons are available for rental: inflatable rafting tube, kayaks, paddle boards, sledding tubes, etc. 24/7 support with certified techs available to address the unexpected. We do offer delivery and pickup services and flexible with pickup & return times. Secure onsite parking of your vehicle is available on request. Towing of any trailer, boat, or vehicle is prohibited. Reservation dates confirmed once payment is made. If you have questions, please let us know.', '2032-09-12', NULL, 79362.0, 72, 3, 1, 1, 0, 'cf3e94b7-4052-4585-86e8-b4ea68ba1bdf'),
         (-2, 'Forest River', 'Sunseeker', 2019, 'Ford', 3, 6, 27, 12.6, 'C:/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.MAUI/Resources/Images/sunseeker.jpg', 'Excellent for family vacations with all the extras included to make your trip enjoyable, feasible, and easy to use. Features include: RV has solar panels, thermal windows, and Artic Pack for winter travels, one slide out to increase living space, private master bedroom with memory foam queen bed & wardrobe area/cabinet, full queen bed above drivers seat, dinette converts to bed, full bathroom and shower, stove/oven combo, microwave, refrigerator/freezer, 2 AC units, motorized awning for easy access, and plenty of undercarriage storage area. Clean bedding, pots, pans, plates, bowls, coffee maker, cups, and kitchen utensils are included in rental. Other add-ons are available for rental: inflatable rafting tube, kayaks, paddle boards, sledding tubes, etc. 24/7 support with certified techs available to address the unexpected. We do offer delivery and pickup services and flexible with pickup & return times. Secure onsite parking of your vehicle is available on request. Towing of any trailer, boat, or vehicle is prohibited. Reservation dates confirmed once payment is made. If you have questions, please let us know.', '2023-08-14', NULL, 68912.0, 48, 2, 0, 1, 1, 'cf3e94b7-4052-4585-86e8-b4ea68ba1bdf');
     END;
-    BEGIN
-        INSERT INTO ShowcaseRVHubDB.dbo.Renters (Id, FirstName, LastName, Email, Phone, CreatedOn, ModifiedOn)
-        VALUES
-        (-1, 'John', 'Doe', 'johndoe@gmail.com', '(425) 760-5962', '2023-07-13', NULL),
-        (-2, 'Jane', 'Doe', 'janedoe@gmail.com', '(425) 293-9006', '2023-07-11', NULL);
-    END;
-    BEGIN
-        INSERT INTO ShowcaseRVHubDB.dbo.Rentals (Id, IsExteriorCleaned, IsFluidChecked, IsInteriorCleaned, IsMaintenance, IsRenterTrained, IsSignalsChecked, IsSystemsChecked, IsTireInspected, CreatedOn, ModifiedOn, RentalEnd, RentalStart, FuelLevel, Propane, BlackWater, GrayWater, RenterId, UserId, VehicleId)
-        VALUES
-        (-1, 1, 1, 1, 1, 1, 1, 1, 1, '2023-08-28', NULL, '2023-09-15', '2023-09-10', 5, 4, 1, 1, -2, 'ADD00D60-8544-4FCC-9494-B4993B05472B', -2),
-        (-2, 1, 1, 1, 1, 1, 1, 1, 1, '2023-09-05', NULL, '2023-09-25', '2023-09-20', 4, 5, 2, 1, -1, 'CF3E94B7-4052-4585-86E8-B4EA68BA1BDF', -2);
-    END;
 
     COMMIT;
 END TRY

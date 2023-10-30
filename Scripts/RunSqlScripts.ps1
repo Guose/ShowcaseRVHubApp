@@ -1,5 +1,5 @@
 # Define the container id
-$containerId = "9909e2b0e80ff6aa074d6e24d4ca4d6c8069b3f9e739d2bb3ee7fb2855070fca"
+$containerId = "c0f863530b52042d1a13c46a5c5061f16434acbc0ad44e85682b11a21a4b44cc"
 
 # Define the paths to your .sql scripts
 $scriptPaths = @(
@@ -15,7 +15,7 @@ foreach ($scriptPath in $scriptPaths) {
   " 'IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N''ShowcaseRVHubDB'') CREATE DATABASE [ShowcaseRVHubDB]'"
 
   # Execute the script to create the database
-  Write-Host "Executing script to create the database..."
+  Write-Host "Executing script to create the database...  $scriptPath"
   Invoke-Expression $dockerExecCommand
 
   # Check the exit code of the previous command

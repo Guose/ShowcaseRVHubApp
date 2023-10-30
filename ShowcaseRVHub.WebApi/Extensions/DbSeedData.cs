@@ -6,6 +6,7 @@ namespace ShowcaseRVHub.WebApi.Extensions
     public class DbSeedData
     {
         private static readonly Guid _userId = new("CF3E94B7-4052-4585-86E8-B4EA68BA1BDF");
+        private static readonly Guid _userId2 = new("ADD00D60-8544-4FCC-9494-B4993B05472B");
 
         public static List<VehicleRv> GetRvSeedData()
         {
@@ -39,6 +40,16 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     Odometer = 68912,
                     MasterBedType = BedType.Queen,
                     UserId = _userId,
+                    //User = new ShowcaseUser
+                    //{
+                    //    Id = _userId,
+                    //    FirstName = "Justin",
+                    //    LastName = "Elder",
+                    //    Username = "Guose",
+                    //    Password = "pass",
+                    //    Email = "justin@showcasemi.com",
+                    //    IsRemembered = true,
+                    //}
                 },
                 new VehicleRv
                 {
@@ -69,6 +80,16 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     Odometer = 79362,
                     MasterBedType = BedType.Full,
                     UserId = _userId,
+                    //User = new ShowcaseUser
+                    //{
+                    //    Id = _userId,
+                    //    FirstName = "Justin",
+                    //    LastName = "Elder",
+                    //    Username = "Guose",
+                    //    Password = "pass",
+                    //    Email = "justin@showcasemi.com",
+                    //    IsRemembered = true,
+                    //}
                 }
             };
 
@@ -82,30 +103,20 @@ namespace ShowcaseRVHub.WebApi.Extensions
                 new Rental
                 {
                     Id = -1,
-                    IsExteriorCleaned = true,
-                    IsFluidChecked = true,
-                    IsInteriorCleaned = true,
-                    IsMaintenance = true,
-                    IsRenterTrained = true,
-                    IsSignalsChecked = true,
-                    IsSystemsChecked = true,
-                    IsTireInspected = true,
-                    UserId = _userId,
+                    RentalStart = DateTime.Now.AddDays(2),
+                    RentalEnd = DateTime.Now.AddDays(9),
+                    //ArrivalId = -1,
+                    DepartureId = -1,
                     RenterId = -1,
                     VehicleId = -2,
                 },
                 new Rental
                 {
                     Id = -2,
-                    IsExteriorCleaned = true,
-                    IsFluidChecked = true,
-                    IsInteriorCleaned = true,
-                    IsMaintenance = true,
-                    IsRenterTrained = true,
-                    IsSignalsChecked = true,
-                    IsSystemsChecked = true,
-                    IsTireInspected = true,
-                    UserId = new Guid("ADD00D60-8544-4FCC-9494-B4993B05472B"),
+                    RentalStart = DateTime.Now.AddDays(20),
+                    RentalEnd = DateTime.Now.AddDays(25),
+                    //ArrivalId = -2,
+                    DepartureId = -2,
                     RenterId = -2,
                     VehicleId = -2,
                 }
@@ -126,10 +137,28 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     Username = "Guose",
                     Password = "pass",
                     Email = "justin@showcasemi.com",
+                    IsRemembered = true,
                 }
             };
 
             return users;
+        }
+
+        public static List<Departure> GetDepartureSeedData()
+        {
+            List<Departure> departures = new()
+            {
+                new Departure
+                {
+
+                },
+                new Departure
+                {
+
+                }
+            };
+
+            return departures;
         }
 
         public static List<ShowcaseRenter> GetRenterSeedData()
