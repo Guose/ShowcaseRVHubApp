@@ -1,17 +1,26 @@
-# Use the official Node.js image as a base image for the React client
-FROM node:14 AS react-client
+# Use the official Node.js image as a base image for the Express.js server
+FROM node:14 AS react-client-build
 
-# Set the working directory for the React client
+# Set the working directory for the Express.js server
 WORKDIR /app
 
-# Copy the React client source code
+# Copy the Express.js server source code
 COPY . .
 
-# Install dependencies and start the React app
+# Install dependencies and build the Express.js server
 RUN npm install
+RUN npm run build
+
+# Stage 2: Create a runtime image
+FROM node:14 AS react-client-final
+
+# Set the working directory for the Express.js server
+WORKDIR /app
+
+# Copy the build application from the build stage
+COPY --from=build /app/build ./build
 
 # Expose the port on which application will listen
 EXPOSE 3000
 
-# Command to start application
 CMD ["npm", "start"]
