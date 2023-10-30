@@ -5,15 +5,16 @@ FROM node:latest AS build
 WORKDIR /app
 
 # Copy the package.json and package-lock.json to the container
-COPY ["./package.json", "./package-lock.json", "./"]
+#COPY ["./package.json", "./package-lock.json", "./"]
 
 # Install dependencies for React client
-RUN npm install
+
 
 # Copy the React client source code
-COPY . .
+COPY . /app
 
 # Build the React client
+RUN npm install
 RUN npm run build
 
 # Stage 2: Create a runtime image
@@ -21,6 +22,9 @@ FROM node:latest AS final
 
 # Set the working directory for the React client
 WORKDIR /app
+
+# Copy the package.json and package-lock.json to the container
+COPY ["app/package.json", "app/package-lock.json", "./"]
 
 # Copy the build application from the build stage
 COPY --from=build /app/build ./build
