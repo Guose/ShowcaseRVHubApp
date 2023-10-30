@@ -4,6 +4,9 @@ FROM node:14 AS build
 # Set the working directory for the Express.js server
 WORKDIR /app
 
+# Copy the package.json and package-lock.json to the container
+COPY package*.json ./
+
 # Copy the Express.js server source code
 COPY . .
 
