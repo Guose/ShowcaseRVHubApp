@@ -22,7 +22,7 @@ namespace ShowcaseRVHub.WebApi.Models
 
 
         [Required] public int RenterId { get; set; }
-        public ShowcaseRenter Renter { get; set; }
+        public ShowcaseRenter? Renter { get; set; }
         [Required] public int VehicleId { get; set; }
         public VehicleRv Vehicle { get; set; }
 

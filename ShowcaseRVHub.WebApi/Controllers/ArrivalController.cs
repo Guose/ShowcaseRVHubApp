@@ -19,7 +19,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Arrival>>> GetArrivals()
         {
-            IEnumerable<Arrival> arrivals = await _arrivalRepo.GetArrivalsAsync();
+            IEnumerable<Arrival>? arrivals = await _arrivalRepo.GetArrivalsAsync();
 
             if (arrivals == null)
                 return NotFound(new { Message = $"Your request could not be made." });
@@ -30,7 +30,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Arrival>> GetArrivalById(int id)
         {
-            Arrival arrival = await _arrivalRepo.GetArrivalByIdAsync(id);
+            Arrival? arrival = await _arrivalRepo.GetArrivalByIdAsync(id);
 
             if (arrival == null)
                 return NotFound(new { Message = $"Arrival with id {id} does not exist." });

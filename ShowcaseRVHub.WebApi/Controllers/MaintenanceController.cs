@@ -19,7 +19,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RvMaintenance>>> GetMaintenance()
         {
-            IEnumerable<RvMaintenance> maintenances = await _maintenance.GetMaintenanceAsync();
+            IEnumerable<RvMaintenance>? maintenances = await _maintenance.GetMaintenanceAsync();
 
             if (maintenances == null)
                 return NotFound(new { Message = $"Your request could not be made." });
@@ -30,7 +30,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RvMaintenance>> GetMaintenanceById(int id)
         {
-            RvMaintenance maintenance = await _maintenance.GetMaintenanceByIdAsync(id);
+            RvMaintenance? maintenance = await _maintenance.GetMaintenanceByIdAsync(id);
 
             if (maintenance == null)
                 return NotFound(new { Message = $"Departure with id {id} does not exist." });

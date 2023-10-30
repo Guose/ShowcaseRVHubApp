@@ -19,7 +19,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Departure>>> GetDepartures()
         {
-            IEnumerable<Departure> departures = await _departureRepo.GetDeparturesAsync();
+            IEnumerable<Departure>? departures = await _departureRepo.GetDeparturesAsync();
 
             if (departures == null)
                 return NotFound(new { Message = $"Your request could not be made." });
@@ -30,7 +30,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Departure>> GetDepartureById(int id)
         {
-            Departure departure = await _departureRepo.GetDepartureByIdAsync(id);
+            Departure? departure = await _departureRepo.GetDepartureByIdAsync(id);
 
             if (departure == null)
                 return NotFound(new { Message = $"Departure with id {id} does not exist." });

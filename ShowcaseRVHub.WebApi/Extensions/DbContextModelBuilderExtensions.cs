@@ -8,7 +8,7 @@ namespace ShowcaseRVHub.WebApi.Extensions
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ShowcaseUser>().HasData(DbSeedData.GetUserSeedData());
+            //modelBuilder.Entity<ShowcaseUser>().HasData(DbSeedData.GetUserSeedData());
             //modelBuilder.Entity<VehicleRv>().HasData(DbSeedData.GetRvSeedData());
             //modelBuilder.Entity<ShowcaseRenter>().HasData(DbSeedData.GetRenterSeedData());
             //modelBuilder.Entity<Rental>().HasData(DbSeedData.GetRentalSeedData());
