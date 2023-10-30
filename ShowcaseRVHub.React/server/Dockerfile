@@ -7,10 +7,8 @@ WORKDIR /app
 # Copy the Express.js server source code
 COPY . .
 
-# Install dependencies and start the Express.js server
+# Install dependencies and build the Express.js server
 RUN npm install
-
-# Build the Express.js application
 RUN npm run build
 
 # Stage 2: Create a runtime image
