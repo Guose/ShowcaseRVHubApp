@@ -21,7 +21,7 @@ FROM node:18 AS final
 WORKDIR /app
 
 # Copy the build application from the build stage
-COPY --from=build /server/build ./build
+COPY --from=build /app/build ./build
 
 # Expose the port on which application will listen
 EXPOSE 3001
