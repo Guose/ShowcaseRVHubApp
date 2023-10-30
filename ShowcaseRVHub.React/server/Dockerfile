@@ -1,5 +1,5 @@
 # Use the official Node.js image as a base image for the Express.js server
-FROM node:14 AS express-server
+FROM node:14 AS build
 
 # Set the working directory for the Express.js server
 WORKDIR /app
@@ -10,7 +10,19 @@ COPY . .
 # Install dependencies and start the Express.js server
 RUN npm install
 
+# Build the Express.js application
+RUN npm run build
+
+# Stage 2: Create a runtime image
+FROM node:14 AS final
+
+# Set the working directory for the Express.js server
+WORKDIR /app
+
+# Copy the build application from the build stage
+COPY --from=build /app/build ./build
+
 # Expose the port on which application will listen
 EXPOSE 3001
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
