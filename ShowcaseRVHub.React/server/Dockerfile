@@ -1,5 +1,5 @@
 # Use the official Node.js image as a base image for the Express.js server
-FROM node:14 AS react-server-build
+FROM node:14 AS build
 
 # Set the working directory for the Express.js server
 WORKDIR /app
@@ -12,7 +12,7 @@ RUN npm install
 RUN npm run build
 
 # Stage 2: Create a runtime image
-FROM node:14 AS react-server-final
+FROM node:14 AS final
 
 # Set the working directory for the Express.js server
 WORKDIR /app

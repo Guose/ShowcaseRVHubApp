@@ -53,7 +53,7 @@ jobs:
         with:
           context: ./ShowcaseRVHub.React/server  # Path to the directory containing the express Dockerfile
           dockerfile: ./ShowcaseRVHub.React/server/Dockerfile
-          target: react-server-build
+          target: build
           load: true
       -
         name: Build and push Express.js
@@ -62,7 +62,7 @@ jobs:
           context: ./ShowcaseRVHub.React/server  # Path to the directory containing the express Dockerfile
           dockerfile: ./ShowcaseRVHub.React/server/Dockerfile
           push: true
-          target: react-server-final
+          target: final
           tags: ${{ secrets.DOCKER_USERNAME }}/express:latest
       -
         name: Build and test React
@@ -70,7 +70,7 @@ jobs:
         with:
           context: ./ShowcaseRVHub.React/rv-email-service  # Path to the directory containing the react Dockerfile
           dockerfile: ./ShowcaseRVHub.React/rv-email-service/Dockerfile
-          target: react-client-build
+          target: build
           load: true
       -
         name: Build and push React
@@ -79,7 +79,7 @@ jobs:
           context: ./ShowcaseRVHub.React/rv-email-service  # Path to the directory containing the react Dockerfile
           dockerfile: ./ShowcaseRVHub.React/rv-email-service/Dockerfile
           push: true
-          target: react-client-final
+          target: final
           tags: ${{ secrets.DOCKER_USERNAME }}/react:latest
       -
         name: Build and test Email
