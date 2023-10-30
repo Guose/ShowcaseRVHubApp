@@ -9,4 +9,8 @@ COPY . .
 
 # Install dependencies and start the Express.js server
 RUN npm install
+
+# Expose the port on which application will listen
+EXPOSE 3001
+
 CMD ["npm", "run", "dev"]

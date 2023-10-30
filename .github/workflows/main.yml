@@ -8,6 +8,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      sql-server:
+        image: mcr.microsoft.com/mssql/server:latest
+        env:
+          SA_PASSWORD: "5p3ctrum!"
+          ACCEPT_EULA: "Y"
+        ports:
+          - "1433:1433"
+        options: --name sql-server-container
     steps:
       -
         name: Checkout
@@ -18,10 +27,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # -
-      #   name: Start Services with docker-compose
-      #   run: docker-compose up -d
-      #   working-directory: C:/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -29,18 +34,68 @@ jobs:
         name: Build and test
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.WebApi  # Path to the directory containing the webapi Dockerfile
+          dockerfile: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.WebApi/Dockerfile
           target: build
           load: true
       -
         name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.WebApi  # Path to the directory containing the webapi Dockerfile
+          dockerfile: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.WebApi/Dockerfile
           push: true
           target: final
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
-      # -
-      #   name: Stop and Remove Services
-      #   run: docker-compose down
-      #   working-directory: C:/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/
+          tags: ${{ secrets.DOCKER_USERNAME }}/webapi:latest
+      -
+        name: Build and test Express.js
+        uses: docker/build-push-action@v5
+        with:
+          context: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.React/server  # Path to the directory containing the express Dockerfile
+          dockerfile: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.React/server/Dockerfile
+          target: build
+          load: true
+      -
+        name: Build and push Express.js
+        uses: docker/build-push-action@v5
+        with:
+          context: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.React/server  # Path to the directory containing the express Dockerfile
+          dockerfile: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.React/server/Dockerfile
+          push: true
+          target: final
+          tags: ${{ secrets.DOCKER_USERNAME }}/express:latest
+      -
+        name: Build and test React
+        uses: docker/build-push-action@v5
+        with:
+          context: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.React/rv-email-service  # Path to the directory containing the react Dockerfile
+          dockerfile: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.React/rv-email-service/Dockerfile
+          target: build
+          load: true
+      -
+        name: Build and push React
+        uses: docker/build-push-action@v5
+        with:
+          context: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.React/rv-email-service  # Path to the directory containing the react Dockerfile
+          dockerfile: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.React/rv-email-service/Dockerfile
+          push: true
+          target: final
+          tags: ${{ secrets.DOCKER_USERNAME }}/react:latest
+      -
+        name: Build and test Email
+        uses: docker/build-push-action@v5
+        with:
+          context: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.Email  # Path to the directory containing the email Dockerfile
+          dockerfile: /mnt/c/Users/Guose/source/repos/GitHubRepos/ShowcaseRVHubApp/ShowcaseRVHub.Email/Dockerfile
+          target: build
+          load: true
+      -
+        name: Build and push Email
+        uses: docker/build-push-action@v5
+        with:
+          context: ./ShowcaseRVHub.Email  # Path to the directory containing the email Dockerfile
+          dockerfile: ./ShowcaseRVHub.Email/Dockerfile
+          push: true
+          target: final
+          tags: ${{ secrets.DOCKER_USERNAME }}/email:latest
+

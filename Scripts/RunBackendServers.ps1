@@ -74,7 +74,7 @@ $result = Invoke-Expression $sqlCommand
 # Check if any results were returned
 if ($null -ne $result -and $result -ne "") {
     Write-Host "Seed data script has been ran..."
-    Write-Host $result  # Output the results if you want
+    Write-Host $result  # Output the results
     # Continue with the next part of your script
 } else {
     Write-Host "SQL query did not seed the data. Running docker-compose down and exiting the script."
