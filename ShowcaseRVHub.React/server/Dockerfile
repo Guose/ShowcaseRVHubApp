@@ -5,7 +5,7 @@ FROM node:latest AS build
 WORKDIR /app
 
 # Copy the package.json and package-lock.json to the container
-COPY ["app/package.json", "app/package-lock.json", "./"]
+COPY ["./package.json", "./package-lock.json", "./"]
 
 # Install dependencies for Express.js server
 RUN npm install
