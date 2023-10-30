@@ -1,27 +1,27 @@
-# Use the official Node.js image as a base image for the Express.js server
-FROM node:14 AS build
+# Use the official Node.js image as a base image for the React client
+FROM node:18 AS build
 
-# Set the working directory for the Express.js server
-WORKDIR /app
+# Set the working directory for the React client
+WORKDIR /rv-email-service
 
 # Copy the package.json and package-lock.json to the container
-COPY package*.json ./
+COPY rv-email-service/package*.json ./
 
-# Copy the Express.js server source code
+# Copy the React client source code
 COPY . .
 
-# Install dependencies and build the Express.js server
+# Install dependencies and build the React client
 RUN npm install
 RUN npm run build
 
 # Stage 2: Create a runtime image
-FROM node:14 AS final
+FROM node:18 AS final
 
-# Set the working directory for the Express.js server
+# Set the working directory for the React client
 WORKDIR /app
 
 # Copy the build application from the build stage
-COPY --from=build /app/build ./build
+COPY --from=build /rv-email-service/build ./build
 
 # Expose the port on which application will listen
 EXPOSE 3000
