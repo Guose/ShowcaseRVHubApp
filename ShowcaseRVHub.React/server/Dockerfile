@@ -5,7 +5,7 @@ FROM node:14 AS build
 WORKDIR /app/ShowcaseRVHub.React/server
 
 # Copy the package.json and package-lock.json to the container
-COPY ["./package.json", "./package-lock.json", "./"]
+COPY ["./package.json", "./package-lock.json", "./"] .
 
 # Install dependencies for Express.js server
 RUN npm install
