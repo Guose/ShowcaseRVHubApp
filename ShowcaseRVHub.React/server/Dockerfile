@@ -23,7 +23,7 @@ FROM node:14 AS final
 WORKDIR /app
 
 # Copy the package.json and package-lock.json to the container
-COPY ["./package.json", "./package-lock.json", "./"]
+COPY ["./package.json", "./package-lock.json", "./"] .
 
 # Copy the build application from the build stage
 COPY --from=build /app/build ./build
