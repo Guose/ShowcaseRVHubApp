@@ -21,27 +21,6 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v4
-
-      -
-        name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-      -
-        name: Install npm dependencies
-        working-directory: ShowcaseRVHubApp/ShowcaseRVHub.React/rv-email-service
-        run: npm install
-      -
-        name: Build React App
-        working-directory: ShowcaseRVHubApp/ShowcaseRVHub.React/rv-email-service
-        run: npm run build
-      -
-        name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./ShowcaseRVHub.React/rv-email-service
-          file: ./ShowcaseRVHub.React/rv-email-service/Dockerfile
-          tags: ${{ secrets.DOCKER_USERNAME }}/react:latest
       -
         name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -49,31 +28,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Push Docker image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/react:latest
-      -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      -
-        name: Checkout code
-        uses: actions/checkout@v2
-      -
-        name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      -
-        name: Deploy to Production
-        run: |
-          cd ShowcaseRVHubApp
-          docker-compose up -d
       # -
       #   name: Build and test
       #   uses: docker/build-push-action@v5
@@ -108,6 +64,23 @@ jobs:
       #     push: true
       #     target: final
       #     tags: ${{ secrets.DOCKER_USERNAME }}/express:latest
+      -
+        name: Build and test React
+        uses: docker/build-push-action@v5
+        with:
+          context: ./ShowcaseRVHub.React/rv-email-service  # Path to the directory containing the react Dockerfile
+          dockerfile: ./ShowcaseRVHub.React/rv-email-service/Dockerfile
+          target: build
+          load: true
+      -
+        name: Build and push React
+        uses: docker/build-push-action@v5
+        with:
+          context: ./ShowcaseRVHub.React/rv-email-service  # Path to the directory containing the react Dockerfile
+          dockerfile: ./ShowcaseRVHub.React/rv-email-service/Dockerfile
+          push: true
+          target: final
+          tags: ${{ secrets.DOCKER_USERNAME }}/react:latest
       # -
       #   name: Build and test Email
       #   uses: docker/build-push-action@v5
