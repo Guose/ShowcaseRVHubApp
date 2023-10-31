@@ -39,8 +39,8 @@ jobs:
         name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./ShowcaseRVHub.React/rv-email-service
+          file: ./ShowcaseRVHub.React/rv-email-service/Dockerfile
           tags: ${{ secrets.DOCKER_USERNAME }}/react:latest
       -
         name: Login to Docker Hub
@@ -72,7 +72,7 @@ jobs:
       -
         name: Deploy to Production
         run: |
-          cd ShowcaseRVHubApp/ShowcaseRVHub.React
+          cd ShowcaseRVHubApp
           docker-compose up -d
       # -
       #   name: Build and test
