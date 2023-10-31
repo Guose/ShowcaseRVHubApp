@@ -5,7 +5,7 @@ FROM node:18.12.0 AS build
 WORKDIR /app
 
 # Install dependencies for React client
-RUN npm install
+RUN npm install -g npm@latest
 
 # Copy the package.json and package-lock.json to the container
 COPY package.json ./
@@ -18,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create a runtime image
-FROM build AS final
+FROM node:18.12.0 AS final
 
 # Set the working directory for the React client
 WORKDIR /app

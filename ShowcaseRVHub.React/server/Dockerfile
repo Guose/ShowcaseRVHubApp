@@ -1,15 +1,15 @@
 # Use the official Node.js image as a base image for the Express.js server
-FROM node:18-alpine AS build
+FROM node:18 AS build
 
 # Set the working directory for the Express.js server
 WORKDIR /app
 
+# Install dependencies for Express.js server
+RUN npm install
+
 # Copy the package.json and package-lock.json to the container
 COPY package.json .
 COPY package-lock.json .
-
-# Install dependencies for Express.js server
-RUN npm install
 
 # Copy the Express.js server source code
 COPY . .
@@ -18,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create a runtime image
-FROM node:18-alpine AS final
+FROM node:18 AS final
 
 # Set the working directory for the Express.js server
 WORKDIR /app
