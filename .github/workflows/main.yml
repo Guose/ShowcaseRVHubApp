@@ -29,9 +29,11 @@ jobs:
           node-version: 14
       -
         name: Install npm dependencies
+        working-directory: ShowcaseRVHubApp/ShowcaseRVHub.React/rv-email-service
         run: npm install
       -
         name: Build React App
+        working-directory: ShowcaseRVHubApp/ShowcaseRVHub.React/rv-email-service
         run: npm run build
       -
         name: Build and push Docker image
@@ -69,7 +71,9 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       -
         name: Deploy to Production
-        run: docker-compose up -d
+        run: |
+        cd ShowcaseRVHubApp/ShowcaseRVHub.React
+        docker-compose up -d
       # -
       #   name: Build and test
       #   uses: docker/build-push-action@v5
