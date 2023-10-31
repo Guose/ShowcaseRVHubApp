@@ -1,30 +1,29 @@
-# Use the official Node.js image as a base image for the React client
-FROM node:16.17.0-bullseye-slim AS build
+# Use an official Node.js runtime as the base image
+FROM node:18.12.0 AS build
 
-# Set the working directory for the React client
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the package.json and package-lock.json to the container
+# Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
-# Build the React client
-# Install dependencies for React client
+# Install project dependencies
 RUN npm install
 
-# Copy the React client source code
+# Copy the rest of the application code to the container
 COPY . .
 
+# Build the React app
 RUN npm run build
 
-# Stage 2: Create a runtime image
-FROM nginx:alpine AS final
+# Use a smaller base image for the final production build
+FROM nginx:alpine
 
-# Copy the build application from the build stage
+# Copy the built React app from the build stage to the nginx web root
 COPY --from=build /app/build /usr/share/nginx/html
-#RUN cp /app/build/index.html /app/public/index.html
 
-# Expose the port on which application will listen
-EXPOSE 3000
+# Expose the port the Nginx server will listen on
+EXPOSE 80
 
-# Command to start the Nginx server
+# Start Nginx to serve the React app
 CMD ["nginx", "-g", "daemon off;"]
