@@ -1,5 +1,5 @@
 # Use the official Node.js image as a base image for the React client
-FROM node:14 AS build
+FROM node:16.17.0-bullseye-slim AS build
 
 # Set the working directory for the React client
 WORKDIR /app
