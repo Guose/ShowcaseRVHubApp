@@ -4,12 +4,12 @@ FROM node:18-alpine AS build
 # Set the working directory for the React client
 WORKDIR /app
 
+# Install dependencies for React client
+RUN npm install
+
 # Copy the package.json and package-lock.json to the container
 COPY package.json .
 COPY package-lock.json .
-
-# Install dependencies for React client
-RUN npm install
 
 # Copy the React client source code
 COPY . .
