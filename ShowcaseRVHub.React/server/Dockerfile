@@ -1,11 +1,11 @@
 # Use the official Node.js image as a base image for the Express.js server
-FROM node:latest AS build
+FROM node:14 AS build
 
 # Set the working directory for the Express.js server
-WORKDIR /app
+WORKDIR /app/ShowcaseRVHub.React/server
 
 # Copy the package.json and package-lock.json to the container
-#COPY ["./package.json", "./package-lock.json", "./"]
+COPY ["./package.json", "./package-lock.json", "./"]
 
 # Install dependencies for Express.js server
 
@@ -18,7 +18,7 @@ RUN npm install
 RUN npm run build
 
 # Stage 2: Create a runtime image
-FROM node:latest AS final
+FROM node:14 AS final
 
 # Set the working directory for the Express.js server
 WORKDIR /app

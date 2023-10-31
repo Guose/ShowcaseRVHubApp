@@ -1,24 +1,23 @@
 # Use the official Node.js image as a base image for the React client
-FROM node:latest AS build
+FROM node:14 AS build
 
 # Set the working directory for the React client
 WORKDIR /app
 
 # Copy the package.json and package-lock.json to the container
-#COPY ["./package.json", "./package-lock.json", "./"]
+COPY ["./package.json", "./package-lock.json", "./"]
 
 # Install dependencies for React client
-
+RUN npm install
 
 # Copy the React client source code
 COPY . .
 
 # Build the React client
-RUN npm install
 RUN npm run build
 
 # Stage 2: Create a runtime image
-FROM node:latest AS final
+FROM node:14 AS final
 
 # Set the working directory for the React client
 WORKDIR /app
