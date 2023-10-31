@@ -47,23 +47,23 @@ jobs:
       #     push: true
       #     target: final
       #     tags: ${{ secrets.DOCKER_USERNAME }}/webapi:latest
-      # -
-      #   name: Build and test Express.js
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: ./ShowcaseRVHub.React/server  # Path to the directory containing the express Dockerfile
-      #     dockerfile: ./ShowcaseRVHub.React/server/Dockerfile
-      #     target: build
-      #     load: true
-      # -
-      #   name: Build and push Express.js
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: ./ShowcaseRVHub.React/server  # Path to the directory containing the express Dockerfile
-      #     dockerfile: ./ShowcaseRVHub.React/server/Dockerfile
-      #     push: true
-      #     target: final
-      #     tags: ${{ secrets.DOCKER_USERNAME }}/express:latest
+      -
+        name: Build and test Express.js
+        uses: docker/build-push-action@v5
+        with:
+          context: ./ShowcaseRVHub.React/server  # Path to the directory containing the express Dockerfile
+          dockerfile: ./ShowcaseRVHub.React/server/Dockerfile
+          target: build
+          load: true
+      -
+        name: Build and push Express.js
+        uses: docker/build-push-action@v5
+        with:
+          context: ./ShowcaseRVHub.React/server  # Path to the directory containing the express Dockerfile
+          dockerfile: ./ShowcaseRVHub.React/server/Dockerfile
+          push: true
+          target: final
+          tags: ${{ secrets.DOCKER_USERNAME }}/express:latest
       -
         name: Build and test React
         uses: docker/build-push-action@v5

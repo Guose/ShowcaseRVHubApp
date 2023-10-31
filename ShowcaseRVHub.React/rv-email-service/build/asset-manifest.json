@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.dfe58502.css",
+    "main.js": "/static/js/main.64c68d50.js",
+    "static/js/787.f54125cc.chunk.js": "/static/js/787.f54125cc.chunk.js",
+    "static/media/Showcase RV Hub.png": "/static/media/Showcase RV Hub.3e462b94240a1f21e968.png",
+    "static/media/Showcase RV Hub.webp": "/static/media/Showcase RV Hub.9d75e8c6651aba5dc530.webp",
+    "index.html": "/index.html",
+    "main.dfe58502.css.map": "/static/css/main.dfe58502.css.map",
+    "main.64c68d50.js.map": "/static/js/main.64c68d50.js.map",
+    "787.f54125cc.chunk.js.map": "/static/js/787.f54125cc.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dfe58502.css",
+    "static/js/main.64c68d50.js"
+  ]
+}

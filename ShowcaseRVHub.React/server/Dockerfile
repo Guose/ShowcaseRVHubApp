@@ -8,13 +8,12 @@ WORKDIR /app/ShowcaseRVHub.React/server
 COPY ["./package.json", "./package-lock.json", "./"]
 
 # Install dependencies for Express.js server
-
+RUN npm install
 
 # Copy the Express.js server source code
 COPY . .
 
 # Build the Express.js server
-RUN npm install
 RUN npm run build
 
 # Stage 2: Create a runtime image
