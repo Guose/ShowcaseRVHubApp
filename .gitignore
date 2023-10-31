@@ -44,7 +44,7 @@ TestResult.xml
 dlldata.c
 
 # DNX
-project.lock.json
+#project.lock.json
 project.fragment.lock.json
 artifacts/
 
@@ -68,7 +68,7 @@ artifacts/
 *.log
 *.vspscc
 *.vssscc
-.builds
+#.builds
 *.pidb
 *.svclog
 *.scc
@@ -126,7 +126,7 @@ AutoTest.Net/
 .sass-cache/
 
 # Installshield output folder
-[Ee]xpress/
+#[Ee]xpress/
 
 # DocProject is a documentation generator add-in
 DocProject/buildhelp/
