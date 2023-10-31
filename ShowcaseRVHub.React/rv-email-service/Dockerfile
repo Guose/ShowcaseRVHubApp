@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create a runtime image
-FROM nginx:alpine
+FROM nginx:alpine AS final
 
 # Copy the build application from the build stage
 COPY --from=build /app/build /usr/share/nginx/html
