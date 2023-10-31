@@ -5,7 +5,7 @@ FROM node:16.17.0-bullseye-slim AS build
 WORKDIR /app
 
 # Install dependencies for React client
-RUN npm install -g npm@7
+RUN NODE_ENV=development npm i
 
 # Copy the package.json and package-lock.json to the container
 COPY package.json .
