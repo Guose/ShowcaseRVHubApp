@@ -1,11 +1,11 @@
 # Use the official Node.js image as a base image for the React client
-FROM node:18-alpine AS build
+FROM node:16.17.0-bullseye-slim AS build
 
 # Set the working directory for the React client
 WORKDIR /app
 
 # Install dependencies for React client
-RUN npm install
+RUN npm install -g npm@7
 
 # Copy the package.json and package-lock.json to the container
 COPY package.json .
@@ -18,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create a runtime image
-FROM node:18-alpine AS final
+FROM build AS final
 
 # Set the working directory for the React client
 WORKDIR /app
@@ -34,4 +34,4 @@ COPY --from=build /app/build ./build
 # Expose the port on which application will listen
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD "npm" "start"
