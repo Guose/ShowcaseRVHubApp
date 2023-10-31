@@ -1,5 +1,5 @@
 # Use the official Node.js image as a base image for the Express.js server
-FROM node:14 AS build
+FROM node:18-alpine AS build
 
 # Set the working directory for the Express.js server
 WORKDIR /app
@@ -18,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create a runtime image
-FROM node:14 AS final
+FROM node:18-alpine AS final
 
 # Set the working directory for the Express.js server
 WORKDIR /app
@@ -29,6 +29,7 @@ COPY package-lock.json .
 
 # Copy the build application from the build stage
 COPY --from=build /app/build ./build
+RUN cp /app/build/index.html /app/public/index.html
 
 # Expose the port on which application will listen
 EXPOSE 3001

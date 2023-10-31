@@ -1,5 +1,5 @@
 # Use the official Node.js image as a base image for the React client
-FROM node:18 AS build
+FROM node:18-alpine AS build
 
 # Set the working directory for the React client
 WORKDIR /app
@@ -18,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create a runtime image
-FROM node:18 AS final
+FROM node:18-alpine AS final
 
 # Set the working directory for the React client
 WORKDIR /app
