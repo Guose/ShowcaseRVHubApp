@@ -72,8 +72,8 @@ jobs:
       -
         name: Deploy to Production
         run: |
-        cd ShowcaseRVHubApp/ShowcaseRVHub.React
-        docker-compose up -d
+          cd ShowcaseRVHubApp/ShowcaseRVHub.React
+          docker-compose up -d
       # -
       #   name: Build and test
       #   uses: docker/build-push-action@v5
