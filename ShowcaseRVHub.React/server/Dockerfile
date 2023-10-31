@@ -28,8 +28,8 @@ COPY package.json .
 COPY package-lock.json .
 
 # Copy the build application from the build stage
-COPY --from=build /app/build ./build
-RUN cp /app/build/index.html /app/public/index.html
+COPY --from=build /app ./build
+
 
 # Expose the port on which application will listen
 EXPOSE 3001
