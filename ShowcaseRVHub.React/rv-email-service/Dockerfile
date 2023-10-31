@@ -5,11 +5,11 @@ FROM node:16.17.0-bullseye-slim AS build
 WORKDIR /app
 
 # Install dependencies for React client
-RUN NODE_ENV=development npm i
+RUN npm install
 
 # Copy the package.json and package-lock.json to the container
-COPY package.json .
-COPY package-lock.json .
+COPY package.json ./
+COPY package-lock.json ./
 
 # Copy the React client source code
 COPY . .
@@ -24,8 +24,8 @@ FROM build AS final
 WORKDIR /app
 
 # Copy the package.json and package-lock.json to the container
-COPY package.json .
-COPY package-lock.json .
+COPY package.json ./
+COPY package-lock.json ./
 
 # Copy the build application from the build stage
 COPY --from=build /app/build ./build
@@ -34,4 +34,4 @@ COPY --from=build /app/build ./build
 # Expose the port on which application will listen
 EXPOSE 3000
 
-CMD "npm" "start"
+CMD ["npm", "start"]
