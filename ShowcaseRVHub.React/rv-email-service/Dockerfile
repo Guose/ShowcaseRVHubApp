@@ -28,7 +28,7 @@ COPY package.json .
 COPY package-lock.json .
 
 # Copy the build application from the build stage
-COPY --from=build /app/public ./build
+COPY --from=build /app/build ./build
 #RUN cp /app/build/index.html /app/public/index.html
 
 # Expose the port on which application will listen
