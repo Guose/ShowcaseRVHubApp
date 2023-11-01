@@ -1,7 +1,7 @@
 version: '3'
 services:
   webapi:
-    image: guose79/webapi:latest
+    image: guose79/webapi:${IMAGE_TAG}
     # build:
     #   context: ./ShowcaseRVHub.WebApi
     ports:
@@ -9,7 +9,7 @@ services:
     # Other configurations for your WebAPI container
 
   express:
-    image: guose79/express:latest
+    image: guose79/express:${IMAGE_TAG}
     # build:
     #   context: ./ShowcaseRVHub.React/server
     ports:
@@ -19,7 +19,7 @@ services:
   react:
     # build:
     #   context: ./ShowcaseRVHub.React/rv-email-service
-    image: guose79/react:latest
+    image: guose79/react:${IMAGE_TAG}
     ports:
       - "3000:3000"
     environment:
@@ -29,13 +29,13 @@ services:
   email:
     # build:
     #   context: ./ShowcaseRVHub.Email
-    image: guose79/email:latest
+    image: guose79/email:${IMAGE_TAG}
     ports:
       - "6000:6000"
     # Other configurations for your Email container
 
   sql-server:
-    image: guose79/sql-server:latest
+    image: guose79/sql-server:${IMAGE_TAG}
     environment:
       SA_PASSWORD: "5p3ctrum!"  # Change this to your desired SQL Server SA password
       ACCEPT_EULA: "Y"
