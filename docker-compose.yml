@@ -37,7 +37,7 @@ services:
   nginx:
     image: guose79/nginx:${IMAGE_TAG}
     ports:
-      - "8080:80"
+      - "8080:8080"
 
 
   sql-server:

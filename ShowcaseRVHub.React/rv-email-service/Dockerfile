@@ -25,14 +25,14 @@ RUN rm /etc/nginx/nginx.conf
 # Remove the default Nginx configuration file
 RUN rm /etc/nginx/conf.d/default.conf
 
-# # Copy custom Nginx configuration
-# COPY nginx/nginx.conf /etc/nginx/nginx.conf
+# Copy custom Nginx configuration
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built React app from the build stage to the Nginx web root
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose the port the Nginx server will listen on
-EXPOSE 80
+EXPOSE 8080
 
 # Start Nginx to serve the React app
 CMD ["nginx", "-g", "daemon off;"]
