@@ -68,7 +68,7 @@ jobs:
 
       -
         name: Build and Push Nginx
-        working-directory: ./ShowcaseRVHub.React/nginx
+        working-directory: ./ShowcaseRVHub.React/rv-email-service/nginx
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/nginx:$GITHUB_SHA -f Dockerfile .
           docker push ${{ secrets.DOCKER_USERNAME }}/nginx:$GITHUB_SHA
