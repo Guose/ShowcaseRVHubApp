@@ -34,6 +34,12 @@ services:
       - "6000:6000"
     # Other configurations for your Email container
 
+  nginx:
+    image: guose79/nginx:${IMAGE_TAG}
+    ports:
+      - "8080:80"
+
+
   sql-server:
     image: guose79/sql-server:${IMAGE_TAG}
     environment:
