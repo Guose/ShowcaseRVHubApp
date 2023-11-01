@@ -1,12 +1,12 @@
 # Stage 1: Build the custom SQL Server image
-FROM mcr.microsoft.com/mssql/server:latest as builder
+FROM mcr.microsoft.com/mssql/server:latest as build
 
 # Set environment variables if needed
 ENV SA_PASSWORD=5p3ctrum!
 ENV ACCEPT_EULA=Y
 
 # Copy SQL scripts to the initialization directory
-COPY ./sql-scripts /docker-entrypoint-initdb.d
+COPY . /docker-entrypoint-initdb.d
 
 # Stage 2: Final image for SQL Server
 FROM mcr.microsoft.com/mssql/server:latest
