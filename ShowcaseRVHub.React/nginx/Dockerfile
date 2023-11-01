@@ -5,7 +5,7 @@ FROM nginx:alpine
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy your React app build to the Nginx web root
-COPY ./build /usr/share/nginx/html
+COPY ../rv-email-service/build /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
