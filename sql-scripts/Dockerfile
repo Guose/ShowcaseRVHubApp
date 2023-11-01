@@ -6,12 +6,12 @@ ENV SA_PASSWORD=5p3ctrum!
 ENV ACCEPT_EULA=Y
 
 # Copy SQL scripts to the initialization directory
-COPY . /docker-entrypoint-initdb.d
+COPY *.sql /docker-entrypoint-initdb.d
 
 # Stage 2: Final image for SQL Server
 FROM mcr.microsoft.com/mssql/server:latest
 
 # Copy the initialized data from the builder stage
-COPY --from=builder /var/opt/mssql /var/opt/mssql
+COPY --from=build /var/opt/mssql /var/opt/mssql
 
 EXPOSE 1433
