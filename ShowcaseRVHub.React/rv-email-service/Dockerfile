@@ -19,11 +19,11 @@ RUN npm run build
 # Use an official Nginx image as the base image for the final production build
 FROM nginx:alpine
 
-# Remove the default Nginx configuration file
-RUN rm /etc/nginx/nginx.conf
-
 # Copy custom Nginx configuration
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# # Copy custom Nginx configuration
+# COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built React app from the build stage to the Nginx web root
 COPY --from=build /app/build /usr/share/nginx/html
