@@ -1,5 +1,5 @@
 # Define the container id
-$containerId = "c0f863530b52042d1a13c46a5c5061f16434acbc0ad44e85682b11a21a4b44cc"
+$containerId = "bf23048dc8317f7fe24f4c6f19f33866678f935bb2502c7843ed97f84f23aa6c"
 
 # Define the paths to your .sql scripts
 $scriptPaths = @(
@@ -27,7 +27,7 @@ foreach ($scriptPath in $scriptPaths) {
   }
 
   # Build the docker exec command to execute the main script
-  $dockerExecCommand = "docker exec -i $containerId /opt/mssql-tools/bin/sqlcmd -S localhost,1433 -U sa -P 5p3ctrum! -d ShowcaseRVHubDB -i /docker-entrypoint-initdb.d/$scriptPath"  
+  $dockerExecCommand = "docker exec -i $containerId /opt/mssql-tools/bin/sqlcmd -S localhost,1433 -U sa -P 5p3ctrum! -d ShowcaseRVHubDB -i /mnt/$scriptPath"  
   
   # Execute the scripts
   Write-Host "Executing $scriptPath in the container..."

@@ -5,6 +5,6 @@
 		-- Wait for SQL Server to be ready (adjust the delay as needed)
 		WAITFOR DELAY '00:00:01'; -- Wait for 30 seconds
 
-		CREATE DATABASE ShowcaseRVHubDB1;
+		CREATE DATABASE ShowcaseRVHubDB;
 	END;
 	GO

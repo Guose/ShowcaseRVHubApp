@@ -1,22 +1,25 @@
 version: '3'
 services:
   webapi:
-    build:
-      context: ./ShowcaseRVHub.WebApi
+    image: guose79/webapi:latest
+    # build:
+    #   context: ./ShowcaseRVHub.WebApi
     ports:
       - "5000:5000"
     # Other configurations for your WebAPI container
 
   express:
-    build:
-      context: ./ShowcaseRVHub.React/server
+    image: guose79/express:latest
+    # build:
+    #   context: ./ShowcaseRVHub.React/server
     ports:
       - "3001:3001"
     # Other configurations for your Express.js server container
 
   react:
-    build:
-      context: ./ShowcaseRVHub.React/rv-email-service
+    # build:
+    #   context: ./ShowcaseRVHub.React/rv-email-service
+    image: guose79/react:latest
     ports:
       - "3000:3000"
     environment:
@@ -24,14 +27,15 @@ services:
     # Other configurations for your React client container
 
   email:
-    build:
-      context: ./ShowcaseRVHub.Email
+    # build:
+    #   context: ./ShowcaseRVHub.Email
+    image: guose79/email:latest
     ports:
       - "6000:6000"
     # Other configurations for your Email container
-  
+
   sql-server:
-    image: mcr.microsoft.com/mssql/server:latest
+    image: guose79/sql-server:latest
     environment:
       SA_PASSWORD: "5p3ctrum!"  # Change this to your desired SQL Server SA password
       ACCEPT_EULA: "Y"
@@ -39,4 +43,3 @@ services:
       - "1433:1433"
     volumes:
       - ./sql-scripts:/docker-entrypoint-initdb.d
-    # Other configurations for your SQL Server container

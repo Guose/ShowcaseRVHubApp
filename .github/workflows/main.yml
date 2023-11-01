@@ -16,7 +16,9 @@ jobs:
           ACCEPT_EULA: "Y"
         ports:
           - "1433:1433"
-        options: --name sql-server-container
+        volumes:
+          - ./sql-scripts:/docker-entrypoint-initdb.d
+        options: --name sql-server
     steps:
       -
         name: Checkout
@@ -30,6 +32,12 @@ jobs:
       # -
       #   name: Set up Docker Buildx
       #   uses: docker/setup-buildx-action@v3
+      -
+        name: Build and Push SQL Server
+        working-directory: ./sql-scripts
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/sql-server:$GITHUB_SHA -f Dockerfile .
+          docker push ${{ secrets.DOCKER_USERNAME }}/sql-server:$GITHUB_SHA
       -
         name: Build and Push Email Service
         working-directory: ./ShowcaseRVHub.Email
