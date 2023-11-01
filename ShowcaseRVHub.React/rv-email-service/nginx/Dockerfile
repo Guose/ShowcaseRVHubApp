@@ -13,5 +13,5 @@ COPY nginx.conf /etc/nginx/conf.d/
 # # Copy custom Nginx configuration
 # COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80
+# Expose port 8080
 EXPOSE 8080

@@ -1,24 +1,24 @@
 version: '3'
 services:
-  webapi:
+  webapi:    
+    build:
+      context: ./ShowcaseRVHub.WebApi
     image: guose79/webapi:${IMAGE_TAG}
-    # build:
-    #   context: ./ShowcaseRVHub.WebApi
     ports:
       - "5000:5000"
     # Other configurations for your WebAPI container
 
-  express:
+  express:    
+    build:
+      context: ./ShowcaseRVHub.React/server
     image: guose79/express:${IMAGE_TAG}
-    # build:
-    #   context: ./ShowcaseRVHub.React/server
     ports:
       - "3001:3001"
     # Other configurations for your Express.js server container
 
   react:
-    # build:
-    #   context: ./ShowcaseRVHub.React/rv-email-service
+    build:
+      context: ./ShowcaseRVHub.React/rv-email-service
     image: guose79/react:${IMAGE_TAG}
     ports:
       - "3000:3000"
@@ -27,14 +27,16 @@ services:
     # Other configurations for your React client container
 
   email:
-    # build:
-    #   context: ./ShowcaseRVHub.Email
+    build:
+      context: ./ShowcaseRVHub.Email
     image: guose79/email:${IMAGE_TAG}
     ports:
       - "6000:6000"
     # Other configurations for your Email container
 
   nginx:
+    build:
+      context: ./ShowcaseRVHub.React/rv-email-service/nginx
     image: guose79/nginx:${IMAGE_TAG}
     ports:
       - "8080:8080"
