@@ -7,7 +7,7 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-const baseAddress = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000'
+const baseAddress = 'http://localhost:5000'
 const url = baseAddress + '/api'
 const PORT = process.env.PORT || 3001
 
