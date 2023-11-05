@@ -1,11 +1,11 @@
 # Define the container id
-$containerId = "8536aadca1fbeac0a41b677a8690e200783a8cf51dfd7ba0e7dd2886cae6f0c6"
+$containerId = $env:CONTAINER_ID
 
 # Define the paths to your .sql scripts
 $scriptPaths = @(
-  "create-db.sql",
-  "create-tables.sql",
-  "seed-data.sql"
+  "01_create-db.sql",
+  "02_create-tables.sql",
+  "03_seed-data.sql"
 )
 
 # Loop through the scripts files and execute them in the Docker container

@@ -1,4 +1,4 @@
-name: ci
+name: CI/CD Pipeline
 
 on:
   push:
@@ -29,14 +29,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # -
-      #   name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v3
       -
         name: Build and Push SQL Server
         working-directory: ./sql-scripts
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/sql-server:$GITHUB_SHA -f Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/sql-server:$GITHUB_SHA .
           docker push ${{ secrets.DOCKER_USERNAME }}/sql-server:$GITHUB_SHA
       -
         name: Build and Push Email Service
@@ -66,9 +63,19 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/webapi:$GITHUB_SHA .
           docker push ${{ secrets.DOCKER_USERNAME }}/webapi:$GITHUB_SHA
 
-      # -
-      #   name: Build and Push Nginx
-      #   working-directory: ./ShowcaseRVHub.React/rv-email-service/nginx
-      #   run: |
-      #     docker build -t ${{ secrets.DOCKER_USERNAME }}/nginx:$GITHUB_SHA -f Dockerfile .
-      #     docker push ${{ secrets.DOCKER_USERNAME }}/nginx:$GITHUB_SHA
+      -
+        name: Update Kubernetes ConfigMaps
+        run: |
+          sed -i "s|dockerContainerTag:.*|dockerContainerTag:$GITHUB_SHA||g" ./k8s-config/configmaps.yaml
+
+        working-directory: ./k8s-config
+        # sed -i "s|image: guose79/express:.*|image: guose79/express:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
+        # sed -i "s|image: guose79/email:.*|image: guose79/email:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
+        # sed -i "s|image: guose79/webapi:.*|image: guose79/webapi:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
+        # sed -i "s|image: guose79/sql-server:.*|image: guose79/sql-server:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
+
+      -
+        name: Deploy to Kubernetes
+        run: kubectl apply -f k8s-config/
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}

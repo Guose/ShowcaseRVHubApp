@@ -14,6 +14,8 @@ services:
     image: guose79/express:${IMAGE_TAG}
     ports:
       - "3001:3001"
+    environment:
+      - REACT_APP_API_BASE_URL=http://webapi:5000 # Use the WebAPI service name as the hostname
     # Other configurations for your Express.js server container
 
   react:
@@ -22,8 +24,6 @@ services:
     image: guose79/react:${IMAGE_TAG}
     ports:
       - "3000:3000"
-    environment:
-      - REACT_APP_API_BASE_URL=http://webapi:5000 # Use the WebAPI service name as the hostname
     # Other configurations for your React client container
 
   email:
@@ -33,14 +33,6 @@ services:
     ports:
       - "6000:6000"
     # Other configurations for your Email container
-
-  # nginx:
-  #   build:
-  #     context: ./ShowcaseRVHub.React/rv-email-service/nginx
-  #   image: guose79/nginx:${IMAGE_TAG}
-  #   ports:
-  #     - "8080:8080"
-
 
   sql-server:
     image: guose79/sql-server:${IMAGE_TAG}

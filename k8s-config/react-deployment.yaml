@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: react
+  name: react-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+    spec:
+      containers:
+        - name: showcaservhubapp-react-1
+          image: guose79/react:${{ env.CONTAINER_TAG }}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: CONTAINER_TAG
+              valueFrom:
+                configMapKeyRef:
+                  name: configmaps
+                  key: dockerContainerTag
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: react
+  name: react-service
+spec:
+  type: LoadBalancer
+  ports:
+    - name: "http"
+      port: 3000
+      targetPort: 3000
+      nodePort: 30000
+  selector:
+    app: react

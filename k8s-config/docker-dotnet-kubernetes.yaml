@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: showcase-rv-hub
+
+# Ingress configurations for routing to different services.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: showcase-rv-hub-ingress
+  annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: mobile.showcaservhub.com
+      http:
+        paths:
+          - path: /react
+            pathType: Prefix
+            backend:
+              service:
+                name: react-service
+                port:
+                  number: 3000
+          - path: /express
+            pathType: Prefix
+            backend:
+              service:
+                name: express-service
+                port:
+                  number: 3001
+          - path: /webapi
+            pathType: Prefix
+            backend:
+              service:
+                name: webapi-service
+                port:
+                  number: 5000
+          - path: /email
+            pathType: Prefix
+            backend:
+              service:
+                name: email-service
+                port:
+                  number: 6000
+  tls:
+    - hosts:
+        - mobile.showcaservhub.com
+      secretName: my-tls-secret  # Reference your TLS secret here
+    
+
+# PersistentVolume (PV) for SQL Server data.
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rvrental-db-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/rvrental-db-data
+
+# Resource quotas for the Kubernetes cluster.
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: my-resource-limits
+spec:
+  hard:
+    pods: "50"  # Limit to 50 pods in total
+    requests.cpu: "10"  # Each pod can use up to 10 CPU units
+    requests.memory: 10Gi
+
+# Network policies to control communication between pods.
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: express-communication
+spec:
+  podSelector:
+    matchLabels:
+      app: express
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: react
+      - podSelector:
+          matchLabels:
+            app: webapi
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+            role: external-service
