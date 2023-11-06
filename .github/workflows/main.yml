@@ -71,9 +71,6 @@ jobs:
         shell: pwsh
         working-directory: ./k8s-config
       -
-        name: Set Kubernetes Context
-        run: kubectl config current-context
-      -
         name: Deploy to Kubernetes
         run: |
           kubectl version
