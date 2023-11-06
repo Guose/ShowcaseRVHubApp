@@ -68,7 +68,7 @@ jobs:
       -
         name: Update Kubernetes ConfigMaps
         run: |
-          sed -i 's|dockerContainerTag:.*|dockerContainerTag:$GITHUB_SHA|g' k8s-config/02-configmaps.yaml
+          sed -i 's/^dockerContainerTag: .*$/dockerContainerTag: $GITHUB_SHA' ./k8s-config/02-configmaps.yaml
         shell: bash
         working-directory: ./k8s-config
       -
