@@ -66,16 +66,15 @@ jobs:
       -
         name: Update Kubernetes ConfigMaps
         run: |
-          sed -i "s|dockerContainerTag:.*|dockerContainerTag:$GITHUB_SHA||g" ./k8s-config/configmaps.yaml
-
+          sed -i "s|dockerContainerTag:.*|dockerContainerTag:$GITHUB_SHA|g" ./k8s-config/configmaps.yaml
         working-directory: ./k8s-config
-        # sed -i "s|image: guose79/express:.*|image: guose79/express:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
-        # sed -i "s|image: guose79/email:.*|image: guose79/email:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
-        # sed -i "s|image: guose79/webapi:.*|image: guose79/webapi:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
-        # sed -i "s|image: guose79/sql-server:.*|image: guose79/sql-server:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
-
       -
         name: Deploy to Kubernetes
         run: kubectl apply -f k8s-config/
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
+
+        # sed -i "s|image: guose79/express:.*|image: guose79/express:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
+        # sed -i "s|image: guose79/email:.*|image: guose79/email:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
+        # sed -i "s|image: guose79/webapi:.*|image: guose79/webapi:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
+        # sed -i "s|image: guose79/sql-server:.*|image: guose79/sql-server:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
