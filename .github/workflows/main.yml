@@ -78,4 +78,6 @@ jobs:
         working-directory: ./
         
         env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }} # This is where I need help setting this up to use properly. I have no idea what needs to go in the secret
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+          TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
+          TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}
