@@ -63,6 +63,8 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/webapi:$GITHUB_SHA .
           docker push ${{ secrets.DOCKER_USERNAME }}/webapi:$GITHUB_SHA
 
+      - name: List directory contents
+        run: ls k8s-config
       -
         name: Update Kubernetes ConfigMaps
         run: |
