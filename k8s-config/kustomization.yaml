@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - 01-namespace.yaml
+  - 02-configmaps.yaml
+  - 03-secrets.yaml
+  - 04-sql-server-persistent-volume.yaml
+  - 05-docker-dotnet-kubernetes.yaml
+  - 06-sql-server-deployment.yaml
+  - 07-email-deployment.yaml
+  - 08-webapi-deployment.yaml
+  - 09-express-deployment.yaml
+  - 10-react-deployment.yaml
+  - 11-service.yaml
+  - 12-network-policies.yaml
+  - 13-resource-quotas.yaml
+  - 14-ingress.yaml
+  - 15-tls-secret.yaml
