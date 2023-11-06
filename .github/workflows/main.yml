@@ -72,7 +72,7 @@ jobs:
         working-directory: ./k8s-config
       -
         name: Set Kubernetes Context
-        run: kubectl config-context showcase-rv-hub-context
+        run: kubectl config current-context
       -
         name: Deploy to Kubernetes
         run: |
