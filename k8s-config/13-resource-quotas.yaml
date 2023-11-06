@@ -1,9 +1,9 @@
-# apiVersion: v1
-# kind: ResourceQuota
-# metadata:
-#   name: my-resource-limits
-# spec:
-#   hard:
-#     pods: "50"  # Limit to 50 pods in total
-#     requests.cpu: "10"  # Each pod can use up to 10 CPU units
-#     requests.memory: 10Gi
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: my-resource-limits
+spec:
+  hard:
+    pods: "50" # Limit to 50 pods in total
+    requests.cpu: "10" # Each pod can use up to 10 CPU units
+    requests.memory: 10Gi

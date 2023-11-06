@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 
 const baseAddress = 'http://localhost:5000'
 const url = baseAddress + '/api'
-const PORT = process.env.PORT || 3001
+const PORT = 3001
 
 app.get('/users', (req, res) => {
     axios(url + '/users')
