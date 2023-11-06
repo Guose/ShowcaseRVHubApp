@@ -68,9 +68,9 @@ jobs:
       -
         name: Update Kubernetes ConfigMaps
         run: |
-          $content = Get-Content -Path k8s-config/02-configmaps.yaml
+          $content = Get-Content -Path ./ShowcaseRVHubApp/k8s-config/02-configmaps.yaml
           $content = $content -replace 'dockerContainerTag:.*', "dockerContainerTag:$env:GITHUB_SHA"
-          $content | Set-Content -Path k8s-config/02-configmaps.yaml
+          $content | Set-Content -Path ./ShowcaseRVHubApp/k8s-config/02-configmaps.yaml
         shell: pwsh
         working-directory: ./k8s-config
       -
