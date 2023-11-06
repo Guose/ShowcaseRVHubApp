@@ -72,7 +72,7 @@ jobs:
         working-directory: ./k8s-config
       -
         name: Deploy to Kubernetes
-        run: kubectl apply -f k8s-config/*.yaml
+        run: kubectl apply -f ./k8s-config/*.yaml
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
 
