@@ -70,6 +70,11 @@ jobs:
           $content | Set-Content -Path 02-configmaps.yaml
         shell: pwsh
         working-directory: ./k8s-config
+      - 
+        name: Debug Secrets
+        run: |
+          echo "TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}"
+          echo "TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}"
       -
         name: Deploy to Kubernetes
         run: |
