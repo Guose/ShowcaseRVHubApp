@@ -66,18 +66,13 @@ jobs:
         name: Update Kubernetes ConfigMaps
         run: |
           $content = Get-Content -Path 02-configmaps.yaml
-          $content = $content -replace 'dockerContainerTag:.*', "dockerContainerTag:$env:GITHUB_SHA"
+          $content = $content -replace 'dockerContainerTag: .*', "dockerContainerTag: $env:GITHUB_SHA"
           $content | Set-Content -Path 02-configmaps.yaml
         shell: pwsh
         working-directory: ./k8s-config
       -
         name: Deploy to Kubernetes
         run: kubectl apply -k k8s-config
+        working-directory: ./
         env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-
-        # sed -i 's|^dockerContainerTag: .*|dockerContainerTag: $GITHUB_SHA|' k8s-config/02-configmaps.yaml
-        # sed -i "s|image: guose79/express:.*|image: guose79/express:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
-        # sed -i "s|image: guose79/email:.*|image: guose79/email:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
-        # sed -i "s|image: guose79/webapi:.*|image: guose79/webapi:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
-        # sed -i "s|image: guose79/sql-server:.*|image: guose79/sql-server:$GITHUB_SHA||g" ./k8s-config/docker-dotnet-kubernetes.yaml
+          KUBECONFIG: ${{ secrets.KUBECONFIG }} # This is where I need help setting this up to use properly. I have no idea what needs to go in the secret

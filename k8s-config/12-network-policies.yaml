@@ -1,21 +1,21 @@
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: express-communication
-spec:
-  podSelector:
-    matchLabels:
-      app: express
-  ingress:
-    - from:
-      - podSelector:
-          matchLabels:
-            app: react
-      - podSelector:
-          matchLabels:
-            app: webapi
-  egress:
-    - to:
-      - podSelector:
-          matchLabels:
-            role: external-service
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: express-communication
+# spec:
+#   podSelector:
+#     matchLabels:
+#       app: express
+#   ingress:
+#     - from:
+#       - podSelector:
+#           matchLabels:
+#             app: react
+#       - podSelector:
+#           matchLabels:
+#             app: webapi
+#   egress:
+#     - to:
+#       - podSelector:
+#           matchLabels:
+#             role: external-service

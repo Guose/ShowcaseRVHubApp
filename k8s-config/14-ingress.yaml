@@ -4,34 +4,34 @@ metadata:
   name: showcase-rv-hub-ingress
 spec:
   rules:
-    - host: mobile.showcaservhub.com
-      http:
-        paths:
-          - path: /react
-            pathType: Prefix
-            backend:
-              service:
-                name: react-service
-                port:
-                  number: 3000
-          - path: /express
-            pathType: Prefix
-            backend:
-              service:
-                name: express-service
-                port:
-                  number: 3001
-          - path: /webapi
-            pathType: Prefix
-            backend:
-              service:
-                name: webapi-service
-                port:
-                  number: 5000
-          - path: /email
-            pathType: Prefix
-            backend:
-              service:
-                name: email-service
-                port:
-                  number: 6000
+  - host: mobile.showcaservhub.com
+    http:
+      paths:
+      - path: /react
+        pathType: Prefix
+        backend:
+          service:
+            name: react-service
+            port:
+              number: 3000
+      - path: /express
+        pathType: Prefix
+        backend:
+          service:
+            name: express-service
+            port:
+              number: 3001
+      - path: /webapi
+        pathType: Prefix
+        backend:
+          service:
+            name: webapi-service
+            port:
+              number: 5000
+      - path: /email
+        pathType: Prefix
+        backend:
+          service:
+            name: email-service
+            port:
+              number: 6000
