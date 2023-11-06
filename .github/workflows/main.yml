@@ -66,7 +66,8 @@ jobs:
       -
         name: Update Kubernetes ConfigMaps
         run: |
-          cmd /c "sed -i 's|dockerContainerTag:.*|dockerContainerTag:$GITHUB_SHA|g' .\k8s-config\02-configmaps.yaml"
+          (Get-Content -Path .\k8s-config\02-configmaps.yaml) | ForEach-Object { $_ -replace 'dockerContainerTag:.*', "dockerContainerTag:$env:GITHUB_SHA" } | Set-Content -Path .\k8s-config\02-configmaps.yaml
+        shell: pwsh
         working-directory: ./k8s-config
       -
         name: Deploy to Kubernetes
