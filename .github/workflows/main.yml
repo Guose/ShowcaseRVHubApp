@@ -62,9 +62,6 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/webapi:$GITHUB_SHA .
           docker push ${{ secrets.DOCKER_USERNAME }}/webapi:$GITHUB_SHA
-
-      - name: List directory contents
-        run: ls k8s-config
       -
         name: Update Kubernetes ConfigMaps
         run: |
@@ -75,7 +72,7 @@ jobs:
         working-directory: ./k8s-config
       -
         name: Deploy to Kubernetes
-        run: kubectl apply -f k8s-config/
+        run: kubectl apply -f k8s-config/*.yaml
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
 
