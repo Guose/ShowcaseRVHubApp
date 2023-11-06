@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: mobile.showcaservhub.com
+  - host: hub.showcaserv.com
     http:
       paths:
       - path: /react
@@ -40,7 +40,7 @@ spec:
               number: 6000
   tls:
   - hosts:
-    - mobile.showcaservhub.com
+    - hub.showcaserv.com
     secretName: my-tls-secret # Reference your TLS secret here
 
 
