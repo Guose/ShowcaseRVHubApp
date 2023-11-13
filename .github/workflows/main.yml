@@ -81,7 +81,12 @@ jobs:
         run: env
       -
         name: Set Kubeconfig Context
-        run: kubectl config use-context docker-desktop
+        run: |
+          kubectl config set-context showcase-rv-hub-dev \
+          --cluster=showcase-rv-hub-cluster \
+          --user=guose79 \
+          --namespace=showcase-rv-hub
+          kubectl config use-context showcase-rv-hub-dev
       - 
         name: Debug Secrets
         run: |
@@ -98,3 +103,6 @@ jobs:
           KUBECONFIG: ${{ github.workspace }}/k8s-config/kubeconfig.yaml
           TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
           TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}
+      -
+        name: Debug Kubeconfig After
+        run: kubectl config view
