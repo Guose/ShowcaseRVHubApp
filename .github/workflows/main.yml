@@ -83,6 +83,6 @@ jobs:
         working-directory: ./k8s-config
         
         env:
-          KUBECONFIG: ./k8s-config/kustomization.yaml
+          KUBECONFIG: ./k8s-config/kubeconfig.yaml
           TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
           TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}
