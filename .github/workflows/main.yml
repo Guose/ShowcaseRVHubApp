@@ -74,10 +74,13 @@ jobs:
         name: Debug Kubeconfig
         run: cat ./k8s-config/kubeconfig.yaml
       -
+        name: List Kubeconfig Contexts
+        run: kubectl config get-contexts
+      -
         name: Debug Environment
         run: env
       -
-        name: Set Kubecongig Context
+        name: Set Kubeconfig Context
         run: kubectl config use-context showcase-rv-hub-dev
       - 
         name: Debug Secrets
@@ -92,6 +95,6 @@ jobs:
         working-directory: ./k8s-config
         
         env:
-          KUBECONFIG: ./k8s-config/kubeconfig.yaml
+          KUBECONFIG: ${{ github.workspace }}/k8s-config/kubeconfig.yaml
           TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
           TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}
