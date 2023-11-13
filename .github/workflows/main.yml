@@ -80,9 +80,9 @@ jobs:
         run: |
           kubectl version
           kubectl apply -k k8s-config
-        working-directory: ./
+        working-directory: ./k8s-config
         
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-          # TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
-          # TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}
+        # env:
+        #   KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        #   TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
+        #   TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}

@@ -23,6 +23,9 @@ internal class Program
         builder.Services.AddScoped<IRVRepo, RVRepo>();
         builder.Services.AddScoped<IRentalRepo, RentalRepo>();
         builder.Services.AddScoped<IRenterRepo,  RenterRepo>();
+        builder.Services.AddScoped<IArrivalRepo, ArrivalRepo>();
+        builder.Services.AddScoped<IDepartureRepo, DepartureRepo>();
+        builder.Services.AddScoped<IMaintenance, MaintenanceRepo>();
 
         //var connectionString = configuration.GetConnectionString("SQLServerLocalhostConnection");
         var connectionString = configuration.GetConnectionString("SQLServerConnection");

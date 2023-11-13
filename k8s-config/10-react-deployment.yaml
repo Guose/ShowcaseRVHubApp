@@ -5,7 +5,7 @@ metadata:
     app: react
   name: react-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: react
@@ -15,16 +15,16 @@ spec:
         app: react
     spec:
       containers:
-        - name: showcaservhubapp-react-1
-          image: guose79/react:${{ env.CONTAINER_TAG }}
-          ports:
-            - containerPort: 3000
-          env:
-            - name: CONTAINER_TAG
-              valueFrom:
-                configMapKeyRef:
-                  name: configmaps
-                  key: dockerContainerTag
+      - name: showcaservhubapp-react-1
+        image: guose79/react:${{ env.CONTAINER_TAG }}
+        ports:
+        - containerPort: 3000
+        env:
+        - name: CONTAINER_TAG
+          valueFrom:
+            configMapKeyRef:
+              name: configmaps
+              key: dockerContainerTag
 ---
 apiVersion: v1
 kind: Service
@@ -35,9 +35,9 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - name: "http"
-      port: 3000
-      targetPort: 3000
-      nodePort: 30000
+  - name: "http"
+    port: 3000
+    targetPort: 3000
+    nodePort: 30000
   selector:
     app: react

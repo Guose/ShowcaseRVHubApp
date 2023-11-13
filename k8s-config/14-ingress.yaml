@@ -4,7 +4,7 @@ metadata:
   name: showcase-rv-hub-ingress
 spec:
   rules:
-  - host: mobile.showcaservhub.com
+  - host: hub.showcaserv.com
     http:
       paths:
       - path: /react
