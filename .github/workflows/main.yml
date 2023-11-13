@@ -81,7 +81,7 @@ jobs:
         run: env
       -
         name: Set Kubeconfig Context
-        run: kubectl config use-context showcase-rv-hub-dev
+        run: kubectl config use-context docker-desktop
       - 
         name: Debug Secrets
         run: |
