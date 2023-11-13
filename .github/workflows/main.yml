@@ -70,6 +70,15 @@ jobs:
           $content | Set-Content -Path 02-configmaps.yaml
         shell: pwsh
         working-directory: ./k8s-config
+      -
+        name: Debug Kubeconfig
+        run: cat ./k8s-config/kubeconfig.yaml
+      -
+        name: Debug Environment
+        run: env
+      -
+        name: Set Kubecongig Context
+        run: kubectl config use-context showcase-rv-hub-dev
       - 
         name: Debug Secrets
         run: |
