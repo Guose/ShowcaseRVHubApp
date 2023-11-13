@@ -82,7 +82,7 @@ jobs:
           kubectl apply -k k8s-config
         working-directory: ./k8s-config
         
-        # env:
-        #   KUBECONFIG: ${{ secrets.KUBECONFIG }}
-        #   TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
-        #   TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}
+        env:
+          KUBECONFIG: ./k8s-config/kustomization.yaml
+          TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
+          TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}
