@@ -77,15 +77,16 @@ jobs:
         name: List Kubeconfig Contexts
         run: kubectl config get-contexts
       -
-        name: Debug Environment
-        run: env
+        name: Set up Certificates
+        run: |
+          echo "$TLS_CERTIFICATE" | base64 --decode > ${{ github.workspace }}/k8s-config/my-cert.crt
+          echo "$TLS_PRIVATE_KEY" | base64 --decode > ${{ github.workspace }}/k8s-config/my-private-key.key
       -
         name: Set Kubeconfig Context
         run: |
-          kubectl config set-context showcase-rv-hub-dev \
-          --cluster=showcase-rv-hub-cluster \
-          --user=guose79 \
-          --namespace=showcase-rv-hub
+          kubectl config set-cluster showcase-rv-hub-cluster --server=https://hub.showcaserv.com --certificate-authority=${{ github.workspace }}/k8s-config/my-cert.crt
+          kubectl config set-credentials guose79 --client-certificate=${{ github.workspace }}/k8s-config/my-cert.crt --client-key=${{ github.workspace }}/k8s-config/my-private-key.key
+          kubectl config set-context showcase-rv-hub-dev --cluster=showcase-rv-hub-cluster --user=guose79 --namespace=showcase-rv-hub
           kubectl config use-context showcase-rv-hub-dev
       - 
         name: Debug Secrets
