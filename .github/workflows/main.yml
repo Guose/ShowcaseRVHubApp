@@ -94,7 +94,9 @@ jobs:
         run: cat /etc/resolv.conf
       -
         name: Cluster Info Dump
-        run: kubectl cluster-info dump
+        run: |
+          cd ${{ github.workspace }}/k8s-confi
+          kubectl cluster-info dump
         working-directory: ./k8s-config
       -
         name: Get kubectl Cluster-Info
