@@ -95,6 +95,7 @@ jobs:
       -
         name: Cluster Info Dump
         run: kubectl cluster-info dump
+        working-directory: ./k8s-config
       -
         name: Get kubectl Cluster-Info
         run: kubectl cluster-info      
