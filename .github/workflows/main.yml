@@ -95,7 +95,7 @@ jobs:
       -
         name: Cluster Info Dump
         run: |
-          cd ${{ github.workspace }}/k8s-confi
+          cd ${{ github.workspace }}/k8s-config
           kubectl cluster-info dump
         working-directory: ./k8s-config
       -
