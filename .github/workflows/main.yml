@@ -77,6 +77,9 @@ jobs:
         name: List Kubeconfig Contexts
         run: kubectl config get-contexts
       -
+        name: Get kubectl Cluster-Info
+        run: kubectl cluster-info
+      -
         name: Set up Certificates
         run: |
           echo "$TLS_CERTIFICATE" | base64 --decode > ${{ github.workspace }}/k8s-config/my-cert.crt
