@@ -81,9 +81,10 @@ jobs:
         run: ls -la ./k8s-config
       -
         name: Set Kubeconfig Context
+        working-directory: ./k8s-config
         run: |
-          kubectl config set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:6443 --certificate-authority=${{ secrets.TLS_CERTIFICATE }}
-          kubectl config set-credentials guose79 --client-certificate=${{ secrets.TLS_CERTIFICATE }} --client-key=${{ secrets.TLS_PRIVATE_KEY }}
+          kubectl config set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:6443 --certificate-authority=my-cert.crt
+          kubectl config set-credentials guose79 --client-certificate=my-cert.crt --client-key=my-cer.key
           kubectl config set-context showcase-rv-hub-dev --cluster=showcase-rv-hub-cluster --user=guose79 --namespace=showcase-rv-hub
           kubectl config use-context showcase-rv-hub-dev
           kubectl config get-contexts
