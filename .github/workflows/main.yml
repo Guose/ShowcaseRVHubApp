@@ -96,14 +96,17 @@ jobs:
       -
         name: Check local DNS Cache
         run: cat /etc/resolv.conf
-      -
-        name: Cluster Info Dump
+      - 
+        name: Debug Kubernetes Configuration
         run: |
           cd ${{ github.workspace }}/k8s-config
           cat kubeconfig.yaml
+          echo "==== kubectl config view ===="
           kubectl config view
-          kubectl version
-          kubectl cluster-info dump
+          echo "==== kubectl cluster-info ===="
+          kubectl cluster-info
+          echo "==== kubectl version ===="
+          kubectl version      
       -
         name: Get kubectl Cluster-Info
         run: kubectl --kubeconfig=./k8s-config/kubeconfig.yaml cluster-info      
