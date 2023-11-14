@@ -77,9 +77,6 @@ jobs:
         name: List Kubeconfig Contexts
         run: kubectl config get-contexts
       -
-        name: Get kubectl Cluster-Info
-        run: kubectl cluster-info
-      -
         name: Set up Certificates
         run: |
           echo "$TLS_CERTIFICATE" | base64 --decode > ${{ github.workspace }}/k8s-config/my-cert.crt
@@ -91,6 +88,9 @@ jobs:
           kubectl config set-credentials guose79 --client-certificate=${{ github.workspace }}/k8s-config/my-cert.crt --client-key=${{ github.workspace }}/k8s-config/my-private-key.key
           kubectl config set-context showcase-rv-hub-dev --cluster=showcase-rv-hub-cluster --user=guose79 --namespace=showcase-rv-hub
           kubectl config use-context showcase-rv-hub-dev
+      -
+        name: Get kubectl Cluster-Info
+        run: kubectl cluster-info
       - 
         name: Debug Secrets
         run: |
