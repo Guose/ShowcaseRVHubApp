@@ -70,17 +70,17 @@ jobs:
           $content | Set-Content -Path 02-configmaps.yaml
         shell: pwsh
         working-directory: ./k8s-config
-      - 
-        name: Set up kubectl
-        uses: azure/k8s-set-context@v1
-        with:
-          kubeconfig: ${{ github.workspace }}/k8s-config/kubeconfig.yaml
+      # - 
+      #   name: Set up kubectl
+      #   uses: azure/k8s-set-context@v1
+      #   with:
+      #     kubeconfig: ${{ github.workspace }}/k8s-config/kubeconfig.yaml
       -
         name: Debug Kubeconfig
         run: cat ./k8s-config/kubeconfig.yaml
       -
         name: List Kubeconfig Contexts
-        run: kubectl config get-contexts
+        run: kubectl config --kubeconfig=./k8s-config/kubeconfig.yaml get-contexts
       - 
         name: Check Permissions
         run: ls -la ./k8s-config
@@ -109,7 +109,7 @@ jobs:
 
       -
         name: Get kubectl Cluster-Info
-        run: kubectl cluster-info      
+        run: kubectl --kubeconfig=./k8s-config/kubeconfig.yaml cluster-info      
       - 
         name: Debug Secrets
         run: |
