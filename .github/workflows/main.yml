@@ -89,8 +89,17 @@ jobs:
           kubectl config set-context showcase-rv-hub-dev --cluster=showcase-rv-hub-cluster --user=guose79 --namespace=showcase-rv-hub
           kubectl config use-context showcase-rv-hub-dev
       -
+        name: Debug DNS Resolution
+        run: nslookup hub.showcaserv.com
+      -
+        name: Cluster Info Dump
+        run: kubectl cluster-info dump
+      -
+        name: Check local DNS Cache
+        run: cat /etc/resolv.conf
+      -
         name: Get kubectl Cluster-Info
-        run: kubectl cluster-info
+        run: kubectl cluster-info      
       - 
         name: Debug Secrets
         run: |
