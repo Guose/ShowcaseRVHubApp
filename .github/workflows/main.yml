@@ -76,13 +76,28 @@ jobs:
       -
         name: List Kubeconfig Contexts
         run: kubectl config get-contexts
+      - 
+        name: Check Permissions
+        run: ls -la ./k8s-config
       -
         name: Set up Certificates
+        working-directory: ./k8s-config
         run: |
-          echo "$TLS_CERTIFICATE" | base64 --decode > ${{ github.workspace }}/k8s-config/my-cert.crt
-          echo "$TLS_PRIVATE_KEY" | base64 --decode > ${{ github.workspace }}/k8s-config/my-private-key.key
-          cat ${{ github.workspace }}/k8s-config/my-cert.crt
-          cat ${{ github.workspace }}/k8s-config/my-private-key.key
+          if echo "$TLS_CERTIFICATE" | base64 --decode > my-cert.crt; then
+            echo "Certificate file created"
+          else
+            echo "Failed to create Certificate file"
+            exit 1
+          fi
+
+          if echo "$TLS_PRIVATE_KEY" | base64 --decode > my-private-key.key; then
+            echo "Certificate file created"
+          else
+              echo "Failed to create Certificate file"
+              exit 1
+          fi
+          cat my-cert.crt
+          cat my-private-key.key
       -
         name: Set Kubeconfig Context
         run: |
