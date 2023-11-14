@@ -86,18 +86,22 @@ jobs:
           kubectl config set-credentials guose79 --client-certificate=${{ env.TLS_CERTIFICATE }} --client-key=${{ env.TLS_PRIVATE_KEY }}
           kubectl config set-context showcase-rv-hub-dev --cluster=showcase-rv-hub-cluster --user=guose79 --namespace=showcase-rv-hub
           kubectl config use-context showcase-rv-hub-dev
+          kubectl config get-contexts
       -
         name: Debug DNS Resolution
         run: cat /etc/resolv.conf
       -
+        name: Check Kubernetes Proxy
+        run: kubectl proxy
+      -
         name: Check local DNS Cache
         run: cat /etc/resolv.conf
-      -
-        name: Cluster Info Dump
-        run: |
-          cd ${{ github.workspace }}/k8s-config
-          kubectl cluster-info dump
-        working-directory: ./k8s-config
+      # -
+      #   name: Cluster Info Dump
+      #   run: |
+      #     cd ${{ github.workspace }}/k8s-config
+      #     kubectl cluster-info dump
+      #   working-directory: ./k8s-config
       -
         name: Get kubectl Cluster-Info
         run: kubectl cluster-info      
