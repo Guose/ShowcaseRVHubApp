@@ -70,14 +70,11 @@ jobs:
           $content | Set-Content -Path 02-configmaps.yaml
         shell: pwsh
         working-directory: ./k8s-config
-      # - 
-      #   name: Set up kubectl
-      #   uses: azure/k8s-set-context@v1
-      #   with:
-      #     kubeconfig: ${{ github.workspace }}/k8s-config/kubeconfig.yaml
       -
         name: Debug Kubeconfig
-        run: cat ./k8s-config/kubeconfig.yaml
+        run: |
+          ls -l ${{ github.workspace }}/k8s-config
+          cat ${{ github.workspace }}/k8s-config/kubeconfig.yaml
       -
         name: List Kubeconfig Contexts
         run: kubectl config --kubeconfig=./k8s-config/kubeconfig.yaml get-contexts
@@ -96,25 +93,23 @@ jobs:
       -
         name: Debug DNS Resolution
         run: cat /etc/resolv.conf
-      # -
-      #   name: Check Kubernetes Proxy
-      #   run: kubectl proxy
       -
         name: Check local DNS Cache
         run: cat /etc/resolv.conf
       -
         name: Cluster Info Dump
-        run: kubectl --kubeconfig=./k8s-config/kubeconfig.yaml cluster-info dump
-        working-directory: ./k8s-config
-
+        run: |
+          cd ${{ github.workspace }}/k8s-config
+          kubectl config view
+          kubectl cluster-info dump
       -
         name: Get kubectl Cluster-Info
         run: kubectl --kubeconfig=./k8s-config/kubeconfig.yaml cluster-info      
       - 
         name: Debug Secrets
         run: |
-          echo "TLS_CERTIFICATE: $TLS_CERTIFICATE"
-          echo "TLS_PRIVATE_KEY: $TLS_PRIVATE_KEY"
+          echo "TLS_CERTIFICATE length: ${#TLS_CERTIFICATE}"
+          echo "TLS_PRIVATE_KEY length: ${#TLS_PRIVATE_KEY}"
       -
         name: Deploy to Kubernetes
         run: |
