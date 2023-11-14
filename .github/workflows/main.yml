@@ -88,11 +88,11 @@ jobs:
         name: Set Kubeconfig Context
         working-directory: ./k8s-config
         run: |
-          kubectl config set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:6443 --certificate-authority=my-cert.crt --embed-certs=true
-          kubectl config set-credentials guose79 --client-certificate=my-cert.crt --client-key=my-cert.key
-          kubectl config set-context showcase-rv-hub-dev --cluster=showcase-rv-hub-cluster --user=guose79 --namespace=showcase-rv-hub
-          kubectl config use-context showcase-rv-hub-dev
-          kubectl config get-contexts
+          kubectl config --kubeconfig=kubeconfig.yaml set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:6443 --certificate-authority=my-cert.crt --embed-certs=true
+          kubectl config --kubeconfig=kubeconfig.yaml set-credentials guose79 --client-certificate=my-cert.crt --client-key=my-cert.key
+          kubectl config --kubeconfig=kubeconfig.yaml set-context showcase-rv-hub-dev --cluster=showcase-rv-hub-cluster --user=guose79 --namespace=showcase-rv-hub
+          kubectl config --kubeconfig=kubeconfig.yaml use-context showcase-rv-hub-dev
+          kubectl config --kubeconfig=kubeconfig.yaml get-contexts
       -
         name: Debug DNS Resolution
         run: cat /etc/resolv.conf
@@ -104,10 +104,9 @@ jobs:
         run: cat /etc/resolv.conf
       -
         name: Cluster Info Dump
-        run: |
-          cd ${{ github.workspace }}/k8s-config/kubeconfig.yaml
-          kubectl cluster-info dump
+        run: kubectl --kubeconfig=./k8s-config/kubeconfig.yaml cluster-info dump
         working-directory: ./k8s-config
+
       -
         name: Get kubectl Cluster-Info
         run: kubectl cluster-info      
@@ -129,4 +128,4 @@ jobs:
           TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}
       -
         name: Debug Kubeconfig After
-        run: kubectl config view
+        run: kubectl config --kubeconfig=./k8s-config/kubeconfig.yaml view
