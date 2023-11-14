@@ -80,25 +80,6 @@ jobs:
         name: Check Permissions
         run: ls -la ./k8s-config
       -
-        name: Set up Certificates
-        working-directory: ./k8s-config
-        run: |
-          if echo "$TLS_CERTIFICATE" | base64 --decode > my-cert.crt; then
-            echo "Certificate file created"
-          else
-            echo "Failed to create Certificate file"
-            exit 1
-          fi
-
-          if echo "$TLS_PRIVATE_KEY" | base64 --decode > my-private-key.key; then
-            echo "Certificate file created"
-          else
-              echo "Failed to create Certificate file"
-              exit 1
-          fi
-          cat my-cert.crt
-          cat my-private-key.key
-      -
         name: Set Kubeconfig Context
         run: |
           kubectl config set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:6443 --certificate-authority=${{ github.workspace }}/k8s-config/my-cert.crt
@@ -120,8 +101,8 @@ jobs:
       - 
         name: Debug Secrets
         run: |
-          echo "TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}"
-          echo "TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}"
+          echo "TLS_CERTIFICATE: $TLS_CERTIFICATE"
+          echo "TLS_PRIVATE_KEY: $TLS_PRIVATE_KEY"
       -
         name: Deploy to Kubernetes
         run: |
