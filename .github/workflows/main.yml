@@ -90,7 +90,7 @@ jobs:
           kubectl config use-context showcase-rv-hub-dev
       -
         name: Debug DNS Resolution
-        run: nslookup hub.showcaserv.com
+        run: cat /etc/resolv.conf
       -
         name: Check local DNS Cache
         run: cat /etc/resolv.conf
