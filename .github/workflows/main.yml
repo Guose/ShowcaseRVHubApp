@@ -70,6 +70,11 @@ jobs:
           $content | Set-Content -Path 02-configmaps.yaml
         shell: pwsh
         working-directory: ./k8s-config
+      - 
+        name: Set up kubectl
+        uses: azure/k8s-set-context@v1
+        with:
+          kubeconfig: ${{ github.workspace }}/k8s-config/kubeconfig.yaml
       -
         name: Debug Kubeconfig
         run: cat ./k8s-config/kubeconfig.yaml
@@ -83,7 +88,7 @@ jobs:
         name: Set Kubeconfig Context
         working-directory: ./k8s-config
         run: |
-          kubectl config set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:6443 --certificate-authority=my-cert.crt
+          kubectl config set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:6443 --certificate-authority=my-cert.crt --embed-certs=true
           kubectl config set-credentials guose79 --client-certificate=my-cert.crt --client-key=my-cert.key
           kubectl config set-context showcase-rv-hub-dev --cluster=showcase-rv-hub-cluster --user=guose79 --namespace=showcase-rv-hub
           kubectl config use-context showcase-rv-hub-dev
@@ -100,7 +105,7 @@ jobs:
       -
         name: Cluster Info Dump
         run: |
-          cd ${{ github.workspace }}/k8s-config
+          cd ${{ github.workspace }}/k8s-config/kubeconfig.yaml
           kubectl cluster-info dump
         working-directory: ./k8s-config
       -
