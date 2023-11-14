@@ -81,6 +81,8 @@ jobs:
         run: |
           echo "$TLS_CERTIFICATE" | base64 --decode > ${{ github.workspace }}/k8s-config/my-cert.crt
           echo "$TLS_PRIVATE_KEY" | base64 --decode > ${{ github.workspace }}/k8s-config/my-private-key.key
+          cat ${{ github.workspace }}/k8s-config/my-cert.crt
+          cat ${{ github.workspace }}/k8s-config/my-private-key.key
       -
         name: Set Kubeconfig Context
         run: |
