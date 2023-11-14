@@ -100,7 +100,9 @@ jobs:
         name: Cluster Info Dump
         run: |
           cd ${{ github.workspace }}/k8s-config
+          cat kubeconfig.yaml
           kubectl config view
+          kubectl version
           kubectl cluster-info dump
       -
         name: Get kubectl Cluster-Info
