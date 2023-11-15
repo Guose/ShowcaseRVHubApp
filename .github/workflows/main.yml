@@ -90,9 +90,11 @@ jobs:
       -
         name: Debug Networking
         run: |
+          ss -tulwn
+          netstat -tuln
           kubectl proxy &
           sleep 5
-          wget -O- http://localhost:8001/api/v1      
+          wget -O- http://127.0.0.1:8888/api/v1
       -
         name: Debug DNS Resolution
         run: cat /etc/resolv.conf
