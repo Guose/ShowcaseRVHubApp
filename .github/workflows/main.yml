@@ -70,16 +70,6 @@ jobs:
           $content | Set-Content -Path 02-configmaps.yaml
         shell: pwsh
         working-directory: ./k8s-config
-      -
-        name: Debug Kubeconfig
-        run: |
-          ls -l ${{ github.workspace }}/k8s-config
-          cat ${{ github.workspace }}/k8s-config/kubeconfig.yaml
-      -
-        name: List Kubeconfig Contexts
-        run: |
-          cd ./k8s-config
-          kubectl config --kubeconfig=./k8s-config/kubeconfig.yaml get-contexts
       - 
         name: Check Permissions
         run: ls -la ./k8s-config
@@ -97,9 +87,9 @@ jobs:
           kubectl config --kubeconfig=kubeconfig.yaml use-context showcase-rv-hub-dev
           echo "==== Get contexts ===="
           kubectl config --kubeconfig=kubeconfig.yaml get-contexts
-      - 
+      -
         name: Debug Networking
-        run: kubectl run --image=busybox:1.28 --rm -it --restart=Never busybox -- /bin/sh -c "wget -O- http://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT"        
+        run: kubectl proxy & && sleep 5 && wget -O- http://localhost:8001/api/v1      
       -
         name: Debug DNS Resolution
         run: cat /etc/resolv.conf
@@ -117,7 +107,6 @@ jobs:
       - 
         name: Print API Server Logs
         run: kubectl logs -n kube-system -l component=kube-apiserver
-
       - 
         name: Print Kubeconfig
         run: cat $HOME/.kube/config
