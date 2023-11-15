@@ -89,10 +89,10 @@ jobs:
           kubectl config --kubeconfig=kubeconfig.yaml get-contexts
       - 
         name: Install kubectl
-        run: |
-          pkill kubectl
+        run: |          
           sudo apt-get update
           sudo apt-get install -y kubectl
+          pkill kubectl
       -
         name: Debug Networking
         run: |
