@@ -87,16 +87,21 @@ jobs:
         name: Set Kubeconfig Context
         working-directory: ./k8s-config
         run: |
+          echo "==== Set kubeconfig cluster, server, & certificate autority ===="
           kubectl config --kubeconfig=kubeconfig.yaml set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:64163 --certificate-authority=my-cert.crt --embed-certs=true
+          echo "==== Set kubeconfig user credentials, cert & key ===="
           kubectl config --kubeconfig=kubeconfig.yaml set-credentials guose79 --client-certificate=my-cert.crt --client-key=my-cert.key
+          echo "==== Set kubeconfig cluster, user & namespace ===="
           kubectl config --kubeconfig=kubeconfig.yaml set-context showcase-rv-hub-dev --cluster=showcase-rv-hub-cluster --user=guose79 --namespace=showcase-rv-hub
+          echo "==== use context showcase-rv-hub-dev ===="
           kubectl config --kubeconfig=kubeconfig.yaml use-context showcase-rv-hub-dev
+          echo "==== Get contexts ===="
           kubectl config --kubeconfig=kubeconfig.yaml get-contexts
+      - 
+        name: Debug Networking
+        run: kubectl run --image=busybox:1.28 --rm -it --restart=Never busybox -- /bin/sh -c "wget -O- http://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT"        
       -
         name: Debug DNS Resolution
-        run: cat /etc/resolv.conf
-      -
-        name: Check local DNS Cache
         run: cat /etc/resolv.conf
       - 
         name: Debug Kubernetes Configuration
@@ -104,14 +109,18 @@ jobs:
           cd ${{ github.workspace }}/k8s-config
           cat kubeconfig.yaml
           echo "==== kubectl config view ===="
-          kubectl config view
+          kubectl config view --kubeconfig=./k8s-config/kubeconfig.yaml
           echo "==== kubectl cluster-info ===="
-          kubectl cluster-info
+          kubectl --kubeconfig=./k8s-config/kubeconfig.yaml cluster-info
           echo "==== kubectl version ===="
-          kubectl version      
-      -
-        name: Get kubectl Cluster-Info
-        run: kubectl --kubeconfig=./k8s-config/kubeconfig.yaml cluster-info      
+          kubectl version
+      - 
+        name: Print API Server Logs
+        run: kubectl logs -n kube-system -l component=kube-apiserver
+
+      - 
+        name: Print Kubeconfig
+        run: cat $HOME/.kube/config
       - 
         name: Debug Secrets
         run: |
