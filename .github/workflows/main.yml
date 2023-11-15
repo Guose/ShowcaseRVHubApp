@@ -89,7 +89,10 @@ jobs:
           kubectl config --kubeconfig=kubeconfig.yaml get-contexts
       -
         name: Debug Networking
-        run: kubectl proxy & && sleep 5 && wget -O- http://localhost:8001/api/v1      
+        run: |
+          kubectl proxy &
+          sleep 5
+          wget -O- http://localhost:8001/api/v1      
       -
         name: Debug DNS Resolution
         run: cat /etc/resolv.conf
