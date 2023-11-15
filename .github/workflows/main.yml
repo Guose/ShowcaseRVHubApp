@@ -87,12 +87,17 @@ jobs:
           kubectl config --kubeconfig=kubeconfig.yaml use-context showcase-rv-hub-dev
           echo "==== Get contexts ===="
           kubectl config --kubeconfig=kubeconfig.yaml get-contexts
+      - 
+        name: Install kubectl
+        run: |
+          pkill kubectl
+          sudo apt-get update
+          sudo apt-get install -y kubectl
       -
         name: Debug Networking
         run: |
           ss -tulwn
-          netstat -tuln
-          pkill kubectl
+          netstat -tuln          
           kubectl port-forward --address 0.0.0.0 svc/kubernetes-dashboard 8888:80 -n your-namespace &
           sleep 5
           wget -O- http://localhost:8888/api/v1
