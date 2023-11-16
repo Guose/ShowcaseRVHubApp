@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sql-server
+  labels:
+    app: rv-sql-server
+    tier: sql-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: sql-server
+  template:
+    metadata:
+      labels:
+        tier: sql-server
+    spec:
+      initContainers:
+      - name: init-database
+        image: sql-init-container:latest
+        env:
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password-secret
+              key: password
+        - name: ACCEPT_EULA
+          value: "Y"
+        command: ["pwsh", "/Scripts/RunSqlScripts.ps1"]
+      containers:
+      - name: rv-sql-server-1
+        image: guose79/sql-server:github
+        env:
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password-secret
+              key: password
+        - name: ACCEPT_EULA
+          value: "Y"
+        ports:
+        - containerPort: 1433
+        volumeMounts:
+        - name: sql-data-volume
+          mountPath: /var/opt/mssql/data/
+      volumes:
+      - name: sql-data-volume
+        persistentVolumeClaim:
+          claimName: rvrental-db-pvc

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapi
+  labels:
+    app: rv-webapi
+    tier: webapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: webapi
+  template:
+    metadata:
+      labels:
+        tier: webapi
+    spec:
+      containers:
+      - name: rv-webapi-1
+        image: guose79/webapi:github
+        env:
+        - name: SQL_SERVER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password-secret
+              key: SA_PASSWORD
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rv-webapi
+  name: webapi
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "http"
+    port: 5000
+    targetPort: 5000
+    nodePort: 30002
+  selector:
+    app: rv-webapi

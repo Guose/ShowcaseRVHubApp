@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios'
-import './form.css'
+import './css/form.css'
 
 function Form() {
     let isSuccess = false

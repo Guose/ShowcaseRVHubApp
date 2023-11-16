@@ -6,4 +6,3 @@ data:
   connectionstring1: Data Source=sql-server;Initial Catalog=ShowcaseRVHubDB;Persist Security Info=True;User ID=sa;Password=5p3ctrum!;Encrypt=False;
   connectionstring2: Data Source=localhost,1433;Initial Catalog=ShowcaseRVHubDB;Persist Security Info=True;User ID=sa;Password=5p3ctrum!;Encrypt=False;
   connectionstring3: Data Source=ShowcaseRVHub_2.db
-  dockerContainerTag: b5a1ea4aba2480152a90d5b1fd46a5c354e7dcf2

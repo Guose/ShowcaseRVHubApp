@@ -22,7 +22,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
       -
         name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -33,106 +33,41 @@ jobs:
         name: Build and Push SQL Server
         working-directory: ./sql-scripts
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/sql-server:$GITHUB_SHA .
-          docker push ${{ secrets.DOCKER_USERNAME }}/sql-server:$GITHUB_SHA
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/sql-server:github .
+          docker push ${{ secrets.DOCKER_USERNAME }}/sql-server:github
       -
         name: Build and Push Email Service
         working-directory: ./ShowcaseRVHub.Email
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/email:$GITHUB_SHA .
-          docker push ${{ secrets.DOCKER_USERNAME }}/email:$GITHUB_SHA
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/email:github .
+          docker push ${{ secrets.DOCKER_USERNAME }}/email:github
 
       -
         name: Build and Push React App
         working-directory: ./ShowcaseRVHub.React/rv-email-service
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/react:$GITHUB_SHA .
-          docker push ${{ secrets.DOCKER_USERNAME }}/react:$GITHUB_SHA
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/react:github .
+          docker push ${{ secrets.DOCKER_USERNAME }}/react:github
 
       -
         name: Build and Push Express.js Server
         working-directory: ./ShowcaseRVHub.React/server
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/express:$GITHUB_SHA .
-          docker push ${{ secrets.DOCKER_USERNAME }}/express:$GITHUB_SHA
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/express:github .
+          docker push ${{ secrets.DOCKER_USERNAME }}/express:github
 
       -
         name: Build and Push WebApi Service
         working-directory: ./ShowcaseRVHub.WebApi
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/webapi:$GITHUB_SHA .
-          docker push ${{ secrets.DOCKER_USERNAME }}/webapi:$GITHUB_SHA
-      -
-        name: Update Kubernetes ConfigMaps
-        run: |
-          $content = Get-Content -Path 02-configmaps.yaml
-          $content = $content -replace 'dockerContainerTag: .*', "dockerContainerTag: $env:GITHUB_SHA"
-          $content | Set-Content -Path 02-configmaps.yaml
-        shell: pwsh
-        working-directory: ./k8s-config
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/webapi:github .
+          docker push ${{ secrets.DOCKER_USERNAME }}/webapi:github
+
       - 
-        name: Check Permissions
-        run: ls -la ./k8s-config
-      -
-        name: Set Kubeconfig Context
-        working-directory: ./k8s-config
-        run: |
-          echo "==== Set kubeconfig cluster, server, & certificate autority ===="
-          kubectl config --kubeconfig=kubeconfig.yaml set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:8888 --certificate-authority=my-cert.crt --embed-certs=true
-          echo "==== Set kubeconfig user credentials, cert & key ===="
-          kubectl config --kubeconfig=kubeconfig.yaml set-credentials guose79 --client-certificate=my-cert.crt --client-key=my-cert.key
-          echo "==== Set kubeconfig cluster, user & namespace ===="
-          kubectl config --kubeconfig=kubeconfig.yaml set-context showcase-rv-hub-dev --cluster=showcase-rv-hub-cluster --user=guose79 --namespace=showcase-rv-hub
-          echo "==== use context showcase-rv-hub-dev ===="
-          kubectl config --kubeconfig=kubeconfig.yaml use-context showcase-rv-hub-dev
-          echo "==== Get contexts ===="
-          kubectl config --kubeconfig=kubeconfig.yaml get-contexts   
-          
-      - 
-        name: Check API Server Status
-        run: kubectl get componentstatuses -n kube-system
-      - 
-        name: Check kubeconfig
-        run: kubectl config view --minify --flatten
-      - 
-        name: Run kubectl with API Server URL
-        run: kubectl get pods --server=https://127.0.0.1:8888 -n showcase-rv-hub
-      - 
-        name: Print API Server Logs
-        run: kubectl logs -n kube-system -l component=kube-apiserver
-      -
-        name: Debug Networking
-        run: |
-          ss -tulwn
-          netstat -tuln          
-          kubectl port-forward --address 0.0.0.0 svc/kubernetes-dashboard 8888:80 -n showcase-rv-hub &
-          sleep 5
-          wget -O- http://localhost:8888/api/v1
-      -
-        name: Debug DNS Resolution
-        run: cat /etc/resolv.conf
-      - 
-        name: Debug Kubernetes Configuration
-        run: |
-          cd ${{ github.workspace }}/k8s-config
-          cat kubeconfig.yaml
-          echo "==== kubectl config view ===="
-          kubectl config view --kubeconfig=./k8s-config/kubeconfig.yaml
-          echo "==== kubectl cluster-info ===="
-          kubectl --kubeconfig=./k8s-config/kubeconfig.yaml cluster-info
-          echo "==== kubectl version ===="
-          kubectl version
-      - 
-        name: Print API Server Logs
-        run: kubectl logs -n kube-system -l component=kube-apiserver
-      - 
-        name: Print Kubeconfig
-        run: cat $HOME/.kube/config
-      - 
-        name: Debug Secrets
-        run: |
-          echo "TLS_CERTIFICATE length: ${#TLS_CERTIFICATE}"
-          echo "TLS_PRIVATE_KEY length: ${#TLS_PRIVATE_KEY}"
+        name: Set up kubectl
+        uses: azure/k8s-set-context@v1
+        with:
+          kubeconfig: ${{ secrets.KUBECONFIG }}
       -
         name: Deploy to Kubernetes
         run: |

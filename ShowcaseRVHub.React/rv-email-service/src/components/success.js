@@ -1,5 +1,5 @@
 import React from 'react'
-import './success.css'
+import './css/success.css'
 
 const Success = () => {
 

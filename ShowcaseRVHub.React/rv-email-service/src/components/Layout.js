@@ -1,4 +1,4 @@
-import './layout.css';
+import './css/layout.css';
 import logo from './Showcase RV Hub.png'
 import logo2 from './Showcase RV Hub.webp'
 import Form from './Form';
@@ -22,7 +22,9 @@ function Layout() {
       </div>   
       <footer className='footer'>
         <p> Powered by{' '} Showcase RV Hub </p>
-        <img src={logo} alt="Showcase" className="footlogo" />
+        <a href='https://www.showcaservhub.com' target='_blank' rel='noreferrer'>
+          <img  src={logo} alt="Showcase" className="footlogo" />
+        </a>
       </footer>
     </div>
   </>
