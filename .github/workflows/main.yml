@@ -86,10 +86,20 @@ jobs:
           echo "==== use context showcase-rv-hub-dev ===="
           kubectl config --kubeconfig=kubeconfig.yaml use-context showcase-rv-hub-dev
           echo "==== Get contexts ===="
-          kubectl config --kubeconfig=kubeconfig.yaml get-contexts          
+          kubectl config --kubeconfig=kubeconfig.yaml get-contexts   
+          
+      - 
+        name: Check API Server Status
+        run: kubectl get componentstatuses -n kube-system
+      - 
+        name: Check kubeconfig
+        run: kubectl config view --minify --flatten
       - 
         name: Run kubectl with API Server URL
-        run: kubectl get pods --kubeconfig=./k8s-config/kubeconfig.yaml --server=https://127.0.0.1:64163 -n showcase-rv-hub              
+        run: kubectl get pods --server=https://127.0.0.1:64163 -n showcase-rv-hub
+      - 
+        name: Print API Server Logs
+        run: kubectl logs -n kube-system -l component=kube-apiserver
       -
         name: Debug Networking
         run: |
