@@ -78,7 +78,7 @@ jobs:
         working-directory: ./k8s-config
         run: |
           echo "==== Set kubeconfig cluster, server, & certificate autority ===="
-          kubectl config --kubeconfig=kubeconfig.yaml set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:64163 --certificate-authority=my-cert.crt --embed-certs=true
+          kubectl config --kubeconfig=kubeconfig.yaml set-cluster showcase-rv-hub-cluster --server=https://127.0.0.1:8888 --certificate-authority=my-cert.crt --embed-certs=true
           echo "==== Set kubeconfig user credentials, cert & key ===="
           kubectl config --kubeconfig=kubeconfig.yaml set-credentials guose79 --client-certificate=my-cert.crt --client-key=my-cert.key
           echo "==== Set kubeconfig cluster, user & namespace ===="
@@ -96,7 +96,7 @@ jobs:
         run: kubectl config view --minify --flatten
       - 
         name: Run kubectl with API Server URL
-        run: kubectl get pods --server=https://127.0.0.1:64163 -n showcase-rv-hub
+        run: kubectl get pods --server=https://127.0.0.1:8888 -n showcase-rv-hub
       - 
         name: Print API Server Logs
         run: kubectl logs -n kube-system -l component=kube-apiserver
