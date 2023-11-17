@@ -72,6 +72,7 @@ jobs:
         name: Deploy to Kubernetes
         run: |
           kubectl config use-context minikube
+          echo ${{ secrets.KUBECONFIG }}
           kubectl version
           kubectl apply -k k8s-config
         working-directory: ./k8s-config
