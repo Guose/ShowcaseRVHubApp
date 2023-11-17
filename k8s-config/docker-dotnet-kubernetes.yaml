@@ -41,22 +41,7 @@ spec:
   tls:
   - hosts:
     - hub.showcaserv.com
-    secretName: my-tls-secret # Reference your TLS secret here
-
-
-# PersistentVolume (PV) for SQL Server data.
-# ---
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: rvrental-db-pv
-# spec:
-#   capacity:
-#     storage: 10Gi
-#   accessModes:
-#   - ReadWriteOnce
-#   hostPath:
-#     path: /data/rvrental-db-data
+    secretName: my-tls-secret
 
 # Resource quotas for the Kubernetes cluster.
 ---
