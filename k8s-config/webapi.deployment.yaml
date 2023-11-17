@@ -32,7 +32,8 @@ kind: Service
 metadata:
   labels:
     app: rv-webapi
-  name: webapi
+    tier: webapi
+  name: webapi-service
 spec:
   type: LoadBalancer
   ports:
@@ -41,4 +42,4 @@ spec:
     targetPort: 5000
     nodePort: 30002
   selector:
-    app: rv-webapi
+    tier: rv-webapi

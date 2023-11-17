@@ -1,37 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: email
   labels:
-    app: email
-  name: email-deployment
+    app: rv-email
+    tier: email
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: email
+      tier: email
   template:
     metadata:
       labels:
-        app: email
+        tier: email
     spec:
       containers:
-      - name: showcaservhubapp-email-1
-        image: guose79/email:${{ env.CONTAINER_TAG }}
+      - name: rv-email-1
+        image: guose79/email:github
         ports:
         - containerPort: 6000
-        env:
-        - name: CONTAINER_TAG
-          valueFrom:
-            configMapKeyRef:
-              name: configmaps
-              key: dockerContainerTag
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: email
   name: email-service
+  labels:
+    app: rv-email
+    tier: email
 spec:
   type: LoadBalancer
   ports:
@@ -40,4 +36,4 @@ spec:
     targetPort: 6000
     nodePort: 30003
   selector:
-    app: email
+    tier: email
