@@ -21,8 +21,8 @@ jobs:
         options: --name sql-server
     steps:
       -
-        name: Checkout
-        uses: actions/checkout@v2
+        name: Checkout Repository
+        uses: actions/checkout@v3
       -
         name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -62,20 +62,23 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/webapi:github .
           docker push ${{ secrets.DOCKER_USERNAME }}/webapi:github
-
+          
+      - name: Set up Kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+          sudo mv kustomize /usr/local/bin/
       - 
         name: Set up kubectl
-        uses: azure/k8s-set-context@v1
+        uses: azure/k8s-set-context@v3.0
         with:
+          method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
       -
         name: Deploy to Kubernetes
         run: |
-          kubectl config use-context minikube
-          echo ${{ secrets.KUBECONFIG }}
-          kubectl version
-          kubectl apply -k k8s-config
-        working-directory: ./k8s-config
+          kubectl confgi set-context showcase-rv-hub
+          kubectl config use-context showcase-rv-hub
+          kustomize build ./k8s-config/ | kubectl apply -f -
         
         env:
           KUBECONFIG: ${{ github.workspace }}/k8s-config/kubeconfig.yaml

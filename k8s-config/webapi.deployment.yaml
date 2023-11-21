@@ -40,6 +40,5 @@ spec:
   - name: "http"
     port: 5000
     targetPort: 5000
-    nodePort: 30002
   selector:
     tier: rv-webapi

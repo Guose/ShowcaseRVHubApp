@@ -43,36 +43,36 @@ spec:
     - hub.showcaserv.com
     secretName: my-tls-secret
 
-# # Resource quotas for the Kubernetes cluster.
-# apiVersion: v1
-# kind: ResourceQuota
-# metadata:
-#   name: my-resource-limits
-# spec:
-#   hard:
-#     pods: "50" # Limit to 50 pods in total
-#     requests.cpu: "10" # Each pod can use up to 10 CPU units
-#     requests.memory: 10Gi
+# Resource quotas for the Kubernetes cluster.
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: my-resource-limits
+spec:
+  hard:
+    pods: "50" # Limit to 50 pods in total
+    requests.cpu: "10" # Each pod can use up to 10 CPU units
+    requests.memory: 10Gi
 
-# # Network policies to control communication between pods.
-# apiVersion: networking.k8s.io/v1
-# kind: NetworkPolicy
-# metadata:
-#   name: express-communication
-# spec:
-#   podSelector:
-#     matchLabels:
-#       app: express
-#   ingress:
-#   - from:
-#     - podSelector:
-#         matchLabels:
-#           app: react
-#     - podSelector:
-#         matchLabels:
-#           app: webapi
-#   egress:
-#   - to:
-#     - podSelector:
-#         matchLabels:
-#           role: external-service
+# Network policies to control communication between pods.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: express-communication
+spec:
+  podSelector:
+    matchLabels:
+      app: express
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: react
+    - podSelector:
+        matchLabels:
+          app: webapi
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          role: external-service

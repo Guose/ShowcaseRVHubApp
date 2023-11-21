@@ -6,6 +6,7 @@ resources:
 - configmaps.yaml
 - secrets.yaml
 - sql-server-persistent-volume.yaml
+- docker-dotnet-kubernetes.yaml
 - sql-server.deployment.yaml
 - email.deployment.yaml
 - webapi.deployment.yaml

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-mappings
+data:
+  connectionstring1: Data Source=sql-server;Initial Catalog=ShowcaseRVHubDB;Persist Security Info=True;User ID=sa;Password=5p3ctrum!;Encrypt=False;
+  connectionstring2: Data Source=localhost,1433;Initial Catalog=ShowcaseRVHubDB;Persist Security Info=True;User ID=sa;Password=5p3ctrum!;Encrypt=False;
+  connectionstring3: Data Source=ShowcaseRVHub_2.db
