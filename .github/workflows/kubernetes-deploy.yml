@@ -76,11 +76,22 @@ jobs:
       -
         name: Deploy to Kubernetes
         run: |
-          kubectl config set-context showcase-rv-hub
-          kubectl config use-context showcase-rv-hub
           minikube start
           minikube ip
-          kustomize build ./k8s-config/ | kubectl apply -f -
+          kubectl config set-context showcase-rv-hub
+          kubectl config use-context showcase-rv-hub
+          kubectl apply -f ./namespace.yaml
+          kubectl apply -f ./configmaps.yaml
+          kubectl apply -f ./secrets.yaml
+          kubectl apply -f ./sql-server-persistent-volume.yaml
+          kubectl apply -f ./sql-server.deployment.yaml
+          kubectl apply -f ./email.deployment.yaml
+          kubectl apply -f ./webapi.deployment.yaml
+          kubectl apply -f ./express.deployment.yaml
+          kubectl apply -f ./react.deployment.yaml
+          kubectl apply -f ./tls.secret.yaml
+
+        #  kustomize build ./k8s-config/ | kubectl apply -f .
         
         env:
           KUBECONFIG: ${{ github.workspace }}/k8s-config/kubeconfig.yaml
