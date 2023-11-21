@@ -78,6 +78,7 @@ jobs:
         run: |
           kubectl config set-context showcase-rv-hub
           kubectl config use-context showcase-rv-hub
+          minikube start
           minikube ip
           kustomize build ./k8s-config/ | kubectl apply -f -
         
