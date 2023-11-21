@@ -76,7 +76,7 @@ jobs:
       -
         name: Deploy to Kubernetes
         run: |
-          kubectl confgi set-context showcase-rv-hub
+          kubectl config set-context showcase-rv-hub
           kubectl config use-context showcase-rv-hub
           kustomize build ./k8s-config/ | kubectl apply -f -
         
