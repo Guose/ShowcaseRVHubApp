@@ -73,25 +73,20 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      - 
+        name: Configure Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  
+      - 
+        name: Azure AKS Get Credentials
+        run: az aks get-credentials --resource-group rg-DevOps-Pipelines --name showcaseRVHub-cluster
+
       -
         name: Deploy to Kubernetes
-        run: |
-          minikube start
-          minikube ip
-          kubectl config set-context showcase-rv-hub
-          kubectl config use-context showcase-rv-hub
-          kubectl apply -f ./namespace.yaml
-          kubectl apply -f ./configmaps.yaml
-          kubectl apply -f ./secrets.yaml
-          kubectl apply -f ./sql-server-persistent-volume.yaml
-          kubectl apply -f ./sql-server.deployment.yaml
-          kubectl apply -f ./email.deployment.yaml
-          kubectl apply -f ./webapi.deployment.yaml
-          kubectl apply -f ./express.deployment.yaml
-          kubectl apply -f ./react.deployment.yaml
-          kubectl apply -f ./tls.secret.yaml
-
-        #  kustomize build ./k8s-config/ | kubectl apply -f .
+        run: kustomize build ./k8s-config/ | kubectl apply -f .
         
         env:
           KUBECONFIG: ${{ github.workspace }}/k8s-config/kubeconfig.yaml
