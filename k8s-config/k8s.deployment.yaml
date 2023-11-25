@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: showcaseRVHub
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: showcaseRVHub
+  template:
+    metadata:
+      labels:
+        app: showcaseRVHub
+    spec:
+      containers:
+      - name: webapi
+        image: ${{ secrets.DOCKER_USERNAME }}/webapi:github
+        ports:
+        - containerPort: 5000
+      - name: express
+        image: ${{ secrets.DOCKER_USERNAME }}/express:github
+        ports:
+        - containerPort: 3001
+      - name: react
+        image: ${{ secrets.DOCKER_USERNAME }}/react:github
+        ports:
+        - containerPort: 3000
+      - name: email
+        image: ${{ secrets.DOCKER_USERNAME }}/email:github
+        ports:
+        - containerPort: 6000

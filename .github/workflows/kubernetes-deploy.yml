@@ -62,36 +62,7 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/webapi:github .
           docker push ${{ secrets.DOCKER_USERNAME }}/webapi:github
-          
-      - name: Set up Kustomize
-        run: |
-          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-          sudo mv kustomize /usr/local/bin/
-      - 
-        name: Set up kubectl
-        uses: azure/k8s-set-context@v3.0
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
-
-      - 
-        name: Configure Azure CLI
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-  
-      - 
-        name: Azure AKS Get Credentials
-        run: az aks get-credentials --resource-group rg-DevOps-Pipelines --name showcaseRVHub-cluster
 
       -
-        name: Deploy to Kubernetes
-        run: kustomize build ./k8s-config/ | kubectl apply -f .
-        
-        env:
-          KUBECONFIG: ${{ github.workspace }}/k8s-config/kubeconfig.yaml
-          TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
-          TLS_PRIVATE_KEY: ${{ secrets.TLS_PRIVATE_KEY }}
-      -
-        name: Debug Kubeconfig After
-        run: kubectl config --kubeconfig=./k8s-config/kubeconfig.yaml view
+        name: Deploy to AKS
+        run: kubectl apply -f ./k8s-config/k8s.deployment.yaml
