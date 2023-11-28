@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: showcaseRVHub
+  name: showcase-rv-hub
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: showcaseRVHub
+      app: showcase-rv-hub
   template:
     metadata:
       labels:
-        app: showcaseRVHub
+        app: showcase-rv-hub
     spec:
       containers:
       - name: webapi
@@ -29,3 +29,7 @@ spec:
         image: ${{ secrets.DOCKER_USERNAME }}/email:github
         ports:
         - containerPort: 6000
+      - name: sql-server
+        image: ${{ secrets.DOCKER_USERNAME }}/sql-server:github
+        ports:
+        - containerPort: 1433

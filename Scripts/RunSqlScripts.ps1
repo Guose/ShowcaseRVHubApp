@@ -1,5 +1,6 @@
 # Define the container id
-$containerId = $env:CONTAINER_ID
+#$containerId = $env:CONTAINER_ID
+$containerId = "861d0d9bbfef"
 
 # Define the paths to your .sql scripts
 $scriptPaths = @(
