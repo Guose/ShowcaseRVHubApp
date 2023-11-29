@@ -69,7 +69,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           cluster-name: showcaseRVHub-cluster
-          resource-group: MC_rg-DevOps-Pipelines_showcaseRVHub-cluster_westus2
+          resource-group: rg-DevOps-Pipelines
 
       -
         name: Deploy to AKS
