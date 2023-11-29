@@ -8,17 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # services:
-    #   sql-server:
-    #     image: mcr.microsoft.com/mssql/server:latest
-    #     env:
-    #       SA_PASSWORD: "5p3ctrum!"
-    #       ACCEPT_EULA: "Y"
-    #     ports:
-    #       - "1433:1433"
-    #     volumes:
-    #       - ./sql-scripts:/docker-entrypoint-initdb.d
-    #     options: --name sql-server
     steps:
       -
         name: Checkout Repository
@@ -76,3 +65,15 @@ jobs:
         run: |
           kubectl config current-context
           kubectl apply -f ./k8s-config/kubeconfig.yaml --server=showcaserv-rg-devops-pipeli-750501-srcaa6ih.hcp.westus2.azmk8s.io
+
+        # services:
+          #   sql-server:
+          #     image: mcr.microsoft.com/mssql/server:latest
+          #     env:
+          #       SA_PASSWORD: "5p3ctrum!"
+          #       ACCEPT_EULA: "Y"
+          #     ports:
+          #       - "1433:1433"
+          #     volumes:
+          #       - ./sql-scripts:/docker-entrypoint-initdb.d
+          #     options: --name sql-server
