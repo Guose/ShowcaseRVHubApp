@@ -60,9 +60,9 @@ jobs:
           kubectl config view
           kubectl cluster-info
 
-      - name: Set AKS Context
-        run: |
-          az aks get-credentials --resource-group rg-DevOps-Pipelines --name showcaseRVHub-cluster
+      # - name: Set AKS Context
+      #   run: |
+      #     az aks get-credentials --resource-group rg-DevOps-Pipelines --name showcaseRVHub-cluster
 
       - name: Debug Environment
         run: |
