@@ -84,11 +84,12 @@ jobs:
       - name: Deploy to AKS
         run: |          
           kubectl config current-context
-          for i in {1..3}; do
-            kubectl config set-credentials clusterAdmin_rg-DevOps-Pipelines_showcaseRVHub-cluster --token="${{ secrets.AZURE_CLIENT_SECRET }}" || exit 1
-            kubectl apply -f ./k8s-config/kubeconfig.yaml --server=${{ secrets.AKS_CLUSTER_ENDPOINT }} --username clusterAdmin_rg-DevOps-Pipelines_showcaseRVHub-cluster --password "${{ secrets.AZURE_CLIENT_SECRET }}" || exit 1
-            sleep 15
-          done
+
+          kubectl config set-cluster showcaseRVHub-cluster --server=${{ secrets.AKS_CLUSTER_ENDPOINT }} --insecure-skip-tls-verify=true || exit 1
+          kubectl config set-context showcaseRVHub-cluster --cluster=showcaseRVHub-cluster --user=clusterAdmin_rg-DevOps-Pipelines_showcaseRVHub-cluster || exit 1
+          kubectl config use-context showcaseRVHub-cluster || exit 1
+
+          kubectl apply -f ./k8s-config/kubeconfig.yaml || exit 1
 
         # services:
           #   sql-server:
