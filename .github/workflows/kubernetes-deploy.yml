@@ -60,9 +60,9 @@ jobs:
           kubectl config view
           kubectl cluster-info
 
-      # - name: Set AKS Context
-      #   run: |
-      #     az aks get-credentials --resource-group rg-DevOps-Pipelines --name showcaseRVHub-cluster
+      - name: Test AKS cluster reachability
+        run: |
+          az aks get-credentials --resource-group rg-DevOps-Pipelines --name showcaseRVHub-cluster
 
       - name: Debug Environment
         run: |
@@ -78,13 +78,15 @@ jobs:
           ip route
           sudo apt install traceroute
           sudo apt install inetutils-traceroute
-          traceroute showcaserv-rg-devops-pipeli-750501-srcaa6ih.hcp.westus2.azmk8s.io
-        
+          traceroute showcaserv-rg-devops-pipeli-750501-srcaa6ih.hcp.westus2.azmk8s.io        
         
       - name: Deploy to AKS
-        run: |
+        run: |          
           kubectl config current-context
-          kubectl apply -f ./k8s-config/kubeconfig.yaml --server=showcaserv-rg-devops-pipeli-750501-srcaa6ih.hcp.westus2.azmk8s.io
+          for i in {1..3}; do
+            kubectl apply -f ./k8s-config/kubeconfig.yaml --server=showcaserv-rg-devops-pipeli-750501-srcaa6ih.hcp.westus2.azmk8s.io
+            sleep 15
+          done
 
         # services:
           #   sql-server:
