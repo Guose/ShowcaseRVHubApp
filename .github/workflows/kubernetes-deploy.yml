@@ -62,6 +62,7 @@ jobs:
 
       - name: Test AKS cluster reachability
         run: |
+          az login
           az aks get-credentials --resource-group rg-DevOps-Pipelines --name showcaseRVHub-cluster
 
       - name: Debug Environment
