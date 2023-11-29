@@ -76,6 +76,8 @@ jobs:
       - name: Debug Networking
         run: |
           ip route
+          sudo apt install traceroute
+          sudo apt install inetutils-traceroute
           traceroute showcaserv-rg-devops-pipeli-750501-srcaa6ih.hcp.westus2.azmk8s.io
         
         
