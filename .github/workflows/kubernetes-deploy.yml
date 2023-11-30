@@ -47,11 +47,17 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/webapi:github .
           docker push ${{ secrets.DOCKER_USERNAME }}/webapi:github
-
-      - name: Authenticate with AKS
-        uses: azure/aks-set-context@v1
+          
+      - name: Azure Authentication
+        uses: azure/login@v1
         with:
-          creds: ${{ toJson(secrets.AZURE_CREDENTIALS) }}
+            client-id: ${{ secrets.AZURE_CLIENT_ID }}
+            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+            
+      - name: AKS Credentials
+        uses: azure/aks-set-context@v3
+        with:
           cluster-name: showcaseRVHub-cluster
           resource-group: rg-DevOps-Pipelines
 
