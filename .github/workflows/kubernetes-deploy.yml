@@ -51,7 +51,7 @@ jobs:
       - name: Authenticate with AKS
         uses: azure/aks-set-context@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ toJson(secrets.AZURE_CREDENTIALS) }}
           cluster-name: showcaseRVHub-cluster
           resource-group: rg-DevOps-Pipelines
 
