@@ -85,7 +85,7 @@ jobs:
       - name: Deploy to AKS
         run: |          
           kubectl config current-context
-
+          kubectl version --client
           kubectl config set-cluster showcaseRVHub-cluster --server=${{ secrets.AKS_CLUSTER_ENDPOINT }} --kubeconfig=$KUBECONFIG || exit 1
           kubectl config set-context showcaseRVHub-cluster --cluster=showcaseRVHub-cluster --user=clusterAdmin_rg-DevOps-Pipelines_showcaseRVHub-cluster --kubeconfig=$KUBECONFIG || exit 1
           kubectl config use-context showcaseRVHub-cluster || exit 1
