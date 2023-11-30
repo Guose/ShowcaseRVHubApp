@@ -48,12 +48,12 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/webapi:github .
           docker push ${{ secrets.DOCKER_USERNAME }}/webapi:github
 
-      - name: Authenticate with AKS
-        uses: azure/aks-set-context@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          cluster-name: showcaseRVHub-cluster
-          resource-group: rg-DevOps-Pipelines
+      # - name: Authenticate with AKS
+      #   uses: azure/aks-set-context@v1
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+      #     cluster-name: showcaseRVHub-cluster
+      #     resource-group: rg-DevOps-Pipelines
 
       - name: Debug Info
         run: |
