@@ -83,26 +83,18 @@ jobs:
           kubectl config set-cluster showcaseRVHub-cluster --server=${{ secrets.AKS_CLUSTER_ENDPOINT }} --kubeconfig=$KUBECONFIG || exit 1
           kubectl config set-context showcaseRVHub-cluster --cluster=showcaseRVHub-cluster --user=clusterAdmin_rg-DevOps-Pipelines_showcaseRVHub-cluster --kubeconfig=$KUBECONFIG || exit 1
           kubectl config use-context showcaseRVHub-cluster || exit 1
-
-          kubectl apply --dry-run=client -f ./k8s-config/namespace/*.yaml --kubeconfig=$KUBECONFIG || exit 1
-          kubectl apply --dry-run=client -f ./k8s-config/configmaps/*.yaml --kubeconfig=$KUBECONFIG || exit 2
-          kubectl apply --dry-run=client -f ./k8s-config/volumes/*.yaml --kubeconfig=$KUBECONFIG || exit 3
-          kubectl apply --dry-run=client -f ./k8s-config/deployments/*.yaml --kubeconfig=$KUBECONFIG || 4
-          kubectl apply --dry-run=client -f ./k8s-config/ingress/*.yaml --kubeconfig=$KUBECONFIG || 5
-          kubectl apply --dry-run=client -f ./k8s-config/services/*.yaml --kubeconfig=$KUBECONFIG || 6
-          kubectl apply --dry-run=client -f ./k8s-config/secrets/*.yaml --kubeconfig=$KUBECONFIG || 7
-          kubectl apply --dry-run=client -f ./k8s-config/kubeconfig.yaml --kubeconfig=$KUBECONFIG || 8
           
-          kubectl apply -f ./k8s-config/namespace/*.yaml --kubeconfig=$KUBECONFIG || exit 1
-          kubectl apply -f ./k8s-config/configmaps/*.yaml --kubeconfig=$KUBECONFIG || exit 2
-          kubectl apply -f ./k8s-config/volumes/*.yaml --kubeconfig=$KUBECONFIG || exit 3
-          kubectl apply -f ./k8s-config/secrets/*.yaml --kubeconfig=$KUBECONFIG || exit 4
+          kubectl apply -f ./k8s-config/namespace/namespace.yaml --kubeconfig=$KUBECONFIG || exit 1
+          kubectl apply -f ./k8s-config/configmaps/configmaps.yaml --kubeconfig=$KUBECONFIG || exit 2
+          kubectl apply -f ./k8s-config/volumes/sql-server-persistent-volume.yaml --kubeconfig=$KUBECONFIG || exit 3
+          kubectl apply -f ./k8s-config/secrets/secrets.yaml --kubeconfig=$KUBECONFIG || exit 4
+          kubectl apply -f ./k8s-config/secrets/tls-secret.yaml --kubeconfig=$KUBECONFIG || exit 4
           kubectl apply -f ./k8s-config/deployments/email.deployment.yaml --kubeconfig=$KUBECONFIG || exit 5
           kubectl apply -f ./k8s-config/deployments/express.deployment.yaml --kubeconfig=$KUBECONFIG || exit 6
           kubectl apply -f ./k8s-config/deployments/react.deployment.yaml --kubeconfig=$KUBECONFIG || exit 7
           kubectl apply -f ./k8s-config/deployments/sql-server.deployment.yaml --kubeconfig=$KUBECONFIG || exit 8
           kubectl apply -f ./k8s-config/deployments/webapi.deployment.yaml --kubeconfig=$KUBECONFIG || exit 9
-          kubectl apply -f ./k8s-config/ingress/*.yaml --kubeconfig=$KUBECONFIG || exit 10
+          kubectl apply -f ./k8s-config/ingress/ingress.yaml --kubeconfig=$KUBECONFIG || exit 10
           kubectl apply -f ./k8s-config/services/webapi.service.yaml --kubeconfig=$KUBECONFIG || exit 11
           kubectl apply -f ./k8s-config/services/react.service.yaml --kubeconfig=$KUBECONFIG || exit 12
           kubectl apply -f ./k8s-config/services/express.service.yaml --kubeconfig=$KUBECONFIG || exit 13
