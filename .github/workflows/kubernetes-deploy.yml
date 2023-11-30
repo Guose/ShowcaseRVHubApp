@@ -62,7 +62,7 @@ jobs:
       - name: Debug Info
         run: |
           kubectl config view --kubeconfig=$KUBECONFIG
-          kubectl version --client --short
+          kubectl version --client
           kubectl cluster-info --kubeconfig=$KUBECONFIG
         
       - name: Print Kubeconfig
