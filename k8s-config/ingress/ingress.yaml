@@ -1,6 +1,7 @@
 # Ingress configurations for routing to different services.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+namespace: showcase-rv-hub
 metadata:
   name: showcase-ingress
   annotations:

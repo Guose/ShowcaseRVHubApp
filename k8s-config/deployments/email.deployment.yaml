@@ -1,4 +1,5 @@
 apiVersion: apps/v1
+namespace: showcase-rv-hub
 kind: Deployment
 metadata:
   name: email
