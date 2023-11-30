@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
-namespace: showcase-rv-hub
 metadata:
   name: sql-mapping
+  namespace: showcase-rv-hub
 data:
   connectionstring1: Data Source=sql-server;Initial Catalog=ShowcaseRVHubDB;Persist Security Info=True;User ID=sa;Password=5p3ctrum!;Encrypt=False;

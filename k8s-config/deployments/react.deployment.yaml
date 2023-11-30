@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
-namespace: showcase-rv-hub
 metadata:
   name: react
+  namespace: showcase-rv-hub
   labels:
     app: rv-react
     tier: react
@@ -17,7 +17,7 @@ spec:
         tier: react
     spec:
       containers:
-      - name: rv-react-1
+      - name: rv-react
         image: guose79/react:github
         ports:
         - containerPort: 3000

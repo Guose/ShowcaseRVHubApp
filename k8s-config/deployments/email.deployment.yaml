@@ -1,8 +1,8 @@
 apiVersion: apps/v1
-namespace: showcase-rv-hub
 kind: Deployment
 metadata:
   name: email
+  namespace: showcase-rv-hub
   labels:
     app: rv-email
     tier: email
@@ -17,7 +17,7 @@ spec:
         tier: email
     spec:
       containers:
-      - name: rv-email-1
+      - name: rv-email
         image: guose79/email:github
         ports:
         - containerPort: 6000

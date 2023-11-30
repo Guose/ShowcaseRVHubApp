@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
-namespace: showcase-rv-hub
 metadata:
+  name: webapi-service
+  namespace: showcase-rv-hub
   labels:
     app: rv-webapi
     tier: webapi
-  name: webapi-service
 spec:
   type: LoadBalancer
   ports:

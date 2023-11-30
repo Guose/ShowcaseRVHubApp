@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
-namespace: showcase-rv-hub
 metadata:
+  name: react-service
+  namespace: showcase-rv-hub
   labels:
     app: rv-react
     tier: react
-  name: react-service
 spec:
   type: LoadBalancer
   ports:

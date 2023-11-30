@@ -84,7 +84,7 @@ jobs:
           kubectl config set-context showcaseRVHub-cluster --cluster=showcaseRVHub-cluster --user=clusterAdmin_rg-DevOps-Pipelines_showcaseRVHub-cluster --kubeconfig=$KUBECONFIG || exit 1
           kubectl config use-context showcaseRVHub-cluster || exit 1
           
-          kubectl apply -f ./k8s-config/namespace/namespace.yaml --kubeconfig=$KUBECONFIG || exit 1
+          kubectl apply -f ./k8s-config/namespace/namespace.yaml --kubeconfig=$KUBECONFIG || exit 51
           kubectl apply -f ./k8s-config/configmaps/configmaps.yaml --kubeconfig=$KUBECONFIG || exit 2
           kubectl apply -f ./k8s-config/volumes/sql-server-persistent-volume.yaml --kubeconfig=$KUBECONFIG || exit 3
           kubectl apply -f ./k8s-config/secrets/secrets.yaml --kubeconfig=$KUBECONFIG || exit 4
@@ -100,4 +100,4 @@ jobs:
           kubectl apply -f ./k8s-config/services/express.service.yaml --kubeconfig=$KUBECONFIG || exit 13
           kubectl apply -f ./k8s-config/services/email.service.yaml --kubeconfig=$KUBECONFIG || exit 14
           
-          kubectl apply -f ./k8s-config/kubeconfig.yaml --kubeconfig=$KUBECONFIG || exit 1
+          kubectl apply -f ./k8s-config/kubeconfig.yaml --kubeconfig=$KUBECONFIG || exit 31
