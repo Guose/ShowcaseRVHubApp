@@ -26,9 +26,9 @@ spec:
               key: password
         - name: ACCEPT_EULA
           value: "Y"
-        command: ["pwsh", "/Scripts/RunSqlScripts.ps1"]
+        # command: ["pwsh", "/Scripts/RunSqlScripts.ps1"]
       containers:
-      - name: rv-sql-server-1
+      - name: sql-server
         image: guose79/sql-server:github
         env:
         - name: SA_PASSWORD
@@ -40,10 +40,17 @@ spec:
           value: "Y"
         ports:
         - containerPort: 1433
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+          requests:
+            cpu: "1"
+            memory: "2Gi"
         volumeMounts:
         - name: sql-data-volume
           mountPath: /var/opt/mssql/data/
       volumes:
       - name: sql-data-volume
         persistentVolumeClaim:
-          claimName: rvrental-db-pvc
+          claimName: rvhub-db-pvc

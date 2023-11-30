@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -59,16 +59,6 @@ jobs:
         run: |
           kubectl config view
           kubectl cluster-info
-
-      # - name: Test AKS cluster reachability
-      #   run: |
-      #     az login
-      #     az aks get-credentials --resource-group rg-DevOps-Pipelines --name showcaseRVHub-cluster
-
-      - name: Debug Environment
-        run: |
-          echo "AZURE_CREDENTIALS: $AZURE_CREDENTIALS"
-          echo "KUBECONFIG: $KUBECONFIG"
         
       - name: Print Kubeconfig
         run: |
@@ -79,26 +69,38 @@ jobs:
           ip route
           sudo apt install traceroute
           sudo apt install inetutils-traceroute
-          traceroute showcaserv-rg-devops-pipeli-750501-srcaa6ih.hcp.westus2.azmk8s.io        
+          traceroute ${{ secrets.AKS_CLUSTER_ENDPOINT }}   
         
       - name: Deploy to AKS
         run: |          
           kubectl config current-context
 
-          kubectl config set-cluster showcaseRVHub-cluster --server=${{ secrets.AKS_CLUSTER_ENDPOINT }} --insecure-skip-tls-verify=true || exit 1
+          kubectl config set-cluster showcaseRVHub-cluster --server=${{ secrets.AKS_CLUSTER_ENDPOINT }} || exit 1
           kubectl config set-context showcaseRVHub-cluster --cluster=showcaseRVHub-cluster --user=clusterAdmin_rg-DevOps-Pipelines_showcaseRVHub-cluster || exit 1
           kubectl config use-context showcaseRVHub-cluster || exit 1
 
+          kubectl apply --dry-run=client -f ./k8s-config/namespace/*.yaml || exit dry-run
+          kubectl apply --dry-run=client -f ./k8s-config/configmaps/*.yaml || exit dry-run
+          kubectl apply --dry-run=client -f ./k8s-config/volumes/*.yaml || exit dry-run
+          kubectl apply --dry-run=client -f ./k8s-config/deployments/*.yaml || exit dry-run
+          kubectl apply --dry-run=client -f ./k8s-config/ingress/*.yaml || exitdry-run
+          kubectl apply --dry-run=client -f ./k8s-config/services/*.yaml || exit dry-run
+          kubectl apply --dry-run=client -f ./k8s-config/secrets/*.yaml || exit dry-run
+          kubectl apply --dry-run=client -f ./k8s-config/kubeconfig.yaml || exit dry-run
+          
+          kubectl apply -f ./k8s-config/namespace/*.yaml || exit namespace
+          kubectl apply -f ./k8s-config/configmaps/*.yaml || exit configmaps
+          kubectl apply -f ./k8s-config/volumes/*.yaml || exit volumes
+          kubectl apply -f ./k8s-config/secrets/*.yaml || exit secrets
+          kubectl apply -f ./k8s-config/deployments/email.deployment.yaml || exit deployment
+          kubectl apply -f ./k8s-config/deployments/express.deployment.yaml || exit deployment
+          kubectl apply -f ./k8s-config/deployments/react.deployment.yaml || exit deployment
+          kubectl apply -f ./k8s-config/deployments/sql-server.deployment.yaml || exit deployment
+          kubectl apply -f ./k8s-config/deployments/webapi.deployment.yaml || exit deployment
+          kubectl apply -f ./k8s-config/ingress/*.yaml || exit ingress
+          kubectl apply -f ./k8s-config/services/webapi.service.yaml || exit service
+          kubectl apply -f ./k8s-config/services/react.service.yaml || exit service
+          kubectl apply -f ./k8s-config/services/express.service.yaml || exit service
+          kubectl apply -f ./k8s-config/services/email.service.yaml || exit service
+          
           kubectl apply -f ./k8s-config/kubeconfig.yaml || exit 1
-
-        # services:
-          #   sql-server:
-          #     image: mcr.microsoft.com/mssql/server:latest
-          #     env:
-          #       SA_PASSWORD: "5p3ctrum!"
-          #       ACCEPT_EULA: "Y"
-          #     ports:
-          #       - "1433:1433"
-          #     volumes:
-          #       - ./sql-scripts:/docker-entrypoint-initdb.d
-          #     options: --name sql-server
