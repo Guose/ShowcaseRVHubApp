@@ -84,7 +84,7 @@ jobs:
         
       - name: Deploy to AKS
         run: |
-          minikube start
+          minikube start --kubernetes-version=v1.27.7
           kubectl config current-context
           kubectl version --client
           kubectl config set-cluster showcaseRVHub-cluster --server=${{ secrets.AKS_CLUSTER_ENDPOINT }} --kubeconfig=$KUBECONFIG || exit 1
