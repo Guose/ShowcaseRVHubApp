@@ -1,11 +1,11 @@
 # Ingress configurations for routing to different services.
-apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: showcase-ingress
   namespace: showcase-rv-hub
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
   - host: showcaserv.com

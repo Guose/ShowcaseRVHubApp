@@ -1,0 +1,21 @@
+# Ingress configurations for routing to different services.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: showcase-ingress-react
+  namespace: showcase-rv-hub
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: showcaserv.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/react"
+        backend:
+          service:
+            name: react-service
+            port:
+              number: 3000

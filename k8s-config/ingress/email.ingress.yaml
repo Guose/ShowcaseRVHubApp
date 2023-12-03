@@ -1,0 +1,21 @@
+# Ingress configurations for routing to different services.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: showcase-ingress-email
+  namespace: showcase-rv-hub
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: showcaserv.com
+    http:
+      paths:
+      - path: /email
+        pathType: Prefix
+        backend:
+          service:
+            name: email-service
+            port:
+              number: 6000
