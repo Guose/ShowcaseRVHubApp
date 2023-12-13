@@ -105,7 +105,7 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     Id = -1,
                     RentalStart = DateTime.Now.AddDays(2),
                     RentalEnd = DateTime.Now.AddDays(9),
-                    //ArrivalId = -1,
+                    ArrivalId = -1,
                     DepartureId = -1,
                     RenterId = -1,
                     VehicleId = -2,
@@ -115,7 +115,7 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     Id = -2,
                     RentalStart = DateTime.Now.AddDays(20),
                     RentalEnd = DateTime.Now.AddDays(25),
-                    //ArrivalId = -2,
+                    ArrivalId = -2,
                     DepartureId = -2,
                     RenterId = -2,
                     VehicleId = -2,
@@ -144,21 +144,117 @@ namespace ShowcaseRVHub.WebApi.Extensions
             return users;
         }
 
+        public static List<Arrival> GetArrivalSeedData()
+        {
+            List<Arrival> arrivals = new()
+            {
+                new Arrival
+                {
+                    Id = -1,
+                    IsExteriorCleaned = true,
+                    IsInteriorCleaned = true,
+                    IsSignalsChecked = true,
+                    IsCheckInComplete = true,
+                    CreatedOn = DateTime.Now,
+                    FuelLevel = LevelType.Full,
+                    BlackWater = LevelType.Empty,
+                    GrayWater = LevelType.Empty,
+                    Propane = LevelType.Full,
+                    UserId = _userId,
+                    RentalId = -1
+                }, 
+                new Arrival
+                {
+                    Id = -2,
+                    IsExteriorCleaned = true,
+                    IsInteriorCleaned = true,
+                    IsSignalsChecked = true,
+                    IsCheckInComplete = true,
+                    CreatedOn = DateTime.Now,
+                    FuelLevel = LevelType.Half,
+                    BlackWater = LevelType.ThreeQuarter,
+                    GrayWater = LevelType.Full,
+                    Propane = LevelType.Empty,
+                    UserId = _userId,
+                    RentalId = -1
+                }
+            };
+
+            return arrivals;
+        }
+
         public static List<Departure> GetDepartureSeedData()
         {
             List<Departure> departures = new()
             {
                 new Departure
                 {
-
-                },
+                    Id = -1,
+                    IsExteriorCleaned = true,
+                    IsInteriorCleaned = true,
+                    IsSignalsChecked = true,
+                    IsRenterTrained = true,
+                    CreatedOn = DateTime.Now,
+                    FuelLevel = LevelType.Full,
+                    BlackWater = LevelType.Empty,
+                    GrayWater = LevelType.Empty,
+                    Propane = LevelType.Full,
+                    UserId = _userId,
+                    RentalId = -1
+                }, 
                 new Departure
                 {
-
+                    Id = -2,
+                    IsExteriorCleaned = true,
+                    IsInteriorCleaned = true,
+                    IsSignalsChecked = true,
+                    IsRenterTrained = true,
+                    CreatedOn = DateTime.Now,
+                    FuelLevel = LevelType.Half,
+                    BlackWater = LevelType.ThreeQuarter,
+                    GrayWater = LevelType.Full,
+                    Propane = LevelType.Empty,
+                    UserId = _userId,
+                    RentalId = -1
                 }
             };
 
             return departures;
+        }
+
+        public static List<RvMaintenance> GetMaintenanceSeedData()
+        {
+            List<RvMaintenance> rvMaintenances = new()
+            {
+                new RvMaintenance
+                {
+                    Id = -1,
+                    IsTireInspected = true,
+                    IsMaintenance = true,
+                    IsFluidChecked = true,
+                    IsSystemsChecked = true,
+                    CreatedOn = DateTime.Now,
+                    MaintenanceStart = DateTime.Now,
+                    MaintenanceEnd = DateTime.Now.AddDays(4),
+                    UserId = _userId,
+                    VehicleId = -1
+                },
+                new RvMaintenance
+                {
+                    Id = -2,
+                    IsTireInspected = true,
+                    IsMaintenance = true,
+                    IsFluidChecked = true,
+                    IsSystemsChecked = true,
+                    CreatedOn = DateTime.Now,
+                    MaintenanceStart = DateTime.Now.AddDays(2),
+                    MaintenanceEnd = DateTime.Now.AddDays(4),
+                    UserId = _userId,
+                    VehicleId = -2
+                }
+            };
+
+            return rvMaintenances;
         }
 
         public static List<ShowcaseRenter> GetRenterSeedData()
