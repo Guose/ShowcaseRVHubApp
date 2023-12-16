@@ -55,7 +55,11 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
         {
             try
             {
-                VehicleRv? vehicle = await Context.VehicleRVs.FirstOrDefaultAsyncEF(v => v.Id == id);
+                VehicleRv? vehicle = await Context.VehicleRVs
+                                                        .Include(u => u.User)
+                                                        .Include(r => r.Rentals)
+                                                        .Include(m => m.RvMaintenances)
+                                                        .FirstOrDefaultAsyncEF(v => v.Id == id);
 
                 if (vehicle == null)
                     return null;
@@ -95,7 +99,11 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
         {
             try
             {
-                IEnumerable<VehicleRv>? vehicles = await Context.VehicleRVs.Include(r => r.Rentals).ToListAsyncEF();
+                IEnumerable<VehicleRv>? vehicles = await Context.VehicleRVs
+                                                                        .Include(r => r.Rentals)
+                                                                        .Include(u => u.User)
+                                                                        .Include(m => m.RvMaintenances)
+                                                                        .ToListAsyncEF();
 
                 if (vehicles == null || !vehicles.Any())
                     return null;

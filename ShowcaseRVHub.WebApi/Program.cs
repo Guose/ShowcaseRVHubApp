@@ -27,8 +27,8 @@ internal class Program
         builder.Services.AddScoped<IDepartureRepo, DepartureRepo>();
         builder.Services.AddScoped<IMaintenance, MaintenanceRepo>();
 
-        //var connectionString = configuration.GetConnectionString("SQLServerLocalhostConnection");
-        var connectionString = configuration.GetConnectionString("SQLServerConnection");
+        var connectionString = configuration.GetConnectionString("SQLServerLocalhostConnection");
+        //var connectionString = configuration.GetConnectionString("SQLServerConnection");
 
         // Add DbContext to the services to the container.
         builder.Services.AddDbContext<ShowcaseDbContext>(options =>
@@ -49,7 +49,11 @@ internal class Program
             s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             s.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
-        }).AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNameCaseInsensitive = true);
+        }).AddJsonOptions(opt =>
+        {
+            opt.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+            opt.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        });
                 
         builder.Services.AddEndpointsApiExplorer();
         var app = builder.Build();
