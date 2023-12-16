@@ -16,8 +16,8 @@ namespace ShowcaseRVHub.WebApi.Models
         public DateTime? ModifiedOn { get; set; }
 
 
-        [JsonIgnore] public ICollection<Rental> Rentals { get; set; }
-        [JsonIgnore] public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
+        public ICollection<Rental> Rentals { get; set; }
+        public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
 
         public ShowcaseRenter()
         {

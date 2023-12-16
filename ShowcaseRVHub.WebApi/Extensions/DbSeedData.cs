@@ -79,7 +79,7 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     GeneratorHours = 72,
                     Odometer = 79362,
                     MasterBedType = BedType.Full,
-                    UserId = _userId,
+                    UserId = _userId2,
                     //User = new ShowcaseUser
                     //{
                     //    Id = _userId,
@@ -138,6 +138,16 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     Password = "pass",
                     Email = "justin@showcasemi.com",
                     IsRemembered = true,
+                },
+                new ShowcaseUser
+                {
+                    Id = _userId2,
+                    FirstName = "Kathleen",
+                    LastName = "Lordan",
+                    Username = "cuggle",
+                    Password = "password",
+                    Email = "cuggle1008@gmail.com",
+                    IsRemembered = false
                 }
             };
 
@@ -175,7 +185,7 @@ namespace ShowcaseRVHub.WebApi.Extensions
                     BlackWater = LevelType.ThreeQuarter,
                     GrayWater = LevelType.Full,
                     Propane = LevelType.Empty,
-                    UserId = _userId,
+                    UserId = _userId2,
                     RentalId = -1
                 }
             };
