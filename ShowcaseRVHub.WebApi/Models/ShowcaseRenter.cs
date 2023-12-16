@@ -17,7 +17,7 @@ namespace ShowcaseRVHub.WebApi.Models
 
 
         public ICollection<Rental> Rentals { get; set; }
-        public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
+        [JsonIgnore] public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
 
         public ShowcaseRenter()
         {
