@@ -2,6 +2,7 @@
 using LinqToDB.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Data.Repositories
@@ -13,14 +14,36 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
         {
             Context = context;
         }
-        public async Task<bool> CreateVehicleRvAsync(VehicleRv rv)
+        public async Task<bool> CreateVehicleRvAsync(VehicleRVDto rv, Guid userId)
         {
             try
             {
                 if (rv == null)
                     return false;
+                
+                VehicleRv? newRv = new VehicleRv
+                {
+                    Make = rv.Make,
+                    Model = rv.Model,
+                    Year = rv.Year,
+                    Chassis = rv.Chassis,
+                    Class = rv.Class,
+                    Sleeps = rv.Sleeps,
+                    Length = rv.Length,
+                    Height = rv.Height,
+                    Image = rv.Image,
+                    Description = rv.Description,
+                    Odometer = rv.Odometer,
+                    GeneratorHours = rv.GeneratorHours,
+                    MasterBedType = rv.MasterBedType,
+                    IsBooked = rv.IsBooked,
+                    HasGenerator = rv.HasGenerator,
+                    HasSlideout = rv.HasSlideout,
+                    CreatedOn = DateTime.Now,
+                    UserId = userId,
+                };
 
-                Context.VehicleRVs.Add(rv);
+                Context.VehicleRVs.Add(newRv);
                 await Context.SaveChangesAsync();
 
                 return true;
@@ -51,15 +74,43 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<VehicleRv?> GetVehicleByIdAsync(int id)
+        public async Task<VehicleRVDto?> GetVehicleByIdAsync(int id)
         {
             try
             {
-                VehicleRv? vehicle = await Context.VehicleRVs
-                                                        .Include(u => u.User)
+                VehicleRVDto? vehicle = await Context.VehicleRVs
                                                         .Include(r => r.Rentals)
                                                         .Include(m => m.RvMaintenances)
-                                                        .FirstOrDefaultAsyncEF(v => v.Id == id);
+                                                        .Select(v => new VehicleRVDto
+                                                        {
+                                                            Id = v.Id,
+                                                            Make = v.Make,
+                                                            Model = v.Model,
+                                                            Year = v.Year,
+                                                            Chassis = v.Chassis,
+                                                            Class = v.Class,
+                                                            Sleeps = v.Sleeps,
+                                                            Length = v.Length,
+                                                            Height = v.Height,
+                                                            Image = v.Image,
+                                                            Description = v.Description,
+                                                            Odometer = v.Odometer,
+                                                            GeneratorHours = v.GeneratorHours,
+                                                            MasterBedType = v.MasterBedType,
+                                                            IsBooked = v.IsBooked,
+                                                            HasSlideout = v.HasSlideout,
+                                                            HasGenerator = v.HasGenerator,
+                                                            CreatedOn = v.CreatedOn,
+                                                            ModifiedOn = v.ModifiedOn,
+                                                            Rentals = v.Rentals!.Select(r => new RentalDto
+                                                            {
+                                                                Id = r.Id,
+                                                            }).ToList(),
+                                                            RvMaintenances = v.RvMaintenances!.Select(m => new RvMaintenanceDto
+                                                            {
+                                                                Id = m.Id,
+                                                            }).ToList()
+                                                        }).FirstOrDefaultAsyncEF(v => v.Id == id);
 
                 if (vehicle == null)
                     return null;
@@ -72,38 +123,43 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<VehicleRv?> GetVehicleWithRentalUserAndRenterAsync(int id, Guid userId)
+        public async Task<IEnumerable<VehicleRVDto>?> GetVehiclesAsync()
         {
             try
             {
-                VehicleRv? vehicle = await Context.VehicleRVs
-                                                        .Include(r => r.Rentals)
-                                                        .Include(u => u.User)
-                                                        .Where(u => u.UserId == userId)
-                                                        .FirstOrDefaultAsyncEF(v => v.Id == id);
-
-                if (vehicle == null)
-                    return null;
-                //else
-                //    vehicle.Rentals = vehicle.Rentals.Where(u => u.UserId == userId).ToList();
-
-                return vehicle;
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-        }
-
-        public async Task<IEnumerable<VehicleRv>?> GetVehiclesAsync()
-        {
-            try
-            {
-                IEnumerable<VehicleRv>? vehicles = await Context.VehicleRVs
+                IEnumerable<VehicleRVDto>? vehicles = await Context.VehicleRVs
                                                                         .Include(r => r.Rentals)
-                                                                        .Include(u => u.User)
                                                                         .Include(m => m.RvMaintenances)
-                                                                        .ToListAsyncEF();
+                                                                        .Select(v => new VehicleRVDto
+                                                                        {
+                                                                            Id = v.Id,
+                                                                            Make = v.Make,
+                                                                            Model = v.Model,
+                                                                            Year = v.Year,
+                                                                            Chassis = v.Chassis,
+                                                                            Class = v.Class,
+                                                                            Sleeps = v.Sleeps,
+                                                                            Length = v.Length,
+                                                                            Height = v.Height,
+                                                                            Image = v.Image,
+                                                                            Description = v.Description,
+                                                                            Odometer = v.Odometer,
+                                                                            GeneratorHours = v.GeneratorHours,
+                                                                            MasterBedType = v.MasterBedType,
+                                                                            IsBooked = v.IsBooked,
+                                                                            HasSlideout = v.HasSlideout,
+                                                                            HasGenerator = v.HasGenerator,
+                                                                            CreatedOn = v.CreatedOn,
+                                                                            ModifiedOn = v.ModifiedOn,
+                                                                            Rentals = v.Rentals!.Select(r => new RentalDto
+                                                                            {
+                                                                                Id = r.Id,
+                                                                            }).ToList(),
+                                                                            RvMaintenances = v.RvMaintenances!.Select(m => new RvMaintenanceDto
+                                                                            {
+                                                                                Id = m.Id,
+                                                                            }).ToList()
+                                                                        }).ToListAsyncEF();
 
                 if (vehicles == null || !vehicles.Any())
                     return null;
@@ -116,7 +172,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<bool> UpdateUserAsync(VehicleRv newRv)
+        public async Task<bool> UpdateUserAsync(VehicleRVDto newRv)
         {
             try
             {
@@ -141,6 +197,29 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             {
                 throw new ArgumentException(ex.Message);
             }
-        }        
+        }    
+
+        public async Task<VehicleRv?> GetVehicleWithRentalUserAndRenterAsync(int id, Guid userId)
+        {
+            try
+            {
+                VehicleRv? vehicle = await Context.VehicleRVs
+                                                        .Include(r => r.Rentals)
+                                                        .Include(u => u.User)
+                                                        .Where(u => u.UserId == userId)
+                                                        .FirstOrDefaultAsyncEF(v => v.Id == id);
+
+                if (vehicle == null)
+                    return null;
+                //else
+                //    vehicle.Rentals = vehicle.Rentals.Where(u => u.UserId == userId).ToList();
+
+                return vehicle;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }    
     }
 }

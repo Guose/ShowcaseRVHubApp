@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 
 
@@ -18,9 +19,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShowcaseUser>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<ShowcaseUserDto>>> GetUsers()
         {
-            IEnumerable<ShowcaseUser>? users = await _userRepo.GetUsersAsync();
+            IEnumerable<ShowcaseUserDto>? users = await _userRepo.GetUsersAsync();
 
             if (users == null)
                 return NotFound(new { Message = $"Your request could not be made." });
@@ -29,9 +30,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShowcaseUser>> GetUserById(Guid id)
+        public async Task<ActionResult<ShowcaseUserDto>> GetUserById(Guid id)
         {
-            ShowcaseUser? user = await _userRepo.GetUserByIdAsync(id);
+            ShowcaseUserDto? user = await _userRepo.GetUserByIdAsync(id);
 
             if (user == null)
                 return NotFound(new { Message = $"User with id {id} does not exist." } );
@@ -40,9 +41,8 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ShowcaseUser>> CreateUser(ShowcaseUser user)
+        public async Task<ActionResult<ShowcaseUser>> CreateUser(ShowcaseUserDto user)
         {
-            user.Id = Guid.NewGuid();
             if (await _userRepo.CreateUserAsync(user))
                 return Ok(user);
             else
@@ -50,9 +50,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser(Guid id, ShowcaseUser updateUser)
+        public async Task<ActionResult> UpdateUser(Guid id, ShowcaseUserDto updateUser)
         {
-            ShowcaseUser? user = await _userRepo.GetUserByIdAsync(id);
+            ShowcaseUserDto? user = await _userRepo.GetUserByIdAsync(id);
 
             if (user == null)
                 return NotFound(new { Message = $"User with id {id} does not exist." });                
@@ -64,9 +64,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> UpdateUserPassword(Guid id, JsonPatchDocument<ShowcaseUser> updateUser)
+        public async Task<ActionResult> UpdateUserPassword(Guid id, JsonPatchDocument<ShowcaseUserDto> updateUser)
         {
-            ShowcaseUser? showcaseUser = await _userRepo.GetUserByIdAsync(id);
+            ShowcaseUserDto? showcaseUser = await _userRepo.GetUserByIdAsync(id);
 
             if (showcaseUser == null)
                 return NotFound(new { Message = $"User with id {id} does not exist." });

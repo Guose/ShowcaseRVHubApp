@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Controllers
@@ -25,7 +26,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> GetVehicles()
         {
-            IEnumerable<VehicleRv>? rvs = await _rvRepo.GetVehiclesAsync();
+            IEnumerable<VehicleRVDto>? rvs = await _rvRepo.GetVehiclesAsync();
 
             if (rvs == null)
                 return NotFound(new { Message = $"Your request could not be made." });
@@ -36,7 +37,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetVehicleById(int id)
         {
-            VehicleRv? rv = await _rvRepo.GetVehicleByIdAsync(id);
+            VehicleRVDto? rv = await _rvRepo.GetVehicleByIdAsync(id);
 
             return rv == null 
                 ? NotFound(new { Message = $"RV with id {id} does not exist." }) 
@@ -54,18 +55,18 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateRV(VehicleRv rv)
+        public async Task<ActionResult> CreateRV(VehicleRVDto rv, Guid userId)
         {
-            if (await _rvRepo.CreateVehicleRvAsync(rv))
+            if (await _rvRepo.CreateVehicleRvAsync(rv, userId))
                 return Ok(rv);
             else
                 return BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateRV(int id, VehicleRv newRv)
+        public async Task<ActionResult> UpdateRV(int id, VehicleRVDto newRv)
         {
-            VehicleRv? rv = await _rvRepo.GetVehicleByIdAsync(id);
+            VehicleRVDto? rv = await _rvRepo.GetVehicleByIdAsync(id);
 
             if (rv == null)
                 return NotFound(new { Message = $"RV with id {id} does not exist." });
