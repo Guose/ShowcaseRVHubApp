@@ -1,4 +1,3 @@
-using LinqToDB;
 using LinqToDB.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
@@ -15,12 +14,12 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             Context = context;
         }
 
-        public async Task CreateAsync(TEntity model)
+        public async Task AddAsync(TEntity model)
         {
             await Context.Set<TEntity>().AddAsync(model);
         }
 
-        public void DeleteAsync(TEntity model)
+        public void Remove(TEntity model)
         {
             Context.Set<TEntity>().Remove(model);
         }
@@ -40,14 +39,9 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             return Context.ChangeTracker.HasChanges();
         }
 
-        public async Task SaveChanges()
+        public async Task SaveAsync()
         {
             await Context.SaveChangesAsync();
-        }
-
-        public Task UpdateAsync(TEntity model)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -6,13 +6,9 @@ using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Data.Repositories
 {
-    public class UserRepo : IUserRepo
+    public class UserRepo : GenericRepository<ShowcaseUserDto, ShowcaseDbContext>, IUserRepo
     {
-        public ShowcaseDbContext Context { get; set; }
-        public UserRepo(ShowcaseDbContext context)
-        {
-            Context = context;
-        }
+        public UserRepo(ShowcaseDbContext context) : base(context) {}
         public async Task<bool> CreateUserAsync(ShowcaseUserDto user)
         {
             try
