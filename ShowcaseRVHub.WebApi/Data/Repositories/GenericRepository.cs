@@ -14,14 +14,23 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             Context = context;
         }
 
-        public async Task AddAsync(TEntity model)
+        public async Task<bool> AddAsync(TEntity model)
         {
+            if (model == null)
+            {
+                return false;
+            }
+
             await Context.Set<TEntity>().AddAsync(model);
+            return true;
         }
 
         public void Remove(TEntity model)
-        {
-            Context.Set<TEntity>().Remove(model);
+        {            
+            if (model != null)
+            {
+                Context.Set<TEntity>().Remove(model);
+            }            
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -29,7 +38,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             return await Context.Set<TEntity>().ToListAsyncEF();
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(object id)
+        public virtual async Task<TEntity> GetByIdAsync(int id)
         {
             return await Context.Set<TEntity>().FirstAsyncEF(i => i.Equals(id));
         }

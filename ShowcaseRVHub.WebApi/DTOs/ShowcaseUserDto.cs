@@ -1,6 +1,3 @@
-using System.Text.Json.Serialization;
-using ShowcaseRVHub.WebApi.Models;
-
 namespace ShowcaseRVHub.WebApi.DTOs
 {
     public class ShowcaseUserDto
@@ -18,10 +15,5 @@ namespace ShowcaseRVHub.WebApi.DTOs
         public ICollection<ArrivalDto>? Arrivals { get; set; }
         public ICollection<DepartureDto>? Departures { get; set; }
         public ICollection<VehicleRVDto>? Vehicles { get; set; }
-
-        public static implicit operator ShowcaseUserDto?(ShowcaseUser? v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

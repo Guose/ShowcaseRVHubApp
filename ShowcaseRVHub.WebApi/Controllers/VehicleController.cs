@@ -26,7 +26,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> GetVehicles()
         {
-            IEnumerable<VehicleRVDto>? rvs = await _rvRepo.GetVehiclesAsync();
+            IEnumerable<VehicleRv>? rvs = await _rvRepo.GetAllAsync();
 
             if (rvs == null)
                 return NotFound(new { Message = $"Your request could not be made." });
@@ -37,7 +37,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetVehicleById(int id)
         {
-            VehicleRVDto? rv = await _rvRepo.GetVehicleByIdAsync(id);
+            VehicleRv? rv = await _rvRepo.GetByIdAsync(id);
 
             return rv == null 
                 ? NotFound(new { Message = $"RV with id {id} does not exist." }) 
@@ -47,7 +47,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet("{id}/{userId}")]
         public async Task<ActionResult> GetVehicleWithRenterUserAndRentals(int id, Guid userId)
         {
-            VehicleRv? rvWithRentalsAndUser = await _rvRepo.GetVehicleWithRentalUserAndRenterAsync(id, userId);
+            VehicleRVDto? rvWithRentalsAndUser = await _rvRepo.GetVehicleWithRentalUserAndRenterAsync(id, userId);
 
             return rvWithRentalsAndUser == null
                 ? NotFound(new { Message = $"RV with id {id} does not exist." })
@@ -57,31 +57,34 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateRV(VehicleRVDto rv, Guid userId)
         {
-            if (await _rvRepo.CreateVehicleRvAsync(rv, userId))
-                return Ok(rv);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _rvRepo.CreateVehicleRvAsync(rv, userId) 
+                ? Ok(rv) 
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateRV(int id, VehicleRVDto newRv)
         {
-            VehicleRVDto? rv = await _rvRepo.GetVehicleByIdAsync(id);
+            VehicleRv? rv = await _rvRepo.GetByIdAsync(id);
 
             if (rv == null)
                 return NotFound(new { Message = $"RV with id {id} does not exist." });
 
-            if (await _rvRepo.UpdateUserAsync(newRv))
-                return NoContent();
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _rvRepo.UpdateVehicleAsync(newRv)
+                ? NoContent()
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteRV(int id)
         {
-            if (await _rvRepo.DeleteUserAsync(id))
+            VehicleRv rv = await _rvRepo.GetByIdAsync(id);
+            
+            if (rv != null)
+            {
+                _rvRepo.Remove(rv);
                 return NoContent();
+            }                
             else
                 return BadRequest(new { Message = $"Your request could not be made." });
         }

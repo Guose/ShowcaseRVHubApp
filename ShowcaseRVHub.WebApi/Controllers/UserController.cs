@@ -19,9 +19,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShowcaseUserDto>>> GetUsers()
+        public async Task<ActionResult> GetUsers() //<IEnumerable<ShowcaseUserDto>>
         {
-            IEnumerable<ShowcaseUserDto>? users = await _userRepo.GetUsersAsync();
+            IEnumerable<ShowcaseUser>? users = await _userRepo.GetAllAsync();
 
             if (users == null)
                 return NotFound(new { Message = $"Your request could not be made." });
@@ -30,7 +30,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShowcaseUserDto>> GetUserById(Guid id)
+        public async Task<ActionResult<ShowcaseUserDto?>> GetUserById(Guid id)
         {
             ShowcaseUserDto? user = await _userRepo.GetUserByIdAsync(id);
 
@@ -79,10 +79,13 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(Guid id)
+        public ActionResult DeleteUser(ShowcaseUser user)
         {
-            if (await _userRepo.DeleteUserAsync(id))
+            if (user != null)
+            {
+                _userRepo.Remove(user);
                 return NoContent();
+            }
             else
                 return BadRequest(new { Message = $"Your request could not be made." });
         }
