@@ -29,10 +29,10 @@ namespace ShowcaseRVHub.WebApi.Models
         [Required] public bool HasGenerator { get; set; }
 
         [ForeignKey("UserId")] public Guid UserId { get; set; }
-        public ShowcaseUser User { get; set; }
+        [JsonIgnore] public ShowcaseUser User { get; set; }
 
-        public ICollection<Rental>? Rentals { get; set; }
-        public ICollection<RvMaintenance>? RvMaintenances { get; set; }
+        [JsonIgnore] public ICollection<Rental>? Rentals { get; set; }
+        [JsonIgnore] public ICollection<RvMaintenance>? RvMaintenances { get; set; }
         [JsonIgnore] public ICollection<VehicleRvRenter>? VehicleRvRenters { get; set; }
 
         public VehicleRv()

@@ -9,34 +9,55 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
     public class UserRepo : GenericRepository<ShowcaseUser, ShowcaseDbContext>, IUserRepo
     {
         public UserRepo(ShowcaseDbContext context) : base(context) {}
-        public async Task<bool> CreateUserAsync(ShowcaseUserDto user)
+
+                public async Task<IEnumerable<ShowcaseUserDto>?> GetAllUsersAsync()
         {
             try
             {
-                if (user == null)
-                    return false;
-                
-                ShowcaseUser? newUser = new ShowcaseUser
-                {
-                    Id = Guid.NewGuid(),
-                    Email = user.Email,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Phone = user.Phone,
-                    Username = user.Username,
-                    Password = user.Password,
-                    CreatedOn = DateTime.Now,
-                    IsRemembered = user.IsRemembered,
-                };
+                IEnumerable<ShowcaseUserDto>? userDto = await Context.ShowcaseUsers
+                                                                            .Include(a => a.Arrivals)
+                                                                            .Include(d => d.Departures)
+                                                                            .Include(v => v.Vehicles!)
+                                                                                .ThenInclude(m => m.RvMaintenances)
+                                                                            .Select(u => new ShowcaseUserDto
+                                                                            {
+                                                                                Id = u.Id,
+                                                                                Email = u.Email,
+                                                                                FirstName = u.FirstName,
+                                                                                LastName = u.LastName,
+                                                                                Phone = u.Phone,
+                                                                                Username = u.Username,
+                                                                                Password = u.Password,
+                                                                                CreatedOn = u.CreatedOn,
+                                                                                ModifiedOn = DateTime.Now,
+                                                                                IsRemembered = u.IsRemembered,
+                                                                                Arrivals = u.Arrivals!.Select(a => new ArrivalDto
+                                                                                {
+                                                                                    Id = a.Id,
+                                                                                }).ToList(),
+                                                                                Departures = u.Departures!.Select(d => new DepartureDto
+                                                                                {
+                                                                                    Id = d.Id,
+                                                                                }).ToList(),
+                                                                                Vehicles = u.Vehicles!.Select(r => new VehicleRVDto
+                                                                                {
+                                                                                    Id = r.Id,
+                                                                                    Rentals = r.Rentals!.Select(re => new RentalDto
+                                                                                    {
+                                                                                        Id = re.Id,
+                                                                                    }).ToList(),
+                                                                                    RvMaintenances = r.RvMaintenances!.Select(m => new RvMaintenanceDto
+                                                                                    {
+                                                                                        Id = m.Id,
+                                                                                    }).ToList()
+                                                                                }).ToList()
+                                                                            }).ToListAsync();
 
-                await AddAsync(newUser);
-                await SaveAsync();
-
-                return true;
+                return userDto;
             }
             catch (Exception ex)
             {
-                throw new ArgumentException(ex.Message);
+                throw new ArgumentNullException(ex.Message);
             }
         }
 
@@ -94,56 +115,6 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        // public async Task<IEnumerable<ShowcaseUserDto>?> GetAllUsersAsync()
-        // {
-        //     try
-        //     {
-        //         IEnumerable<ShowcaseUserDto>? userDto = await Context.ShowcaseUsers
-        //                                                                     .Include(a => a.Arrivals)
-        //                                                                     .Include(d => d.Departures)
-        //                                                                     .Include(v => v.Vehicles!)
-        //                                                                         .ThenInclude(m => m.RvMaintenances)
-        //                                                                     .Select(u => new ShowcaseUserDto
-        //                                                                     {
-        //                                                                         Id = u.Id,
-        //                                                                         Email = u.Email,
-        //                                                                         FirstName = u.FirstName,
-        //                                                                         LastName = u.LastName,
-        //                                                                         Phone = u.Phone,
-        //                                                                         Username = u.Username,
-        //                                                                         Password = u.Password,
-        //                                                                         CreatedOn = u.CreatedOn,
-        //                                                                         ModifiedOn = DateTime.Now,
-        //                                                                         IsRemembered = u.IsRemembered,
-        //                                                                         Arrivals = u.Arrivals!.Select(a => new ArrivalDto
-        //                                                                         {
-        //                                                                             Id = a.Id,
-        //                                                                         }).ToList(),
-        //                                                                         Departures = u.Departures!.Select(d => new DepartureDto
-        //                                                                         {
-        //                                                                             Id = d.Id,
-        //                                                                         }).ToList(),
-        //                                                                         Vehicles = u.Vehicles!.Select(r => new VehicleRVDto
-        //                                                                         {
-        //                                                                             Id = r.Id,
-        //                                                                             Rentals = r.Rentals!.Select(re => new RentalDto
-        //                                                                             {
-        //                                                                                 Id = re.Id,
-        //                                                                             }).ToList(),
-        //                                                                             RvMaintenances = r.RvMaintenances!.Select(m => new RvMaintenanceDto
-        //                                                                             {
-        //                                                                                 Id = m.Id,
-        //                                                                             }).ToList()
-        //                                                                         }).ToList()
-        //                                                                     }).ToListAsync();
-
-        //         return userDto;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         throw new ArgumentNullException(ex.Message);
-        //     }
-        // }
 
         public async Task<bool> UpdateUsersPasswordAsync(Guid userId, ShowcaseUserDto newUser)
         {
@@ -173,7 +144,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
         {
             try
             {
-                var updateUser = await Context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == newUser.Id);
+                ShowcaseUser? updateUser = await Context.ShowcaseUsers.FirstOrDefaultAsyncEF(u => u.Id == newUser.Id);
 
                 if (updateUser == null)
                     return false;
@@ -189,7 +160,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                 updateUser.IsRemembered = newUser.IsRemembered;
 
                 Context.ShowcaseUsers.Update(updateUser);
-                await Context.SaveChangesAsync();
+                await SaveAsync();
 
                 return true;
             }

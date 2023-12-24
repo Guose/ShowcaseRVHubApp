@@ -1,3 +1,4 @@
+using LinqToDB;
 using LinqToDB.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
@@ -22,6 +23,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
 
             await Context.Set<TEntity>().AddAsync(model);
+            await SaveAsync();
             return true;
         }
 
@@ -31,16 +33,6 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             {
                 Context.Set<TEntity>().Remove(model);
             }            
-        }
-
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
-        {
-            return await Context.Set<TEntity>().ToListAsyncEF();
-        }
-
-        public virtual async Task<TEntity> GetByIdAsync(int id)
-        {
-            return await Context.Set<TEntity>().FirstAsyncEF(i => i.Equals(id));
         }
 
         public bool HasChanges()

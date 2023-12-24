@@ -21,7 +21,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> GetUsers() //<IEnumerable<ShowcaseUserDto>>
         {
-            IEnumerable<ShowcaseUser>? users = await _userRepo.GetAllAsync();
+            IEnumerable<ShowcaseUserDto>? users = await _userRepo.GetAllUsersAsync();
 
             if (users == null)
                 return NotFound(new { Message = $"Your request could not be made." });
@@ -41,9 +41,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ShowcaseUser>> CreateUser(ShowcaseUserDto user)
+        public async Task<ActionResult<ShowcaseUser>> CreateUser(ShowcaseUser user)
         {
-            if (await _userRepo.CreateUserAsync(user))
+            if (await _userRepo.AddAsync(user))
                 return Ok(user);
             else
                 return BadRequest(new { Message = $"Your request could not be made." });

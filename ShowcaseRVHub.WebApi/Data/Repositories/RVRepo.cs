@@ -10,140 +10,104 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
     public class RVRepo : GenericRepository<VehicleRv, ShowcaseDbContext>, IRVRepo
     {
         public RVRepo(ShowcaseDbContext context) : base(context) {}
-        public async Task<bool> CreateVehicleRvAsync(VehicleRVDto rv, Guid userId)
+
+        public async Task<IEnumerable<VehicleRVDto>?> GetAllVehicles()
         {
             try
             {
-                if (rv == null)
-                    return false;
-                
-                VehicleRv? newRv = new VehicleRv
-                {
-                    Make = rv.Make,
-                    Model = rv.Model,
-                    Year = rv.Year,
-                    Chassis = rv.Chassis,
-                    Class = rv.Class,
-                    Sleeps = rv.Sleeps,
-                    Length = rv.Length,
-                    Height = rv.Height,
-                    Image = rv.Image,
-                    Description = rv.Description,
-                    Odometer = rv.Odometer,
-                    GeneratorHours = rv.GeneratorHours,
-                    MasterBedType = rv.MasterBedType,
-                    IsBooked = rv.IsBooked,
-                    UserId = userId,
-                };
+                IEnumerable<VehicleRVDto>? vehicles = await Context.VehicleRVs
+                                                                        .Include(r => r.Rentals)
+                                                                        .Include(m => m.RvMaintenances)
+                                                                        .Select(v => new VehicleRVDto
+                                                                        {
+                                                                            Id = v.Id,
+                                                                            Make = v.Make,
+                                                                            Model = v.Model,
+                                                                            Year = v.Year,
+                                                                            Chassis = v.Chassis,
+                                                                            Class = v.Class,
+                                                                            Sleeps = v.Sleeps,
+                                                                            Length = v.Length,
+                                                                            Height = v.Height,
+                                                                            Image = v.Image,
+                                                                            Description = v.Description,
+                                                                            Odometer = v.Odometer,
+                                                                            GeneratorHours = v.GeneratorHours,
+                                                                            MasterBedType = v.MasterBedType,
+                                                                            IsBooked = v.IsBooked,
+                                                                            HasSlideout = v.HasSlideout,
+                                                                            HasGenerator = v.HasGenerator,
+                                                                            CreatedOn = v.CreatedOn,
+                                                                            ModifiedOn = v.ModifiedOn,
+                                                                            Rentals = v.Rentals!.Select(r => new RentalDto
+                                                                            {
+                                                                                Id = r.Id,
+                                                                            }).ToList(),
+                                                                            RvMaintenances = v.RvMaintenances!.Select(m => new RvMaintenanceDto
+                                                                            {
+                                                                                Id = m.Id,
+                                                                            }).ToList()
+                                                                        }).ToListAsyncEF();
 
-                await AddAsync(newRv);
-                await SaveAsync();
+                if (vehicles == null || !vehicles.Any())
+                    return null;
 
-                return true;
+                return vehicles;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentNullException(ex.Message);
+            }
+        }
+
+        public async Task<VehicleRVDto?> GetVehicleByIdAsync(int id)
+        {
+            try
+            {
+                VehicleRVDto? vehicle = await Context.VehicleRVs
+                                                        .Include(r => r.Rentals)
+                                                        .Include(m => m.RvMaintenances)
+                                                        .Select(v => new VehicleRVDto
+                                                        {
+                                                            Id = v.Id,
+                                                            Make = v.Make,
+                                                            Model = v.Model,
+                                                            Year = v.Year,
+                                                            Chassis = v.Chassis,
+                                                            Class = v.Class,
+                                                            Sleeps = v.Sleeps,
+                                                            Length = v.Length,
+                                                            Height = v.Height,
+                                                            Image = v.Image,
+                                                            Description = v.Description,
+                                                            Odometer = v.Odometer,
+                                                            GeneratorHours = v.GeneratorHours,
+                                                            MasterBedType = v.MasterBedType,
+                                                            IsBooked = v.IsBooked,
+                                                            HasSlideout = v.HasSlideout,
+                                                            HasGenerator = v.HasGenerator,
+                                                            CreatedOn = v.CreatedOn,
+                                                            ModifiedOn = v.ModifiedOn,
+                                                            Rentals = v.Rentals!.Select(r => new RentalDto
+                                                            {
+                                                                Id = r.Id,
+                                                            }).ToList(),
+                                                            RvMaintenances = v.RvMaintenances!.Select(m => new RvMaintenanceDto
+                                                            {
+                                                                Id = m.Id,
+                                                            }).ToList()
+                                                        }).FirstOrDefaultAsyncEF(v => v.Id == id);
+
+                if (vehicle == null)
+                    return null;
+
+                return vehicle;
             }
             catch (Exception ex)
             {
                 throw new ArgumentException(ex.Message);
             }
         }
-
-        // public async Task<VehicleRVDto?> GetVehicleByIdAsync(int id)
-        // {
-        //     try
-        //     {
-        //         VehicleRVDto? vehicle = await Context.VehicleRVs
-        //                                                 .Include(r => r.Rentals)
-        //                                                 .Include(m => m.RvMaintenances)
-        //                                                 .Select(v => new VehicleRVDto
-        //                                                 {
-        //                                                     Id = v.Id,
-        //                                                     Make = v.Make,
-        //                                                     Model = v.Model,
-        //                                                     Year = v.Year,
-        //                                                     Chassis = v.Chassis,
-        //                                                     Class = v.Class,
-        //                                                     Sleeps = v.Sleeps,
-        //                                                     Length = v.Length,
-        //                                                     Height = v.Height,
-        //                                                     Image = v.Image,
-        //                                                     Description = v.Description,
-        //                                                     Odometer = v.Odometer,
-        //                                                     GeneratorHours = v.GeneratorHours,
-        //                                                     MasterBedType = v.MasterBedType,
-        //                                                     IsBooked = v.IsBooked,
-        //                                                     HasSlideout = v.HasSlideout,
-        //                                                     HasGenerator = v.HasGenerator,
-        //                                                     CreatedOn = v.CreatedOn,
-        //                                                     ModifiedOn = v.ModifiedOn,
-        //                                                     Rentals = v.Rentals!.Select(r => new RentalDto
-        //                                                     {
-        //                                                         Id = r.Id,
-        //                                                     }).ToList(),
-        //                                                     RvMaintenances = v.RvMaintenances!.Select(m => new RvMaintenanceDto
-        //                                                     {
-        //                                                         Id = m.Id,
-        //                                                     }).ToList()
-        //                                                 }).FirstOrDefaultAsyncEF(v => v.Id == id);
-
-        //         if (vehicle == null)
-        //             return null;
-
-        //         return vehicle;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         throw new ArgumentException(ex.Message);
-        //     }
-        // }
-
-        // public async Task<IEnumerable<VehicleRVDto>?> GetVehiclesAsync()
-        // {
-        //     try
-        //     {
-        //         IEnumerable<VehicleRVDto>? vehicles = await Context.VehicleRVs
-        //                                                                 .Include(r => r.Rentals)
-        //                                                                 .Include(m => m.RvMaintenances)
-        //                                                                 .Select(v => new VehicleRVDto
-        //                                                                 {
-        //                                                                     Id = v.Id,
-        //                                                                     Make = v.Make,
-        //                                                                     Model = v.Model,
-        //                                                                     Year = v.Year,
-        //                                                                     Chassis = v.Chassis,
-        //                                                                     Class = v.Class,
-        //                                                                     Sleeps = v.Sleeps,
-        //                                                                     Length = v.Length,
-        //                                                                     Height = v.Height,
-        //                                                                     Image = v.Image,
-        //                                                                     Description = v.Description,
-        //                                                                     Odometer = v.Odometer,
-        //                                                                     GeneratorHours = v.GeneratorHours,
-        //                                                                     MasterBedType = v.MasterBedType,
-        //                                                                     IsBooked = v.IsBooked,
-        //                                                                     HasSlideout = v.HasSlideout,
-        //                                                                     HasGenerator = v.HasGenerator,
-        //                                                                     CreatedOn = v.CreatedOn,
-        //                                                                     ModifiedOn = v.ModifiedOn,
-        //                                                                     Rentals = v.Rentals!.Select(r => new RentalDto
-        //                                                                     {
-        //                                                                         Id = r.Id,
-        //                                                                     }).ToList(),
-        //                                                                     RvMaintenances = v.RvMaintenances!.Select(m => new RvMaintenanceDto
-        //                                                                     {
-        //                                                                         Id = m.Id,
-        //                                                                     }).ToList()
-        //                                                                 }).ToListAsyncEF();
-
-        //         if (vehicles == null || !vehicles.Any())
-        //             return null;
-
-        //         return vehicles;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         throw new ArgumentNullException(ex.Message);
-        //     }
-        // }
 
         public async Task<bool> UpdateVehicleAsync(VehicleRVDto newRv)
         {
@@ -218,6 +182,6 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             {
                 throw new ArgumentException(ex.Message);
             }
-        }    
+        }
     }
 }
