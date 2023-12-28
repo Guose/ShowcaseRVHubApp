@@ -1,13 +1,12 @@
-﻿using ShowcaseRVHub.WebApi.Models;
+﻿using ShowcaseRVHub.WebApi.DTOs;
+using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Data.Interfaces
 {
-    public interface IRenterRepo
+    public interface IRenterRepo : IGenericRepository<ShowcaseRenter>
     {
-        Task<bool> CreateRenterAsync(ShowcaseRenter renter);
-        Task<IEnumerable<ShowcaseRenter>?> GetRentersAsync();
-        Task<ShowcaseRenter?> GetRenterByIdAsync(int id);
+        Task<IEnumerable<ShowcaseRenterDto>?> GetRentersAsync();
+        Task<ShowcaseRenterDto?> GetRenterByIdAsync(int id);
         Task<bool> UpdateRenterAsync(ShowcaseRenter renter);
-        Task<bool> DeleteRenterAsync(int id);
     }
 }

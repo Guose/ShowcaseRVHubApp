@@ -11,7 +11,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
     {
         public RVRepo(ShowcaseDbContext context) : base(context) {}
 
-        public async Task<IEnumerable<VehicleRVDto>?> GetAllVehicles()
+        public async Task<IEnumerable<VehicleRVDto>?> GetAllVehiclesAsync()
         {
             try
             {

@@ -9,6 +9,6 @@ namespace ShowcaseRVHub.WebApi.DTOs
         public string Lastname { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
-        public ICollection<Rental>? Rentals { get; set; }
+        public ICollection<RentalDto>? Rentals { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult> GetVehicles()
         {
-            IEnumerable<VehicleRVDto>? rvs = await _rvRepo.GetAllVehicles();
+            IEnumerable<VehicleRVDto>? rvs = await _rvRepo.GetAllVehiclesAsync();
 
             if (rvs == null)
                 return NotFound(new { Message = $"Your request could not be made." });
