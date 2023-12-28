@@ -62,11 +62,11 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<bool> UpdateRenterAsync(ShowcaseRenter renter)
+        public async Task<bool> UpdateRenterAsync(ShowcaseRenterDto renter)
         {
             try
             {
-                var updateRenter = await Context.Renters.FirstOrDefaultAsyncEF(r => r.Id == renter.Id);
+                ShowcaseRenter? updateRenter = await Context.Renters.FirstOrDefaultAsyncEF(r => r.Id == renter.Id);
 
                 if (updateRenter == null)
                     return false;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Controllers
@@ -19,7 +20,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rental>>> GetRentals()
         {
-            IEnumerable<Rental>? rentals = await _rentalRepo.GetRentalsAsync();
+            IEnumerable<RentalDto>? rentals = await _rentalRepo.GetRentalsAsync();
 
             if (rentals == null)
                 return NotFound(new { Message = $"Your request could not be made." });
@@ -29,7 +30,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Rental>> GetRentalById(int id)
         {
-            Rental? rental = await _rentalRepo.GetRentalByIdAsync(id);
+            RentalDto? rental = await _rentalRepo.GetRentalByIdAsync(id);
 
             if (rental == null)
                 return NotFound(new { Message = $"Rental with id {id} does not exist." } );
@@ -40,16 +41,15 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateRental([FromBody] Rental rental)
         {
-            if (await _rentalRepo.CreateRentalAsync(rental))
-                return CreatedAtRoute(nameof(CreateRental), new {id = rental.Id}, rental);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _rentalRepo.AddAsync(rental)
+            ? CreatedAtRoute(nameof(CreateRental), new {id = rental.Id}, rental)
+            : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateRental(int id, [FromBody] Rental updateRental)
+        public async Task<ActionResult> UpdateRental(int id, [FromBody] RentalDto updateRental)
         {
-            Rental? rental = await _rentalRepo.GetRentalByIdAsync(id);
+            RentalDto? rental = await _rentalRepo.GetRentalByIdAsync(id);
 
             if (rental == null)
                 return NotFound(new { Message = $"Rental with id {id} does not exist." });
@@ -61,9 +61,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> UpdateRentalPatch(int id, [FromBody] JsonPatchDocument<Rental> updateRental)
+        public async Task<ActionResult> UpdateRentalPatch(int id, [FromBody] JsonPatchDocument<RentalDto> updateRental)
         {
-            Rental? rentalPatch = await _rentalRepo.GetRentalByIdAsync(id);
+            RentalDto? rentalPatch = await _rentalRepo.GetRentalByIdAsync(id);
 
             if (rentalPatch == null)
                 return NotFound(new { Message = $"Rental with id {id} does not exist." } );
@@ -76,10 +76,14 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteRental(int id)
+        public ActionResult DeleteRental(Rental rental)
         {
-            if (await _rentalRepo.DeleteRentalAsync(id))
+            if (rental != null)
+            {
+                _rentalRepo.Remove(rental);
                 return NoContent();
+            }
+                
             else
                 return BadRequest(new { Message = $"Your request could not be made." });
         }

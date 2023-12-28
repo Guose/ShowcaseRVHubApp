@@ -7,6 +7,6 @@ namespace ShowcaseRVHub.WebApi.Data.Interfaces
     {
         Task<IEnumerable<ShowcaseRenterDto>?> GetRentersAsync();
         Task<ShowcaseRenterDto?> GetRenterByIdAsync(int id);
-        Task<bool> UpdateRenterAsync(ShowcaseRenter renter);
+        Task<bool> UpdateRenterAsync(ShowcaseRenterDto renter);
     }
 }

@@ -1,13 +1,12 @@
-﻿using ShowcaseRVHub.WebApi.Models;
+﻿using ShowcaseRVHub.WebApi.DTOs;
+using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Data.Interfaces
 {
-    public interface IRentalRepo
+    public interface IRentalRepo : IGenericRepository<Rental>
     {
-        Task<bool> CreateRentalAsync(Rental rental);
-        Task<IEnumerable<Rental>?> GetRentalsAsync();
-        Task<Rental?> GetRentalByIdAsync(int id);
-        Task<bool> UpdateRentalAsync(Rental user);
-        Task<bool> DeleteRentalAsync(int id);
+        Task<IEnumerable<RentalDto>?> GetRentalsAsync();
+        Task<RentalDto?> GetRentalByIdAsync(int id);
+        Task<bool> UpdateRentalAsync(RentalDto user);
     }
 }
