@@ -57,10 +57,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
             if (user == null)
                 return NotFound(new { Message = $"User with id {id} does not exist." });                
 
-            if (await _userRepo.UpdateUserAsync(updateUser))
-                return Ok(updateUser);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _userRepo.UpdateUserAsync(updateUser)
+            ? Ok(user)
+            : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPatch("{id}")]
@@ -72,10 +71,10 @@ namespace ShowcaseRVHub.WebApi.Controllers
                 return NotFound(new { Message = $"User with id {id} does not exist." });
 
             updateUser.ApplyTo(showcaseUser);
-            if (await _userRepo.UpdateUsersPasswordAsync(id, showcaseUser))
-                return Ok(showcaseUser);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+
+            return await _userRepo.UpdateUsersPasswordAsync(id, showcaseUser)
+            ? Ok(showcaseUser)
+            : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpDelete("{id}")]

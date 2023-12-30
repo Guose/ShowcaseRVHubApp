@@ -55,10 +55,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
             if (main == null)
                 return NotFound(new { Message = $"Rv Maintenance item with id {id} does not exist." });
 
-            if (await _maintenance.UpdateMaintenanceAsync(updateMaintenance))
-                return Ok(updateMaintenance);
-            else
-                return BadRequest(new { Message = "Your request could not be made." });
+            return await _maintenance.UpdateMaintenanceAsync(updateMaintenance)
+            ? Ok(main)
+            : BadRequest(new { Message = "Your request could not be made." });
         }
 
         [HttpPatch("{id}")]
@@ -70,10 +69,10 @@ namespace ShowcaseRVHub.WebApi.Controllers
                 return NotFound(new { Message = $"Rv Maintenance item with id {id} does not exist." });
 
             updateMaintenance.ApplyTo(maintenancePatch);
-            if (await _maintenance.UpdateMaintenanceAsync(maintenancePatch))
-                return Ok(maintenancePatch);
-            else
-                return BadRequest(new { Message = "Your request could not be made." });
+
+            return await _maintenance.UpdateMaintenanceAsync(maintenancePatch)
+            ? Ok(maintenancePatch)
+            : BadRequest(new { Message = "Your request could not be made." });
         }
 
         [HttpDelete("{id}")]

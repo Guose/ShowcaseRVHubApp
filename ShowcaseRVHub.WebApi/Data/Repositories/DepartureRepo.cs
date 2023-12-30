@@ -1,64 +1,34 @@
 ﻿using LinqToDB.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Data.Repositories
 {
-   public class DepartureRepo : IDepartureRepo
+   public class DepartureRepo : GenericRepository<Departure, ShowcaseDbContext>, IDepartureRepo
    {
-        private readonly ShowcaseDbContext _context;
+        public DepartureRepo(ShowcaseDbContext context) : base(context) {}
 
-        public DepartureRepo(ShowcaseDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<bool> CreateDepartureAsync(Departure departure)
+        public async Task<DepartureDto?> GetDepartureByIdAsync(int id)
         {
             try
             {
-                if (departure == null)
-                    return false;
-
-                _context.Departures.Add(departure);
-                await _context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-        }
-
-        public async Task<bool> DeleteDepartureAsync(int id)
-        {
-            try
-            {
-                Departure? deleteDeparture = await _context.Departures.FirstOrDefaultAsyncEF(d => d.Id == id);
-
-                if (deleteDeparture == null)
-                    return false;
-
-                _context.Departures.Remove(deleteDeparture);
-                await _context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-        }
-
-        public async Task<Departure?> GetDepartureByIdAsync(int id)
-        {
-            try
-            {
-                Departure? departure = await _context.Departures
+                DepartureDto? departure = await Context.Departures
                                                             .Include(u => u.User)
-                                                            .FirstOrDefaultAsyncEF(x => x.Id == id);
+                                                            .Select(d => new DepartureDto
+                                                            {
+                                                                Id = d.Id,
+                                                                IsExteriorCleaned = d.IsExteriorCleaned,
+                                                                IsInteriorCleaned = d.IsInteriorCleaned,
+                                                                IsRenterTrained = d.IsRenterTrained,
+                                                                IsSignalsChecked = d.IsSignalsChecked,
+                                                                CreatedOn = d.CreatedOn,
+                                                                FuelLevel = d.FuelLevel,
+                                                                BlackWater = d.BlackWater,
+                                                                GrayWater = d.GrayWater,
+                                                                Propane = d.Propane,
+                                                            }).FirstOrDefaultAsyncEF(x => x.Id == id);
                 if (departure == null)
                     return null;
 
@@ -70,13 +40,25 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<Departure>?> GetDeparturesAsync()
+        public async Task<IEnumerable<DepartureDto>?> GetDeparturesAsync()
         {
             try
             {
-                List<Departure> departures = await _context.Departures
+                List<DepartureDto> departures = await Context.Departures
                                                             .Include(u => u.User)
-                                                            .ToListAsyncEF();
+                                                            .Select(d => new DepartureDto
+                                                            {
+                                                                Id = d.Id,
+                                                                IsExteriorCleaned = d.IsExteriorCleaned,
+                                                                IsInteriorCleaned = d.IsInteriorCleaned,
+                                                                IsRenterTrained = d.IsRenterTrained,
+                                                                IsSignalsChecked = d.IsSignalsChecked,
+                                                                CreatedOn = d.CreatedOn,
+                                                                FuelLevel = d.FuelLevel,
+                                                                BlackWater = d.BlackWater,
+                                                                GrayWater = d.GrayWater,
+                                                                Propane = d.Propane,
+                                                            }).ToListAsyncEF();
                 if (departures == null)
                     return null;
 
@@ -88,11 +70,11 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<bool> UpdateDepartureAsync(Departure newDeparture)
+        public async Task<bool> UpdateDepartureAsync(DepartureDto newDeparture)
         {
             try
             {
-                Departure? departure = await _context.Departures.FirstOrDefaultAsyncEF(x => x.Id == newDeparture.Id);
+                Departure? departure = await Context.Departures.FirstOrDefaultAsyncEF(x => x.Id == newDeparture.Id);
 
                 if (departure == null)
                     return false;
@@ -110,8 +92,8 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                     ModifiedOn = DateTime.Now,
                 };
 
-                _context.Departures.Update(updateDeparture);
-                await _context.SaveChangesAsync();
+                Context.Departures.Update(updateDeparture);
+                await SaveAsync();
 
                 return true;
             }
