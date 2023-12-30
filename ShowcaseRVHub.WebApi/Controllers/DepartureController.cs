@@ -29,7 +29,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Departure>> GetDepartureById(int id)
+        public async Task<ActionResult<DepartureDto>> GetDepartureById(int id)
         {
             DepartureDto? departure = await _departureRepo.GetDepartureByIdAsync(id);
 

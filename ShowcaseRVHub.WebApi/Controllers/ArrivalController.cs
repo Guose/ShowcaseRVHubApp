@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Controllers
@@ -17,9 +18,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Arrival>>> GetArrivals()
+        public async Task<ActionResult<IEnumerable<ArrivalDto>>> GetArrivals()
         {
-            IEnumerable<Arrival>? arrivals = await _arrivalRepo.GetArrivalsAsync();
+            IEnumerable<ArrivalDto>? arrivals = await _arrivalRepo.GetArrivalsAsync();
 
             if (arrivals == null)
                 return NotFound(new { Message = $"Your request could not be made." });
@@ -28,9 +29,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Arrival>> GetArrivalById(int id)
+        public async Task<ActionResult<ArrivalDto>> GetArrivalById(int id)
         {
-            Arrival? arrival = await _arrivalRepo.GetArrivalByIdAsync(id);
+            ArrivalDto? arrival = await _arrivalRepo.GetArrivalByIdAsync(id);
 
             if (arrival == null)
                 return NotFound(new { Message = $"Arrival with id {id} does not exist." });
@@ -41,47 +42,47 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateArrival([FromBody]Arrival newArrival)
         {
-            if (await _arrivalRepo.CreateArrivalAsync(newArrival))
-                return CreatedAtRoute(nameof(CreateArrival), new { id = newArrival.Id }, newArrival);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _arrivalRepo.AddAsync(newArrival)
+            ? CreatedAtRoute(nameof(CreateArrival), new { id = newArrival.Id }, newArrival)
+            : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateArrival(int id, [FromBody] Arrival updateArrival)
+        public async Task<ActionResult> UpdateArrival(int id, [FromBody] ArrivalDto updateArrival)
         {
-            Arrival? arrival = await _arrivalRepo.GetArrivalByIdAsync(id);
+            ArrivalDto? arrival = await _arrivalRepo.GetArrivalByIdAsync(id);
 
             if (arrival == null)
                 return NotFound(new { Message = $"Arrival with id {id} does not exist." });
 
-            if (await _arrivalRepo.UpdateArrivalAsync(updateArrival))
-                return Ok(updateArrival);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _arrivalRepo.UpdateArrivalAsync(updateArrival)
+            ? Ok(updateArrival)
+            : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> UpdateArrivalPatch(int id, [FromBody] JsonPatchDocument<Arrival> updateArrival)
+        public async Task<ActionResult> UpdateArrivalPatch(int id, [FromBody] JsonPatchDocument<ArrivalDto> updateArrival)
         {
-            Arrival? arrivalPatch = await _arrivalRepo.GetArrivalByIdAsync(id);
+            ArrivalDto? arrivalPatch = await _arrivalRepo.GetArrivalByIdAsync(id);
 
             if (arrivalPatch == null)
                 return NotFound(new { Message = $"Rental with id {id} does not exist." });
 
             updateArrival.ApplyTo(arrivalPatch);
 
-            if (await _arrivalRepo.UpdateArrivalAsync(arrivalPatch)) 
-                return Ok(arrivalPatch);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _arrivalRepo.UpdateArrivalAsync(arrivalPatch)
+            ? Ok(arrivalPatch)
+            : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteArrival(int id)
+        public ActionResult DeleteArrival(Arrival arrival)
         {
-            if (await _arrivalRepo.DeleteArrivalAsync(id))
+            if (arrival != null)
+            {
+                _arrivalRepo.Remove(arrival);
                 return NoContent();
+            }
             else
                 return BadRequest(new { Message = $"Your request could not be made." });
         }
