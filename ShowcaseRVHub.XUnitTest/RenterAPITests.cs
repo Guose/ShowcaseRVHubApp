@@ -57,7 +57,7 @@ namespace ShowcaseRVHub.XUnitTest
                 ? JsonSerializer.Deserialize<ShowcaseRenter>(content, _jsonSerializerOptions)
                 : null;
 
-            Assert.NotEqual(1, renter?.Id);
+            Assert.NotEqual(-1, renter?.Id);
         }
 
         //[Fact]
