@@ -1,3 +1,4 @@
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.XUnitTest
@@ -8,12 +9,12 @@ namespace ShowcaseRVHub.XUnitTest
             ShowcaseDbContextHelper.GetMockDb(nameof(UserAPITests)));
 
         private readonly Guid _userId = new("CF3E94B7-4052-4585-86E8-B4EA68BA1BDF");
-        public ShowcaseUser? User { get; set; }
+        public ShowcaseUserDto? User { get; set; }
 
         [Fact]
         public async Task Can_Get_All_Users()
         {
-            IEnumerable<ShowcaseUser>? users = await userAPIs.GetUsersAsync();
+            IEnumerable<ShowcaseUserDto>? users = await userAPIs.GetAllUsersAsync();
             Assert.NotNull(users);
         }
 
