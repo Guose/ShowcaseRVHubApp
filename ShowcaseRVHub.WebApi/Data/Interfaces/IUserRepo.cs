@@ -1,17 +1,13 @@
-﻿using ShowcaseRVHub.WebApi.Models;
+﻿using ShowcaseRVHub.WebApi.DTOs;
+using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Data.Interfaces
 {
-    public interface IUserRepo
-    {        
-        Task<IEnumerable<ShowcaseUser>?> GetUsersAsync();
-        Task<ShowcaseUser?> GetUserByIdAsync(Guid id);
-        Task<ShowcaseUser?> GetUserVehicleRVs(Guid id);
-        Task<ShowcaseUser?> GetUserRentals(Guid id);
-
-        Task<bool> CreateUserAsync(ShowcaseUser user);
-        Task<bool> UpdateUserAsync(ShowcaseUser user);
-        Task<bool> UpdateUsersPasswordAsync(Guid userId, ShowcaseUser user);
-        Task<bool> DeleteUserAsync(Guid id);
+    public interface IUserRepo : IGenericRepository<ShowcaseUser>
+    {
+        Task<IEnumerable<ShowcaseUserDto>?> GetAllUsersAsync();
+        Task<ShowcaseUserDto?> GetUserByIdAsync(Guid id);
+        Task<bool> UpdateUserAsync(ShowcaseUserDto user);
+        Task<bool> UpdateUsersPasswordAsync(Guid userId, ShowcaseUserDto user);
     }
 }

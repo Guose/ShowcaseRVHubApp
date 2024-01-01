@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Controllers
@@ -17,72 +18,67 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Departure>>> GetDepartures()
+        public async Task<ActionResult<IEnumerable<DepartureDto>>> GetDepartures()
         {
-            IEnumerable<Departure>? departures = await _departureRepo.GetDeparturesAsync();
+            IEnumerable<DepartureDto>? departures = await _departureRepo.GetDeparturesAsync();
 
-            if (departures == null)
-                return NotFound(new { Message = $"Your request could not be made." });
-
-            return Ok(departures.Take(5));
+            return departures != null
+                ? Ok(departures.Take(5))
+                : NotFound(new { Message = $"Your request could not be made." });            
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Departure>> GetDepartureById(int id)
+        public async Task<ActionResult<DepartureDto>> GetDepartureById(int id)
         {
-            Departure? departure = await _departureRepo.GetDepartureByIdAsync(id);
+            DepartureDto? departure = await _departureRepo.GetDepartureByIdAsync(id);
 
-            if (departure == null)
-                return NotFound(new { Message = $"Departure with id {id} does not exist." });
-
-            return Ok(departure);
+            return departure != null
+                ? Ok(departure)
+                : NotFound(new { Message = $"Departure with id {id} does not exist." });            
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateDeparture(Departure newDeparture)
         {
-            if (await _departureRepo.CreateDepartureAsync(newDeparture))
-                return CreatedAtRoute(nameof(CreateDeparture), new { id = newDeparture.Id }, newDeparture);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _departureRepo.CreateAsync(newDeparture)
+                ? CreatedAtRoute(nameof(CreateDeparture), new { id = newDeparture.Id }, newDeparture)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateDeparture(int id, [FromBody] Departure newDeparture)
+        public async Task<ActionResult> UpdateDeparture(int id, [FromBody] DepartureDto newDeparture)
         {
-            Departure? departure = await _departureRepo.GetDepartureByIdAsync(id);
+            DepartureDto? departure = await _departureRepo.GetDepartureByIdAsync(id);
 
             if (departure == null)
                 return NotFound(new { Message = $"Departure with id {id} does not exist." });
-
-            if (await _departureRepo.CreateDepartureAsync(newDeparture))
-                return Ok(departure);
-            else
-                return BadRequest(new { Message = "Your request could not be made." } );
+            
+            return await _departureRepo.UpdateDepartureAsync(newDeparture)
+                ? Ok(departure)
+                : BadRequest(new { Message = "Your request could not be made." } );
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> UpdateDeparturePatch(int id, [FromBody] JsonPatchDocument<Departure> updateDeparture)
+        public async Task<ActionResult> UpdateDeparturePatch(int id, [FromBody] JsonPatchDocument<DepartureDto> updateDeparture)
         {
-            Departure? departurePatch = await _departureRepo.GetDepartureByIdAsync(id);
+            DepartureDto? departurePatch = await _departureRepo.GetDepartureByIdAsync(id);
 
             if (departurePatch == null)
                 return NotFound(new { Message = $"Departure with  id {id} does not exist." });
             
             updateDeparture.ApplyTo(departurePatch);
-            if (await _departureRepo.UpdateDepartureAsync(departurePatch))
-                return Ok(departurePatch);
-            else
-                return BadRequest(new { Message = "Your request could not be made." });
+
+            return await _departureRepo.UpdateDepartureAsync(departurePatch)
+                ? Ok(departurePatch)
+                : BadRequest(new { Message = "Your request could not be made." });
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteDeparture(int id)
+        public async Task<ActionResult> DeleteDeparture(Departure departure)
         {
-            if (await _departureRepo.DeleteDepartureAsync(id))
-                return NoContent();
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _departureRepo.DeleteAsync(departure)
+                ? NoContent()
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
     }
 }

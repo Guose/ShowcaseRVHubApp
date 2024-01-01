@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShowcaseRVHub.WebApi.Data;
 
@@ -11,9 +12,11 @@ using ShowcaseRVHub.WebApi.Data;
 namespace ShowcaseRVHub.WebApi.Migrations
 {
     [DbContext(typeof(ShowcaseDbContext))]
-    partial class ShowcaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231219090716_vehicleModelUpdate")]
+    partial class vehicleModelUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,7 +397,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
                     b.HasOne("ShowcaseRVHub.WebApi.Models.ShowcaseUser", "User")
                         .WithMany("Arrivals")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -405,7 +408,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
                     b.HasOne("ShowcaseRVHub.WebApi.Models.ShowcaseUser", "User")
                         .WithMany("Departures")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -416,23 +419,23 @@ namespace ShowcaseRVHub.WebApi.Migrations
                     b.HasOne("ShowcaseRVHub.WebApi.Models.Arrival", "Arrival")
                         .WithOne("Rental")
                         .HasForeignKey("ShowcaseRVHub.WebApi.Models.Rental", "ArrivalId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShowcaseRVHub.WebApi.Models.Departure", "Departure")
                         .WithOne("Rental")
                         .HasForeignKey("ShowcaseRVHub.WebApi.Models.Rental", "DepartureId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ShowcaseRVHub.WebApi.Models.ShowcaseRenter", "Renter")
                         .WithMany("Rentals")
                         .HasForeignKey("RenterId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ShowcaseRVHub.WebApi.Models.VehicleRv", "Vehicle")
                         .WithMany("Rentals")
                         .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Arrival");
@@ -449,13 +452,13 @@ namespace ShowcaseRVHub.WebApi.Migrations
                     b.HasOne("ShowcaseRVHub.WebApi.Models.ShowcaseUser", "User")
                         .WithMany("RvMaintenances")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ShowcaseRVHub.WebApi.Models.VehicleRv", "Vehicle")
                         .WithMany("RvMaintenances")
                         .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -468,7 +471,7 @@ namespace ShowcaseRVHub.WebApi.Migrations
                     b.HasOne("ShowcaseRVHub.WebApi.Models.ShowcaseUser", "User")
                         .WithMany("Vehicles")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");

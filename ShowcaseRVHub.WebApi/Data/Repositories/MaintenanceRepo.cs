@@ -1,65 +1,32 @@
-﻿using LinqToDB.EntityFrameworkCore;
+﻿using LinqToDB;
+using LinqToDB.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Data.Repositories
 {
-    public class MaintenanceRepo : IMaintenance
+    public class MaintenanceRepo : GenericRepository<RvMaintenance, ShowcaseDbContext>, IMaintenance
     {
-        private readonly ShowcaseDbContext _context;
-
-        public MaintenanceRepo(ShowcaseDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<bool> CreateMaintenanceAsync(RvMaintenance rvMaintenance)
+        public MaintenanceRepo(ShowcaseDbContext context) : base(context) {}
+        public async Task<IEnumerable<RvMaintenanceDto>?> GetMaintenanceAsync()
         {
             try
             {
-                if (rvMaintenance == null)
-                    return false;
-
-                _context.Maintenances.Add(rvMaintenance);
-                await _context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-        }
-
-        public async Task<bool> DeleteMaintenanceAsync(int id)
-        {
-            try
-            {
-                RvMaintenance? deleteMain = await _context.Maintenances.FirstOrDefaultAsyncEF(x => x.Id == id);
-
-                if (deleteMain == null)
-                    return false;
-
-                _context.Maintenances.Remove(deleteMain);
-                await _context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-        }
-
-        public async Task<IEnumerable<RvMaintenance>?> GetMaintenanceAsync()
-        {
-            try
-            {
-                List<RvMaintenance> rvMaintenances = await _context.Maintenances
-                                                                        .Include(u => u.User)
+                List<RvMaintenanceDto> rvMaintenances = await Context.Maintenances
                                                                         .Include(v => v.Vehicle)
-                                                                        .ToListAsync();
+                                                                        .Select(m => new RvMaintenanceDto
+                                                                        {
+                                                                            Id = m.Id,
+                                                                            IsFluidChecked = m.IsFluidChecked,
+                                                                            IsMaintenance = m.IsMaintenance,
+                                                                            IsSystemsChecked = m.IsSystemsChecked,
+                                                                            IsTireInspected = m.IsTireInspected,
+                                                                            CreatedOn = m.CreatedOn,
+                                                                            MaintenanceStart = m.MaintenanceStart,
+                                                                            MaintenanceEnd = m.MaintenanceEnd,
+                                                                        }).ToListAsyncEF();
 
                 if (!rvMaintenances.Any())
                     return null;
@@ -72,14 +39,24 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<RvMaintenance?> GetMaintenanceByIdAsync(int id)
+        public async Task<RvMaintenanceDto?> GetMaintenanceByIdAsync(int id)
         {
             try
             {
-                RvMaintenance? rvMain = await _context.Maintenances
+                RvMaintenanceDto? rvMain = await Context.Maintenances
                                                             .Include(u => u.User)
                                                             .Include(v => v.Vehicle)
-                                                            .FirstOrDefaultAsyncEF(x => x.Id == id);
+                                                            .Select(m => new RvMaintenanceDto
+                                                            {
+                                                                Id = m.Id,
+                                                                IsFluidChecked = m.IsFluidChecked,
+                                                                IsMaintenance = m.IsMaintenance,
+                                                                IsSystemsChecked = m.IsSystemsChecked,
+                                                                IsTireInspected = m.IsTireInspected,
+                                                                CreatedOn = m.CreatedOn,
+                                                                MaintenanceStart = m.MaintenanceStart,
+                                                                MaintenanceEnd = m.MaintenanceEnd,
+                                                            }).FirstOrDefaultAsyncEF(x => x.Id == id);
 
                 if (rvMain == null)
                     return null;
@@ -92,11 +69,11 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             }
         }
 
-        public async Task<bool> UpdateMaintenanceAsync(RvMaintenance newRvMaintenance)
+        public async Task<bool> UpdateMaintenanceAsync(RvMaintenanceDto newRvMaintenance)
         {
             try
             {
-                RvMaintenance? rvMain = await _context.Maintenances.FirstOrDefaultAsyncEF(x => x.Id == newRvMaintenance.Id);
+                RvMaintenance? rvMain = await Context.Maintenances.FirstOrDefaultAsyncEF(x => x.Id == newRvMaintenance.Id);
 
                 if (rvMain == null)
                     return false;
@@ -112,8 +89,8 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                     ModifiedOn = DateTime.Now,
                 };
 
-                _context.Maintenances.Update(updateRvMain);
-                await _context.SaveChangesAsync();
+                Context.Maintenances.Update(updateRvMain);
+                await SaveAsync();
 
                 return true;
             }

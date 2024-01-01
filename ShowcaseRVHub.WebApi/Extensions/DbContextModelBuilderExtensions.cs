@@ -20,29 +20,29 @@ namespace ShowcaseRVHub.WebApi.Extensions
             modelBuilder.Entity<ShowcaseUser>()
                 .HasMany(u => u.Arrivals)
                 .WithOne(a => a.User)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<ShowcaseUser>()
                 .HasMany(u => u.Departures)
                 .WithOne(a => a.User)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<ShowcaseUser>()
                 .HasMany(u => u.Vehicles)
                 .WithOne(a => a.User)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<ShowcaseUser>()
                 .HasMany(u => u.RvMaintenances)
                 .WithOne(a => a.User)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Build VehicleRv Model
             modelBuilder.Entity<VehicleRv>()
                 .HasMany(r => r.Rentals)
                 .WithOne(v => v.Vehicle)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<VehicleRv>()
                 .HasMany(r => r.RvMaintenances)
                 .WithOne(v => v.Vehicle)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<VehicleRv>()
                 .HasOne(u => u.User)
                 .WithMany(r => r.Vehicles)
@@ -52,17 +52,17 @@ namespace ShowcaseRVHub.WebApi.Extensions
             modelBuilder.Entity<ShowcaseRenter>()
                 .HasMany(r => r.Rentals)
                 .WithOne(r => r.Renter)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Build Rental Model
             modelBuilder.Entity<Rental>()
                 .HasOne(r => r.Arrival)
                 .WithOne(a => a.Rental)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Rental>()
                 .HasOne(r => r.Departure)
                 .WithOne(d => d.Rental)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Build Many to Many relationship between Renter and VehicleRv
             modelBuilder.Entity<VehicleRvRenter>()

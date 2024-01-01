@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ShowcaseRVHub.WebApi.DTOs;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShowcaseRVHub.WebApi.Models
@@ -16,10 +17,10 @@ namespace ShowcaseRVHub.WebApi.Models
         public DateTime? ModifiedOn { get; set; }
         [Required] public bool IsRemembered { get; set; } = false;
 
-        public ICollection<Arrival>? Arrivals { get; set; }
-        public ICollection<Departure>? Departures { get; set; }
-        public ICollection<VehicleRv>? Vehicles { get; set; }
-        public ICollection<RvMaintenance>? RvMaintenances { get; set; }
+        [JsonIgnore] public ICollection<Arrival>? Arrivals { get; set; }
+        [JsonIgnore] public ICollection<Departure>? Departures { get; set; }
+        [JsonIgnore] public ICollection<VehicleRv>? Vehicles { get; set; }
+        [JsonIgnore] public ICollection<RvMaintenance>? RvMaintenances { get; set; }
 
         public ShowcaseUser()
         {

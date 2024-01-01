@@ -1,13 +1,12 @@
-﻿using ShowcaseRVHub.WebApi.Models;
+﻿using ShowcaseRVHub.WebApi.DTOs;
+using ShowcaseRVHub.WebApi.Models;
 
 namespace ShowcaseRVHub.WebApi.Data.Interfaces
 {
-    public interface IArrivalRepo
+    public interface IArrivalRepo : IGenericRepository<Arrival>
     {
-        Task<bool> CreateArrivalAsync(Arrival arrival);
-        Task<IEnumerable<Arrival>?> GetArrivalsAsync();
-        Task<Arrival?> GetArrivalByIdAsync(int id);
-        Task<bool> UpdateArrivalAsync(Arrival arrival);
-        Task<bool> DeleteArrivalAsync(int id);
+        Task<IEnumerable<ArrivalDto>?> GetArrivalsAsync();
+        Task<ArrivalDto?> GetArrivalByIdAsync(int id);
+        Task<bool> UpdateArrivalAsync(ArrivalDto arrival);
     }
 }

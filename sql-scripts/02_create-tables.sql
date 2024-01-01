@@ -66,8 +66,8 @@ BEGIN TRY
 		GeneratorHours INT NOT NULL,
 		MasterBedType TINYINT NOT NULL,
 		IsBooked BIT NOT NULL DEFAULT 0,
-		HasSlideOut BIT NULL,
-		HasGenerator BIT NULL,
+		HasSlideOut BIT NOT NULL,
+		HasGenerator BIT NOT NULL,
 		UserId UNIQUEIDENTIFIER NOT NULL,
 		PRIMARY KEY (Id),
 		CONSTRAINT FK_UserVehicle FOREIGN KEY (UserId) REFERENCES dbo.ShowcaseUsers(Id)

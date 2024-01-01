@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using ShowcaseRVHub.WebApi.Data.Interfaces;
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 
 
@@ -18,73 +19,69 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShowcaseUser>>> GetUsers()
+        public async Task<ActionResult> GetUsers() //<IEnumerable<ShowcaseUserDto>>
         {
-            IEnumerable<ShowcaseUser>? users = await _userRepo.GetUsersAsync();
+            IEnumerable<ShowcaseUserDto>? users = await _userRepo.GetAllUsersAsync();
 
-            if (users == null)
-                return NotFound(new { Message = $"Your request could not be made." });
+            return users != null
+                ? Ok(users.Take(5))
+                : NotFound(new { Message = $"Your request could not be made." });
 
-            return Ok(users.Take(5));
+            
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShowcaseUser>> GetUserById(Guid id)
+        public async Task<ActionResult<ShowcaseUserDto?>> GetUserById(Guid id)
         {
-            ShowcaseUser? user = await _userRepo.GetUserByIdAsync(id);
+            ShowcaseUserDto? user = await _userRepo.GetUserByIdAsync(id);
 
-            if (user == null)
-                return NotFound(new { Message = $"User with id {id} does not exist." } );
-
-            return Ok(user);
+            return user != null
+                ? Ok(user)
+                : NotFound(new { Message = $"User with id {id} does not exist." } );
         }
 
         [HttpPost]
         public async Task<ActionResult<ShowcaseUser>> CreateUser(ShowcaseUser user)
         {
-            user.Id = Guid.NewGuid();
-            if (await _userRepo.CreateUserAsync(user))
-                return Ok(user);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _userRepo.CreateAsync(user)
+                ? Ok(user)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser(Guid id, ShowcaseUser updateUser)
+        public async Task<ActionResult> UpdateUser(Guid id, ShowcaseUserDto updateUser)
         {
-            ShowcaseUser? user = await _userRepo.GetUserByIdAsync(id);
+            ShowcaseUserDto? user = await _userRepo.GetUserByIdAsync(id);
 
             if (user == null)
                 return NotFound(new { Message = $"User with id {id} does not exist." });                
 
-            if (await _userRepo.UpdateUserAsync(updateUser))
-                return Ok(updateUser);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _userRepo.UpdateUserAsync(updateUser)
+                ? Ok(user)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult> UpdateUserPassword(Guid id, JsonPatchDocument<ShowcaseUser> updateUser)
+        public async Task<ActionResult> UpdateUserPassword(Guid id, JsonPatchDocument<ShowcaseUserDto> updateUser)
         {
-            ShowcaseUser? showcaseUser = await _userRepo.GetUserByIdAsync(id);
+            ShowcaseUserDto? showcaseUser = await _userRepo.GetUserByIdAsync(id);
 
             if (showcaseUser == null)
                 return NotFound(new { Message = $"User with id {id} does not exist." });
 
             updateUser.ApplyTo(showcaseUser);
-            if (await _userRepo.UpdateUsersPasswordAsync(id, showcaseUser))
-                return Ok(showcaseUser);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+
+            return await _userRepo.UpdateUsersPasswordAsync(id, showcaseUser)
+                ? Ok(showcaseUser)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(Guid id)
+        public async Task<ActionResult> DeleteUser(ShowcaseUser user)
         {
-            if (await _userRepo.DeleteUserAsync(id))
-                return NoContent();
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _userRepo.DeleteAsync(user)
+                ? NoContent()
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
     }
 }

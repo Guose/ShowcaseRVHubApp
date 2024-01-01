@@ -1,7 +1,16 @@
-﻿namespace ShowcaseRVHub.MAUI.ViewModel
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace ShowcaseRVHub.MAUI.ViewModel
 {
-    public partial class ViewModelBase : ObservableObject
+    public partial class ViewModelBase : ObservableObject //, INotifyPropertyChanged
     {
+        // public event PropertyChangedEventHandler PropertyChanged;
+        // protected new virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
+        // {
+        //     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        // }
+
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsButtonNotEnabled))]
         bool isButtonEnabled;
