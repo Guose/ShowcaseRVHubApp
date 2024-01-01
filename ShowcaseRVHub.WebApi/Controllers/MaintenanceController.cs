@@ -22,10 +22,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             IEnumerable<RvMaintenanceDto>? maintenances = await _maintenance.GetMaintenanceAsync();
 
-            if (maintenances == null)
-                return NotFound(new { Message = $"Your request could not be made." });
-
-            return Ok(maintenances.Take(5));
+            return maintenances != null
+                ? Ok(maintenances.Take(5))
+                : NotFound(new { Message = $"Your request could not be made." });            
         }
 
         [HttpGet("{id}")]
@@ -33,18 +32,17 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             RvMaintenanceDto? maintenance = await _maintenance.GetMaintenanceByIdAsync(id);
 
-            if (maintenance == null)
-                return NotFound(new { Message = $"Departure with id {id} does not exist." });
-
-            return Ok(maintenance);
+            return maintenance != null
+                ? Ok(maintenance)
+                : NotFound(new { Message = $"Departure with id {id} does not exist." });            
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateMaintenance(RvMaintenance newMaintenance)
         {
-            return await _maintenance.AddAsync(newMaintenance)
-            ? CreatedAtRoute(nameof(CreateMaintenance), new { id = newMaintenance.Id }, newMaintenance)
-            : BadRequest(new { Message = $"Your request could not be made." });
+            return await _maintenance.CreateAsync(newMaintenance)
+                ? CreatedAtRoute(nameof(CreateMaintenance), new { id = newMaintenance.Id }, newMaintenance)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
@@ -56,8 +54,8 @@ namespace ShowcaseRVHub.WebApi.Controllers
                 return NotFound(new { Message = $"Rv Maintenance item with id {id} does not exist." });
 
             return await _maintenance.UpdateMaintenanceAsync(updateMaintenance)
-            ? Ok(main)
-            : BadRequest(new { Message = "Your request could not be made." });
+                ? Ok(main)
+                : BadRequest(new { Message = "Your request could not be made." });
         }
 
         [HttpPatch("{id}")]
@@ -71,20 +69,16 @@ namespace ShowcaseRVHub.WebApi.Controllers
             updateMaintenance.ApplyTo(maintenancePatch);
 
             return await _maintenance.UpdateMaintenanceAsync(maintenancePatch)
-            ? Ok(maintenancePatch)
-            : BadRequest(new { Message = "Your request could not be made." });
+                ? Ok(maintenancePatch)
+                : BadRequest(new { Message = "Your request could not be made." });
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteMaintenance(RvMaintenance maintenance)
+        public async Task<ActionResult> DeleteMaintenance(RvMaintenance maintenance)
         {
-            if (maintenance != null)
-            {
-                _maintenance.Remove(maintenance);
-                return NoContent();
-            }
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _maintenance.DeleteAsync(maintenance)
+                ? NoContent()
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
     }
 }

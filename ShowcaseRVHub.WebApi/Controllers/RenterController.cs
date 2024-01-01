@@ -22,10 +22,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             IEnumerable<ShowcaseRenterDto>? renters = await _renterRepo.GetRentersAsync();
 
-            if (renters == null)
-                return NotFound(new { Message = $"Your request could not be made." });
-
-            return Ok(renters.Take(5));
+            return renters != null
+                ? Ok(renters.Take(5))
+                : NotFound(new { Message = $"Your request could not be made." });            
         }
 
         [HttpGet("{id}")]
@@ -33,27 +32,25 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             ShowcaseRenterDto? renter = await _renterRepo.GetRenterByIdAsync(id);
 
-            if (renter == null)
-                return NotFound(new { Message = $"Item with id {id} does not exist." });
-
-            return Ok(renter);
+            return renter != null
+                ? Ok(renter)
+                : NotFound(new { Message = $"Item with id {id} does not exist." });            
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateRental(ShowcaseRenter renter)
         {
-            return await _renterRepo.AddAsync(renter)
-            ? Ok(renter)
-            : BadRequest(new { Message = $"Your request could not be made." });
+            return await _renterRepo.CreateAsync(renter)
+                ? Ok(renter)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateRental(int id, ShowcaseRenterDto updateRenter)
         {
-            if (await _renterRepo.UpdateRenterAsync(updateRenter))
-                return Ok(updateRenter);
-            else
-                return NotFound(new { Message = $"Renter with id {id} does not exist." });
+            return await _renterRepo.UpdateRenterAsync(updateRenter)
+                ? Ok(updateRenter)
+                : NotFound(new { Message = $"Renter with id {id} does not exist." });
         }
 
         [HttpPatch("{id}")]
@@ -67,21 +64,16 @@ namespace ShowcaseRVHub.WebApi.Controllers
             updateRenter.ApplyTo(renterPatch);
 
             return await _renterRepo.UpdateRenterAsync(renterPatch)
-            ? Ok(renterPatch)
-            : BadRequest(new { Message = $"Your request could not be made." });
+                ? Ok(renterPatch)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteRental(ShowcaseRenter renter)
+        public async Task<ActionResult> DeleteRental(ShowcaseRenter renter)
         {
-            if (renter != null)
-            {
-                _renterRepo.Remove(renter);
-                return NoContent();
-            }
-                
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _renterRepo.DeleteAsync(renter)
+                ? NoContent()
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
     }
 }

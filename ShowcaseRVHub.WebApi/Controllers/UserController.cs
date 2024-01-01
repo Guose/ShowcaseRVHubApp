@@ -23,10 +23,11 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             IEnumerable<ShowcaseUserDto>? users = await _userRepo.GetAllUsersAsync();
 
-            if (users == null)
-                return NotFound(new { Message = $"Your request could not be made." });
+            return users != null
+                ? Ok(users.Take(5))
+                : NotFound(new { Message = $"Your request could not be made." });
 
-            return Ok(users.Take(5));
+            
         }
 
         [HttpGet("{id}")]
@@ -34,19 +35,17 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             ShowcaseUserDto? user = await _userRepo.GetUserByIdAsync(id);
 
-            if (user == null)
-                return NotFound(new { Message = $"User with id {id} does not exist." } );
-
-            return Ok(user);
+            return user != null
+                ? Ok(user)
+                : NotFound(new { Message = $"User with id {id} does not exist." } );
         }
 
         [HttpPost]
         public async Task<ActionResult<ShowcaseUser>> CreateUser(ShowcaseUser user)
         {
-            if (await _userRepo.AddAsync(user))
-                return Ok(user);
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _userRepo.CreateAsync(user)
+                ? Ok(user)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
@@ -58,8 +57,8 @@ namespace ShowcaseRVHub.WebApi.Controllers
                 return NotFound(new { Message = $"User with id {id} does not exist." });                
 
             return await _userRepo.UpdateUserAsync(updateUser)
-            ? Ok(user)
-            : BadRequest(new { Message = $"Your request could not be made." });
+                ? Ok(user)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPatch("{id}")]
@@ -73,20 +72,16 @@ namespace ShowcaseRVHub.WebApi.Controllers
             updateUser.ApplyTo(showcaseUser);
 
             return await _userRepo.UpdateUsersPasswordAsync(id, showcaseUser)
-            ? Ok(showcaseUser)
-            : BadRequest(new { Message = $"Your request could not be made." });
+                ? Ok(showcaseUser)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteUser(ShowcaseUser user)
+        public async Task<ActionResult> DeleteUser(ShowcaseUser user)
         {
-            if (user != null)
-            {
-                _userRepo.Remove(user);
-                return NoContent();
-            }
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _userRepo.DeleteAsync(user)
+                ? NoContent()
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
     }
 }

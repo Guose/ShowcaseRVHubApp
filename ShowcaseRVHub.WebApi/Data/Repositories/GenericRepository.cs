@@ -13,7 +13,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             Context = context;
         }
 
-        public async Task<bool> AddAsync(TEntity model)
+        public async Task<bool> CreateAsync(TEntity model)
         {
             if (model == null)
             {
@@ -25,12 +25,15 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             return true;
         }
 
-        public void Remove(TEntity model)
-        {            
+        public async Task<bool> DeleteAsync(TEntity model)
+        {
             if (model != null)
             {
                 Context.Set<TEntity>().Remove(model);
-            }            
+                await SaveAsync();
+                return true;
+            }
+            return false;        
         }
 
         public bool HasChanges()

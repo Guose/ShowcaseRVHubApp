@@ -3,8 +3,8 @@ namespace ShowcaseRVHub.WebApi.Data.Interfaces
     public interface IGenericRepository<T>
     {
         Task SaveAsync();
-        Task<bool> AddAsync(T model);
+        Task<bool> CreateAsync(T model);
         bool HasChanges();
-        void Remove(T model);
+        Task<bool> DeleteAsync(T model);
     }
 }

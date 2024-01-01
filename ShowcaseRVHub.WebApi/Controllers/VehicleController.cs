@@ -28,10 +28,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             IEnumerable<VehicleRVDto>? rvs = await _rvRepo.GetAllVehiclesAsync();
 
-            if (rvs == null)
-                return NotFound(new { Message = $"Your request could not be made." });
-
-            return Ok(rvs);
+            return rvs != null 
+                ? Ok(rvs)
+                : NotFound(new { Message = $"Your request could not be made." });            
         }
 
         [HttpGet("{id}")]
@@ -57,7 +56,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateRV(VehicleRv rv)
         {
-            return await _rvRepo.AddAsync(rv) 
+            return await _rvRepo.CreateAsync(rv) 
                 ? Ok(rv) 
                 : BadRequest(new { Message = $"Your request could not be made." });
         }
@@ -76,15 +75,11 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteRV(VehicleRv rv)
+        public async Task<ActionResult> DeleteRV(VehicleRv rv)
         {            
-            if (rv != null)
-            {
-                _rvRepo.Remove(rv);
-                return NoContent();
-            }                
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _rvRepo.DeleteAsync(rv)
+                ? NoContent()
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
     }
 }

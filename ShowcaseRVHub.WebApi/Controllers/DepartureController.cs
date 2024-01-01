@@ -22,10 +22,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             IEnumerable<DepartureDto>? departures = await _departureRepo.GetDeparturesAsync();
 
-            if (departures == null)
-                return NotFound(new { Message = $"Your request could not be made." });
-
-            return Ok(departures.Take(5));
+            return departures != null
+                ? Ok(departures.Take(5))
+                : NotFound(new { Message = $"Your request could not be made." });            
         }
 
         [HttpGet("{id}")]
@@ -33,18 +32,17 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             DepartureDto? departure = await _departureRepo.GetDepartureByIdAsync(id);
 
-            if (departure == null)
-                return NotFound(new { Message = $"Departure with id {id} does not exist." });
-
-            return Ok(departure);
+            return departure != null
+                ? Ok(departure)
+                : NotFound(new { Message = $"Departure with id {id} does not exist." });            
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateDeparture(Departure newDeparture)
         {
-            return await _departureRepo.AddAsync(newDeparture)
-            ? CreatedAtRoute(nameof(CreateDeparture), new { id = newDeparture.Id }, newDeparture)
-            : BadRequest(new { Message = $"Your request could not be made." });
+            return await _departureRepo.CreateAsync(newDeparture)
+                ? CreatedAtRoute(nameof(CreateDeparture), new { id = newDeparture.Id }, newDeparture)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
@@ -56,8 +54,8 @@ namespace ShowcaseRVHub.WebApi.Controllers
                 return NotFound(new { Message = $"Departure with id {id} does not exist." });
             
             return await _departureRepo.UpdateDepartureAsync(newDeparture)
-            ? Ok(departure)
-            : BadRequest(new { Message = "Your request could not be made." } );
+                ? Ok(departure)
+                : BadRequest(new { Message = "Your request could not be made." } );
         }
 
         [HttpPatch("{id}")]
@@ -71,20 +69,16 @@ namespace ShowcaseRVHub.WebApi.Controllers
             updateDeparture.ApplyTo(departurePatch);
 
             return await _departureRepo.UpdateDepartureAsync(departurePatch)
-            ? Ok(departurePatch)
-            : BadRequest(new { Message = "Your request could not be made." });
+                ? Ok(departurePatch)
+                : BadRequest(new { Message = "Your request could not be made." });
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteDeparture(Departure departure)
+        public async Task<ActionResult> DeleteDeparture(Departure departure)
         {
-            if (departure != null)
-            {
-                _departureRepo.Remove(departure);
-                return NoContent();
-            }
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _departureRepo.DeleteAsync(departure)
+                ? NoContent()
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
     }
 }

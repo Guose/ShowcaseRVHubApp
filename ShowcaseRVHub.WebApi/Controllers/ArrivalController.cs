@@ -22,10 +22,9 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             IEnumerable<ArrivalDto>? arrivals = await _arrivalRepo.GetArrivalsAsync();
 
-            if (arrivals == null)
-                return NotFound(new { Message = $"Your request could not be made." });
-
-            return Ok(arrivals.Take(5));
+            return arrivals != null
+                ? Ok(arrivals.Take(5))
+                : NotFound(new { Message = $"Your request could not be made." });            
         }
 
         [HttpGet("{id}")]
@@ -33,18 +32,17 @@ namespace ShowcaseRVHub.WebApi.Controllers
         {
             ArrivalDto? arrival = await _arrivalRepo.GetArrivalByIdAsync(id);
 
-            if (arrival == null)
-                return NotFound(new { Message = $"Arrival with id {id} does not exist." });
-
-            return Ok(arrival);
+            return arrival != null 
+                ? Ok(arrival)
+                : NotFound(new { Message = $"Arrival with id {id} does not exist." });
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateArrival([FromBody]Arrival newArrival)
         {
-            return await _arrivalRepo.AddAsync(newArrival)
-            ? CreatedAtRoute(nameof(CreateArrival), new { id = newArrival.Id }, newArrival)
-            : BadRequest(new { Message = $"Your request could not be made." });
+            return await _arrivalRepo.CreateAsync(newArrival)
+                ? CreatedAtRoute(nameof(CreateArrival), new { id = newArrival.Id }, newArrival)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPut("{id}")]
@@ -56,8 +54,8 @@ namespace ShowcaseRVHub.WebApi.Controllers
                 return NotFound(new { Message = $"Arrival with id {id} does not exist." });
 
             return await _arrivalRepo.UpdateArrivalAsync(updateArrival)
-            ? Ok(updateArrival)
-            : BadRequest(new { Message = $"Your request could not be made." });
+                ? Ok(updateArrival)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpPatch("{id}")]
@@ -71,20 +69,16 @@ namespace ShowcaseRVHub.WebApi.Controllers
             updateArrival.ApplyTo(arrivalPatch);
 
             return await _arrivalRepo.UpdateArrivalAsync(arrivalPatch)
-            ? Ok(arrivalPatch)
-            : BadRequest(new { Message = $"Your request could not be made." });
+                ? Ok(arrivalPatch)
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteArrival(Arrival arrival)
+        public async Task<ActionResult> DeleteArrival(Arrival arrival)
         {
-            if (arrival != null)
-            {
-                _arrivalRepo.Remove(arrival);
-                return NoContent();
-            }
-            else
-                return BadRequest(new { Message = $"Your request could not be made." });
+            return await _arrivalRepo.DeleteAsync(arrival)
+                ? NoContent()
+                : BadRequest(new { Message = $"Your request could not be made." });
         }
     }
 }
