@@ -6,54 +6,60 @@ namespace ShowcaseRVHub.XUnitTest
 {
     public class ShowcaseDbContextHelper
     {
-        /// <summary>
-        /// Returns an instance of the In-Memory context for tests
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns>In-Memory DbContext</returns>
-        public static ShowcaseDbContext GetMockDb(string name)
+        private readonly ShowcaseDbContext? db;
+        private readonly DbContextOptions<ShowcaseDbContext> dbOptions;
+        public ShowcaseDbContextHelper(string name)
         {
-            DbContextOptions<ShowcaseDbContext>? options = new DbContextOptionsBuilder<ShowcaseDbContext>()
+            dbOptions = new DbContextOptionsBuilder<ShowcaseDbContext>()
                 .UseInMemoryDatabase(name)
                 .Options;
 
-            ShowcaseDbContext? db = new ShowcaseDbContext(options);
+            db = new ShowcaseDbContext(dbOptions);
+        }
 
+        /// <summary>
+        /// Returns an instance of the In-Memory context for tests
+        /// </summary>
+        /// <param name="name">string</param>
+        /// <param name="db">ShowcaseDbContext</param>
+        /// <returns>In-Memory DbContext</returns>
+        public async Task<ShowcaseDbContext> GetMockDbAsync()
+        {
             // Seed In-Memory database
-            if (!db.ShowcaseUsers.Any())
+            if (!db!.ShowcaseUsers.Any())
             {
-                db.ShowcaseUsers.AddRangeAsync(DbSeedData.GetUserSeedData());
-                db.SaveChangesAsync();
-            }
-            if (!db.Renters.Any())
-            {
-                db.Renters.AddRangeAsync(DbSeedData.GetRenterSeedData());
-                db.SaveChangesAsync();
+                await db.ShowcaseUsers.AddRangeAsync(DbSeedData.GetUserSeedData());
+                await db.SaveChangesAsync();
             }
             if (!db.VehicleRVs.Any())
             {
-                db.VehicleRVs.AddRangeAsync(DbSeedData.GetRvSeedData());
-                db.SaveChangesAsync();
+                await db.VehicleRVs.AddRangeAsync(DbSeedData.GetRvSeedData());
+                await db.SaveChangesAsync();
+            }
+            if (!db.Renters.Any())
+            {
+                await db.Renters.AddRangeAsync(DbSeedData.GetRenterSeedData());
+                await db.SaveChangesAsync();
             }
             if (!db.Rentals.Any())
             {
-                db.Rentals.AddRangeAsync(DbSeedData.GetRentalSeedData());
-                db.SaveChangesAsync();
-            }
-            if (!db.Arrivals.Any())
-            {
-                db.Arrivals.AddRangeAsync(DbSeedData.GetArrivalSeedData());
-                db.SaveChangesAsync();
+                await db.Rentals.AddRangeAsync(DbSeedData.GetRentalSeedData());
+                await db.SaveChangesAsync();
             }
             if (!db.Departures.Any())
             {
-                db.Departures.AddRangeAsync(DbSeedData.GetDepartureSeedData());
-                db.SaveChangesAsync();
+                await db.Departures.AddRangeAsync(DbSeedData.GetDepartureSeedData());
+                await db.SaveChangesAsync();
+            }
+            if (!db.Arrivals.Any())
+            {
+                await db.Arrivals.AddRangeAsync(DbSeedData.GetArrivalSeedData());
+                await db.SaveChangesAsync();
             }
             if (!db.Maintenances.Any())
             {
-                db.Maintenances.AddRangeAsync(DbSeedData.GetMaintenanceSeedData());
-                db.SaveChangesAsync();
+                await db.Maintenances.AddRangeAsync(DbSeedData.GetMaintenanceSeedData());
+                await db.SaveChangesAsync();
             }
 
             return db;

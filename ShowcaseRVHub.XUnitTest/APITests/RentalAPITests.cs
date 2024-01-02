@@ -1,12 +1,14 @@
-﻿using ShowcaseRVHub.WebApi.Models;
+﻿using ShowcaseRVHub.WebApi.Data;
+using ShowcaseRVHub.WebApi.Models;
 using System.Text.Json;
 
-namespace ShowcaseRVHub.XUnitTest
+namespace ShowcaseRVHub.XUnitTest.APITests
 {
     public class RentalAPITests
     {
-        private readonly RentalRepo rentalAPIs = new(ShowcaseDbContextHelper.GetMockDb(nameof(RentalAPITests)));
-
+        private ShowcaseDbContext? _context;
+        private readonly ShowcaseDbContextHelper _showcaseDbContextHelper;
+        private RentalRepo? _repo;
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
         private readonly string _url;
@@ -14,8 +16,9 @@ namespace ShowcaseRVHub.XUnitTest
 
         public RentalAPITests()
         {
+            _showcaseDbContextHelper = new ShowcaseDbContextHelper(nameof(RentalAPITests));
             _httpClient = new HttpClient();
-            _baseAddress = "http://localhost:80";
+            _baseAddress = "http://localhost:5000";
             _url = $"{_baseAddress}/api/rentals/";
 
             _jsonSerializerOptions = new JsonSerializerOptions
@@ -24,28 +27,39 @@ namespace ShowcaseRVHub.XUnitTest
             };
         }
 
-        [Fact]
-        public async Task Can_GetAll_Rentals()
+        private async Task<ShowcaseDbContext> GetData()
         {
-            List<Rental>? rentals = new List<Rental>();
-
-            var response = await _httpClient.GetAsync(_url);
-            string content = await response.Content.ReadAsStringAsync();
-            rentals = response.IsSuccessStatusCode
-                ? JsonSerializer.Deserialize<List<Rental>>(content, _jsonSerializerOptions)
-                : null;
-
-            Assert.NotNull(rentals);
+            _context = await _showcaseDbContextHelper.GetMockDbAsync();
+            return _context;
         }
 
         [Fact]
-        public async Task Can_Get_Rental_By_ID()
+        public async Task Add_New_Rental()
         {
-            Rental? rental = new Rental();
+            using (_context = await _showcaseDbContextHelper.GetMockDbAsync())
+            {
+                _repo = new RentalRepo(_context);
+            }
+        }
 
-            var response = await _httpClient.GetAsync(_url + -1);
+        [Fact]
+        public async Task Can_GetAll_Rentals()
+        {
+            HttpResponseMessage? response = await _httpClient.GetAsync(_url);
             string content = await response.Content.ReadAsStringAsync();
-            rental = response.IsSuccessStatusCode
+            List<Rental>? rentals = response.IsSuccessStatusCode
+                ? JsonSerializer.Deserialize<List<Rental>>(content, _jsonSerializerOptions)
+                : null;
+
+            Assert.NotEmpty(rentals!);
+        }
+
+        [Fact]
+        public async Task Can_Get_Rental_By_Id()
+        {
+            HttpResponseMessage? response = await _httpClient.GetAsync(_url + -1);
+            string content = await response.Content.ReadAsStringAsync();
+            Rental? rental = response.IsSuccessStatusCode
                 ? JsonSerializer.Deserialize<Rental>(content, _jsonSerializerOptions)
                 : null;
 
@@ -55,11 +69,9 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Can_Get_Rental_By_ID_FAIL()
         {
-            Rental? rental = new Rental();
-
-            var response = await _httpClient.GetAsync(_url + 1);
+            HttpResponseMessage? response = await _httpClient.GetAsync(_url + 1);
             string content = await response.Content.ReadAsStringAsync();
-            rental = response.IsSuccessStatusCode
+            Rental? rental = response.IsSuccessStatusCode
                 ? JsonSerializer.Deserialize<Rental>(content, _jsonSerializerOptions)
                 : null;
 

@@ -1,14 +1,15 @@
-﻿using ShowcaseRVHub.WebApi.DTOs;
+﻿using ShowcaseRVHub.WebApi.Data;
+using ShowcaseRVHub.WebApi.DTOs;
 using ShowcaseRVHub.WebApi.Models;
 using System.Text.Json;
 
-namespace ShowcaseRVHub.XUnitTest
+namespace ShowcaseRVHub.XUnitTest.APITests
 {
     public class RvAPITests
     {
-        private readonly RVRepo rvAPIs = new(
-            ShowcaseDbContextHelper.GetMockDb(nameof(RvAPITests)));
-
+        private ShowcaseDbContext? _context;
+        private readonly ShowcaseDbContextHelper _showcaseDbContextHelper;
+        private readonly RVRepo? _repo;
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
         private readonly string _url;
@@ -16,6 +17,7 @@ namespace ShowcaseRVHub.XUnitTest
 
         public RvAPITests()
         {
+            _showcaseDbContextHelper = new ShowcaseDbContextHelper(nameof(RvAPITests));
             _httpClient = new HttpClient();
             _baseAddress = "http://localhost:80";
             _url = $"{_baseAddress}/api/vehicles/";
@@ -25,6 +27,11 @@ namespace ShowcaseRVHub.XUnitTest
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
 
+        }
+        private async Task<ShowcaseDbContext> GetData()
+        {
+            _context = await _showcaseDbContextHelper.GetMockDbAsync();
+            return _context;
         }
 
         [Fact]
@@ -66,7 +73,7 @@ namespace ShowcaseRVHub.XUnitTest
         [Fact]
         public async Task Delete_RV_By_ID()
         {
-            VehicleRVDto? rv = await rvAPIs.GetVehicleByIdAsync(-2);
+            VehicleRVDto? rv = await _repo!.GetVehicleByIdAsync(-2);
 
             if (rv == null)
                 Assert.Fail();

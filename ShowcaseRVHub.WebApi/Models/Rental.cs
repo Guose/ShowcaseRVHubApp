@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LinqToDB.Mapping;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,9 +17,9 @@ namespace ShowcaseRVHub.WebApi.Models
 
         
         public int? DepartureId { get; set; }
-        [ForeignKey("DepartureId")] public Departure? Departure { get; set; }
+        [Nullable][ForeignKey("DepartureId")] public Departure? Departure { get; set; }
         public int? ArrivalId { get; set; }
-        [ForeignKey("ArrivalId")] public Arrival? Arrival { get; set; }
+        [Nullable][ForeignKey("ArrivalId")] public Arrival? Arrival { get; set; }
 
 
         [Required] public int RenterId { get; set; }

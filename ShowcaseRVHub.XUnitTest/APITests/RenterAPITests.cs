@@ -1,12 +1,14 @@
-﻿using ShowcaseRVHub.WebApi.Models;
+﻿using ShowcaseRVHub.WebApi.Data;
+using ShowcaseRVHub.WebApi.Models;
 using System.Text.Json;
 
-namespace ShowcaseRVHub.XUnitTest
+namespace ShowcaseRVHub.XUnitTest.APITests
 {
     public class RenterAPITests
     {
-        private readonly RenterRepo renterAPIs = new(ShowcaseDbContextHelper.GetMockDb(nameof(RenterAPITests)));
-
+        private ShowcaseDbContext? _context;
+        private readonly ShowcaseDbContextHelper _showcaseDbContextHelper;
+        private RenterRepo? _repo;
         private readonly HttpClient _httpClient;
         private readonly string _baseAddress;
         private readonly string _url;
@@ -14,14 +16,21 @@ namespace ShowcaseRVHub.XUnitTest
 
         public RenterAPITests()
         {
+            _showcaseDbContextHelper = new ShowcaseDbContextHelper(nameof(RenterAPITests));
             _httpClient = new HttpClient();
-            _baseAddress = "http://localhost:80";
+            _baseAddress = "http://localhost:5000";
             _url = $"{_baseAddress}/api/renters/";
 
             _jsonSerializerOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
+        }
+
+        private async Task<ShowcaseDbContext> GetData()
+        {
+            _context = await _showcaseDbContextHelper.GetMockDbAsync();
+            return _context;
         }
 
         [Fact]
