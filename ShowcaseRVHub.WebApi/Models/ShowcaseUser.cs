@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using ShowcaseRVHub.WebApi.DTOs;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShowcaseRVHub.WebApi.Models

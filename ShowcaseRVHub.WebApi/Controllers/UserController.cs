@@ -19,7 +19,7 @@ namespace ShowcaseRVHub.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetUsers() //<IEnumerable<ShowcaseUserDto>>
+        public async Task<ActionResult> GetUsers()
         {
             IEnumerable<ShowcaseUserDto>? users = await _userRepo.GetAllUsersAsync();
 

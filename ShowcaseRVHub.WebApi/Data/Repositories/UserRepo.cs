@@ -10,7 +10,7 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
     {
         public UserRepo(ShowcaseDbContext context) : base(context) {}
 
-                public async Task<IEnumerable<ShowcaseUserDto>?> GetAllUsersAsync()
+        public async Task<IEnumerable<ShowcaseUserDto>?> GetAllUsersAsync()
         {
             try
             {
