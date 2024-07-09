@@ -9,7 +9,6 @@ namespace ShowcaseRVHub.WebApi.DTOs
         public string? Phone { get; set; }
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public bool IsRemembered { get; set; } = false;
         public ICollection<ArrivalDto>? Arrivals { get; set; }
