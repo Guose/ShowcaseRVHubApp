@@ -10,50 +10,25 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
     {
         public UserRepo(ShowcaseDbContext context) : base(context) {}
 
-                public async Task<IEnumerable<ShowcaseUserDto>?> GetAllUsersAsync()
+        public async Task<IEnumerable<ShowcaseUserDto>?> GetAllUsersAsync()
         {
             try
             {
-                IEnumerable<ShowcaseUserDto>? userDto = await Context.ShowcaseUsers
-                                                                            .Include(a => a.Arrivals)
-                                                                            .Include(d => d.Departures)
-                                                                            .Include(v => v.Vehicles!)
-                                                                                .ThenInclude(m => m.RvMaintenances)
-                                                                            .Select(u => new ShowcaseUserDto
-                                                                            {
-                                                                                Id = u.Id,
-                                                                                Email = u.Email,
-                                                                                FirstName = u.FirstName,
-                                                                                LastName = u.LastName,
-                                                                                Phone = u.Phone,
-                                                                                Username = u.Username,
-                                                                                Password = u.Password,
-                                                                                CreatedOn = u.CreatedOn,
-                                                                                ModifiedOn = DateTime.Now,
-                                                                                IsRemembered = u.IsRemembered,
-                                                                                Arrivals = u.Arrivals!.Select(a => new ArrivalDto
-                                                                                {
-                                                                                    Id = a.Id,
-                                                                                }).ToList(),
-                                                                                Departures = u.Departures!.Select(d => new DepartureDto
-                                                                                {
-                                                                                    Id = d.Id,
-                                                                                }).ToList(),
-                                                                                Vehicles = u.Vehicles!.Select(r => new VehicleRVDto
-                                                                                {
-                                                                                    Id = r.Id,
-                                                                                    Rentals = r.Rentals!.Select(re => new RentalDto
-                                                                                    {
-                                                                                        Id = re.Id,
-                                                                                    }).ToList(),
-                                                                                    RvMaintenances = r.RvMaintenances!.Select(m => new RvMaintenanceDto
-                                                                                    {
-                                                                                        Id = m.Id,
-                                                                                    }).ToList()
-                                                                                }).ToList()
-                                                                            }).ToListAsync();
+                IEnumerable<ShowcaseUserDto> users = await Context.ShowcaseUsers
+                    .Select(u => new ShowcaseUserDto
+                    {
+                        Id = u.Id,
+                        Email = u.Email,
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                        Phone = u.Phone,
+                        Password = u.Password,
+                        Username = u.Username,
+                        ModifiedOn = u.ModifiedOn,
+                        IsRemembered = u.IsRemembered,
 
-                return userDto;
+                    }).ToListAsync();
+                return users;
             }
             catch (Exception ex)
             {
@@ -79,7 +54,6 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
                                                                 Phone = u.Phone,
                                                                 Username = u.Username,
                                                                 Password = u.Password,
-                                                                CreatedOn = u.CreatedOn,
                                                                 ModifiedOn = DateTime.Now,
                                                                 IsRemembered = u.IsRemembered,
                                                                 Arrivals = u.Arrivals!.Select(a => new ArrivalDto
@@ -167,6 +141,56 @@ namespace ShowcaseRVHub.WebApi.Data.Repositories
             catch (Exception ex)
             {
                 throw new ArgumentException(ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<ShowcaseUserDto>> GetUsersWithVehicles()
+        {
+            try
+            {
+                IEnumerable<ShowcaseUserDto>? userDto = await Context.ShowcaseUsers
+                                                                            .Include(a => a.Arrivals)
+                                                                            .Include(d => d.Departures)
+                                                                            .Include(v => v.Vehicles!)
+                                                                                .ThenInclude(m => m.RvMaintenances)
+                                                                            .Select(u => new ShowcaseUserDto
+                                                                            {
+                                                                                Id = u.Id,
+                                                                                Email = u.Email,
+                                                                                FirstName = u.FirstName,
+                                                                                LastName = u.LastName,
+                                                                                Phone = u.Phone,
+                                                                                Username = u.Username,
+                                                                                Password = u.Password,
+                                                                                ModifiedOn = DateTime.Now,
+                                                                                IsRemembered = u.IsRemembered,
+                                                                                Arrivals = u.Arrivals!.Select(a => new ArrivalDto
+                                                                                {
+                                                                                    Id = a.Id,
+                                                                                }).ToList(),
+                                                                                Departures = u.Departures!.Select(d => new DepartureDto
+                                                                                {
+                                                                                    Id = d.Id,
+                                                                                }).ToList(),
+                                                                                Vehicles = u.Vehicles!.Select(r => new VehicleRVDto
+                                                                                {
+                                                                                    Id = r.Id,
+                                                                                    Rentals = r.Rentals!.Select(re => new RentalDto
+                                                                                    {
+                                                                                        Id = re.Id,
+                                                                                    }).ToList(),
+                                                                                    RvMaintenances = r.RvMaintenances!.Select(m => new RvMaintenanceDto
+                                                                                    {
+                                                                                        Id = m.Id,
+                                                                                    }).ToList()
+                                                                                }).ToList()
+                                                                            }).ToListAsync();
+
+                return userDto;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentNullException(ex.Message);
             }
         }
     }
